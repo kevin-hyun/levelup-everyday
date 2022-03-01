@@ -29,6 +29,7 @@ export class User extends Document {
   })
   @IsString()
   @IsNotEmpty()
+  @Prop()
   password: string;
 
   @ApiProperty({
@@ -64,7 +65,6 @@ export class User extends Document {
     email: string;
     name: string;
     role: number;
-    imgUrl: string;
   };
   readonly adminData: {
     id: string;

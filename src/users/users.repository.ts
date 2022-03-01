@@ -10,12 +10,26 @@ export class UsersRepository {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
+  async findUserByIdWithoutPassword(userId: string): Promise<User | null> {
+    //password 제외하고
+    const user = await await this.userModel
+      .findById(userId)
+      .select('-password');
+    return user;
+  }
+
+  async findUserByEmail(email: string): Promise<User | null> {
+    const user = await this.userModel.findOne({ email });
+    return user;
+  }
+
   async existsByEmail(email: string): Promise<boolean> {
     const result = (await this.userModel.exists({ email })) ? true : false;
     return result;
   }
 
   async create(user: UsersCreateDto): Promise<User> {
+    delete user.passwordConfirm;
     return await this.userModel.create(user);
   }
 }

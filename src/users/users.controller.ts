@@ -1,27 +1,43 @@
+import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
+import { LoginRequestDto } from './../auth/dto/login.request.dto';
+import { AuthService } from './../auth/auth.service';
 import { ReadOnlyUserDto } from './dto/users.dto';
 import { UsersService } from './users.service';
 import {
   Body,
   Controller,
   Get,
+  Req,
+  Request,
   UseFilters,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+
 import { Post } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { UsersCreateDto } from './dto/users.create.dto';
-import { ApiOperation, ApiProperty, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { CurrentUser } from '../common/decorators/user.decorator';
+import { User } from './users.schema';
 
 @Controller('users')
 @UseInterceptors(SuccessInterceptor)
 @UseFilters(HttpExceptionFilter)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
+  @ApiOperation({
+    summary: '현재 유저 정보 가져오기',
+  })
+  @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat() {
-    return '1';
+  getCurrentCat(@CurrentUser() user: User) {
+    return user.readOnlyData;
   }
 
   @ApiOperation({
@@ -41,9 +57,12 @@ export class UsersController {
     return await this.usersService.signUp(body);
   }
 
+  @ApiOperation({
+    summary: '로그인',
+  })
   @Post('login')
-  logIn() {
-    return '1';
+  logIn(@Body() data: LoginRequestDto) {
+    return this.authService.jwtLogIn(data);
   }
 
   @Post('logout')

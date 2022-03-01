@@ -1,9 +1,5 @@
 import { UsersCreateDto } from './dto/users.create.dto';
-import {
-  HttpException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
@@ -17,7 +13,7 @@ export class UsersService {
   }
 
   async signUp(body: UsersCreateDto) {
-    const { email, name, password, passwordConfirm, imgUrl, role } = body;
+    const { email, name, password, imgUrl, role } = body;
     //duplicated email
     const isUserExist = await this.usersRepository.existsByEmail(email);
 
@@ -28,7 +24,7 @@ export class UsersService {
       */
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    console.log(hashedPassword);
     const user = await this.usersRepository.create({
       email,
       name,
@@ -37,6 +33,7 @@ export class UsersService {
       imgUrl,
       role,
     });
+    console.log(user);
     return user.readOnlyData;
   }
 }
