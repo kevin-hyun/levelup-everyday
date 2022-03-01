@@ -4,25 +4,22 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { User } from './users.schema';
-import { InjectModel } from '@nestjs/mongoose';
+
 import * as bcrypt from 'bcrypt';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<User>,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   getCurrentCat(): string {
     return '1111';
   }
 
   async signUp(body: UsersCreateDto) {
-    const { email, name, password, passwordConfirm, imgUrl } = body;
+    const { email, name, password, passwordConfirm, imgUrl, role } = body;
     //duplicated email
-    const isUserExist = await this.userModel.exists({ email });
+    const isUserExist = await this.usersRepository.existsByEmail(email);
 
     if (isUserExist) {
       throw new UnauthorizedException('해당하는 이메일이 이미 존재합니다.');
@@ -30,16 +27,15 @@ export class UsersService {
       throw new HttpException('해당하는 이메일이 이미 존재합니다. ', 403);
       */
     }
-    if (password !== passwordConfirm) {
-      throw new UnauthorizedException('입력하신 비밀번호가 일치하지 않습니다.');
-    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await this.userModel.create({
+    const user = await this.usersRepository.create({
       email,
       name,
       password: hashedPassword,
+      passwordConfirm: hashedPassword,
       imgUrl,
+      role,
     });
     return user.readOnlyData;
   }
