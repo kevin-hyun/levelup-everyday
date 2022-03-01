@@ -3,14 +3,11 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
+import { User } from './users.schema';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
-
-  getCurrentCat(): string {
-    return '1111';
-  }
 
   async signUp(body: UsersCreateDto) {
     const { email, name, password, imgUrl, role } = body;
@@ -35,5 +32,17 @@ export class UsersService {
     });
     console.log(user);
     return user.readOnlyData;
+  }
+
+  async uploadImg(user: User, files: Express.Multer.File[]) {
+    const fileName = `users/${files[0].filename}`;
+    console.log(user);
+    console.log(fileName);
+    const newUser = await this.usersRepository.findUserByIdAndUpdateImg(
+      user.id,
+      fileName,
+    );
+    console.log(newUser);
+    return newUser;
   }
 }

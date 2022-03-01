@@ -1,3 +1,4 @@
+import { multerOptions } from './../common/utils/multer.options';
 import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
 import { LoginRequestDto } from './../auth/dto/login.request.dto';
 import { AuthService } from './../auth/auth.service';
@@ -7,8 +8,7 @@ import {
   Body,
   Controller,
   Get,
-  Req,
-  Request,
+  UploadedFiles,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -21,6 +21,7 @@ import { UsersCreateDto } from './dto/users.create.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../common/decorators/user.decorator';
 import { User } from './users.schema';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
 @UseInterceptors(SuccessInterceptor)
@@ -65,8 +66,16 @@ export class UsersController {
     return this.authService.jwtLogIn(data);
   }
 
-  @Post('logout')
-  logOut() {
-    return '1';
+  @ApiOperation({ summary: '유저 프로필사진 업로드' })
+  @UseInterceptors(FilesInterceptor('image', 1, multerOptions('users')))
+  @UseGuards(JwtAuthGuard)
+  @Post('upload')
+  uploadUserImg(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @CurrentUser() user: User,
+  ) {
+    // console.log(files);
+    // return { image: `http://localhost:8000/media/users/${files[0].filename}` };
+    return this.usersService.uploadImg(user, files);
   }
 }
