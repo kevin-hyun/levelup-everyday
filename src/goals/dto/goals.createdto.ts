@@ -10,4 +10,5 @@ export class GoalsDBInsertDto extends PickType(Goals, [
   'author',
   'category',
   'contents',
+  'softDelete',
 ] as const) {}

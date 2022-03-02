@@ -20,6 +20,7 @@ export class GoalsService {
       author: user.id,
       category: category._id,
       contents: data.contents,
+      softDelete: false,
     };
     return this.goalsRepository.createGoal(goal);
   }

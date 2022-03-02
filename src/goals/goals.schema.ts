@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions, Types } from 'mongoose';
 const options: SchemaOptions = {
   timestamps: true,
@@ -47,6 +47,13 @@ export class Goals extends Document {
   @IsNotEmpty()
   @IsString()
   contents: string;
+
+  @Prop({
+    required: true,
+    default: false,
+  })
+  @IsBoolean()
+  softDelete: boolean;
 
   readonly readOnlyData: {
     category: string;
