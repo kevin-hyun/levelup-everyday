@@ -1,3 +1,4 @@
+import { GoalsModule } from './goals/goals.module';
 import { UsersModule } from './users/users.module';
 import { Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -19,6 +20,7 @@ import { CategoryModule } from './category/category.module';
     UsersModule,
     AuthModule,
     CategoryModule,
+    GoalsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

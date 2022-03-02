@@ -1,6 +1,6 @@
 import { CategoryCreateDto } from './dto/category.create.dto';
 import { Category } from './category.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../users/users.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,6 +10,15 @@ export class CategoryRepository {
   constructor(
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}
+
+  async findCategoryByName(categoryName: string | Types.ObjectId) {
+    const result = await this.categoryModel.findOne({ name: categoryName });
+    if (!result) {
+      throw new UnauthorizedException('해당하는 카테고리가 없습니다.');
+    }
+
+    return result;
+  }
 
   async createCategory(user: User, data: CategoryCreateDto): Promise<Category> {
     console.log(data.name);
