@@ -2,7 +2,10 @@ import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  Patch,
   Post,
   UseFilters,
   UseGuards,
@@ -33,6 +36,14 @@ export class GoalsController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getAllGoal(@CurrentUser() user: User) {
-    return this.goalsService.getAllGoal(user);
+    return this.goalsService.getAllGoals(user);
+  }
+
+  @ApiOperation({ summary: 'goal 삭제하기' })
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  deleteGoal(@CurrentUser() user: User, @Param('id') id: string) {
+    console.log(id);
+    return this.goalsService.deleteGoal(user, id);
   }
 }
