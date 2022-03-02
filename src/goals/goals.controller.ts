@@ -2,6 +2,7 @@ import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
 import {
   Body,
   Controller,
+  Get,
   Post,
   UseFilters,
   UseGuards,
@@ -26,5 +27,12 @@ export class GoalsController {
   @Post()
   createGoal(@CurrentUser() user: User, @Body() data: GoalsCreateDto) {
     return this.goalsService.createGoal(user, data);
+  }
+
+  @ApiOperation({ summary: 'goal 가져오기' })
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getAllGoal(@CurrentUser() user: User) {
+    return this.goalsService.getAllGoal(user);
   }
 }

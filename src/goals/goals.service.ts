@@ -24,4 +24,10 @@ export class GoalsService {
     };
     return this.goalsRepository.createGoal(goal);
   }
+
+  async getAllGoal(user: User) {
+    const userId = user._id;
+    console.log(userId);
+    return this.goalsRepository.getGoals(userId);
+  }
 }
