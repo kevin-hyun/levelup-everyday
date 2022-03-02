@@ -18,7 +18,10 @@ export class GoalsRepository {
 
   async getAllGoals(userId: string | Types.ObjectId) {
     const id = typeof userId === 'string' ? userId : userId.toString();
-    const result = await this.goalsModel.find({ author: id });
+    const result = await this.goalsModel.find({
+      author: id,
+      softDelete: false,
+    });
     return result;
   }
 
