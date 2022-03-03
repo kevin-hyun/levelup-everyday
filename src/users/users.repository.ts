@@ -1,7 +1,7 @@
 import { UsersCreateDto } from './dto/users.create.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User } from './users.schema';
 
 @Injectable()
@@ -24,6 +24,23 @@ export class UsersRepository {
       .findById(userId)
       .select('-password');
     return user;
+  }
+
+  async findUserAndUpdateContinuity(
+    userId: string,
+    isContinuous: boolean,
+  ): Promise<User | null> {
+    if (isContinuous) {
+      const user = await this.findUserByIdWithoutPassword(userId);
+      user.continuity += 1;
+      await user.save();
+      return user;
+    } else {
+      const user = await this.findUserByIdWithoutPassword(userId);
+      user.continuity = 0;
+      await user.save();
+      return user;
+    }
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
