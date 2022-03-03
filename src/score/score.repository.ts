@@ -8,18 +8,13 @@ export class ScoreRepository {
   constructor(
     @InjectModel(Score.name) private readonly scoreModel: Model<Score>,
   ) {}
-  async createScore(data: data) {
-    return await this.scoreModel.create();
+  async create(score: number) {
+    return await this.scoreModel.create({ score });
   }
 
-  async findScoreByGoalId(
-    user: string | Types.ObjectId,
-    id: string | Types.ObjectId,
-  ) {
-    await scoreMdoel.find();
+  async getScoreDateBetween(dateStart: Date, dateEnd: Date) {
+    return await this.scoreModel.find({
+      updatedAt: { $gte: dateStart, $lte: dateEnd },
+    });
   }
-
-  //   async createGoal(goal: GoalsDBInsertDto) {
-  //     return await this.goalsModel.create(goal);
-  //   }
 }

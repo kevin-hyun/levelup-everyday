@@ -1,3 +1,4 @@
+import { ScoreModule } from './score/score.module';
 import { GoalsModule } from './goals/goals.module';
 import { UsersModule } from './users/users.module';
 import { Module, NestModule } from '@nestjs/common';
@@ -21,6 +22,7 @@ import { CategoryModule } from './category/category.module';
     AuthModule,
     CategoryModule,
     GoalsModule,
+    ScoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],
