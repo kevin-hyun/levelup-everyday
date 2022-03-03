@@ -60,6 +60,16 @@ export class User extends Document {
   })
   imgUrl: string;
 
+  @ApiProperty({
+    example: 3,
+    description: '연속 횟수',
+    required: true,
+  })
+  @Prop({
+    default: 0,
+  })
+  continuity: number;
+
   readonly readOnlyData: {
     id: string;
     email: string;
