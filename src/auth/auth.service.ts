@@ -16,7 +16,6 @@ export class AuthService {
 
     //email exist?
     const user = await this.usersRepository.findUserByEmail(email);
-    console.log(user);
     if (!user) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
@@ -27,14 +26,11 @@ export class AuthService {
       user.password,
     );
 
-    console.log(isPasswordValidated);
-
     if (!isPasswordValidated) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
 
     const payload = { email: email, sub: user.id };
-    console.log(payload);
     return {
       token: this.jwtService.sign(payload),
     };
