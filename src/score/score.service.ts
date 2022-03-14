@@ -54,18 +54,47 @@ export class ScoreService {
 
     //data insert
 
-    for (const el of data['goalsArray']) {
-      const goal = await this.goalsRepository.getGoal(el);
-      const goalId = goal['_id'];
-      console.log(continuity);
-      const data = {
-        score: 100 + continuity * comboWeight,
-        author: userId,
-        goal: goalId,
-      };
-      await this.scoreRepository.InsertData(data);
+    try {
+      for (const el of data['goalsArray']) {
+        const goal = await this.goalsRepository.getGoal(el);
+        const goalId = goal['_id'];
+        console.log(continuity);
+        const data = {
+          score: 100 + continuity * comboWeight,
+          author: userId,
+          goal: goalId,
+        };
+        await this.scoreRepository.InsertData(data);
+      }
+    } catch (err) {
+      console.log(err);
     }
 
     return 1;
+  }
+
+  async getAllScores(user: User) {
+    const userId = user._id;
+    return await this.scoreRepository.getAllScore(userId);
+  }
+
+  async getScoreByQuery(user: User, startDate: string, endDate: string) {
+    const userId = user._id;
+    const timeZone = 1000 * 60 * 60 * 9;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const startDateTimezone = new Date(
+      new Date(startDate).getTime() - timeZone,
+    );
+    const endDateTimezone = new Date(
+      new Date(endDate).getTime() + oneDay - timeZone,
+    );
+
+    const data = {
+      userId,
+      startDate: startDateTimezone,
+      endDate: endDateTimezone,
+    };
+    console.log(data);
+    return this.scoreRepository.getScoreBetweenDate(data);
   }
 }

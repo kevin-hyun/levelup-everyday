@@ -3,6 +3,8 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Score } from './score.schema';
 import { ScoreInsertDto } from './dto/score.insert.dto';
+import { ScoreReadParamsDto } from './dto/score.read.params';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class ScoreRepository {
@@ -13,9 +15,13 @@ export class ScoreRepository {
     return await this.scoreModel.create({ score });
   }
 
-  async getScoreDateBetween(dateStart: Date, dateEnd: Date) {
+  async getScoreBetweenDate(data: ScoreReadParamsDto) {
     return await this.scoreModel.find({
-      updatedAt: { $gte: dateStart, $lte: dateEnd },
+      author: data.userId,
+      updatedAt: {
+        $gte: data.startDate,
+        $lte: data.endDate,
+      },
     });
   }
   async getScoreLastData(userId: Types.ObjectId) {
@@ -23,6 +29,31 @@ export class ScoreRepository {
       const result = await this.scoreModel
         .find({ author: userId })
         .sort({ dateCreated: -1 });
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getScore(userId: Types.ObjectId, id: string) {
+    try {
+      const result = await this.scoreModel.find({
+        author: userId,
+        _id: id,
+      });
+
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getAllScore(userId: Types.ObjectId) {
+    try {
+      const result = await this.scoreModel.find({
+        author: userId,
+      });
+
       return result;
     } catch (err) {
       console.log(err);

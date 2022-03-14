@@ -43,7 +43,6 @@ export class GoalsController {
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   deleteGoal(@CurrentUser() user: User, @Param('id') id: string) {
-    console.log(id);
     return this.goalsService.deleteGoal(user, id);
   }
 }

@@ -8,6 +8,8 @@ import {
   Param,
   Patch,
   Post,
+  Put,
+  Query,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -31,5 +33,23 @@ export class ScoreController {
   @Post()
   createScore(@CurrentUser() user: User, @Body() data: ScoreCreateDto) {
     return this.scoreService.createScore(user, data);
+  }
+
+  @ApiOperation({ summary: 'score 모두 가져오기' })
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getAllScores(@CurrentUser() user: User) {
+    return this.scoreService.getAllScores(user);
+  }
+
+  @ApiOperation({ summary: 'score 필터링' })
+  @UseGuards(JwtAuthGuard)
+  @Get('graph')
+  getScoreByQuery(
+    @CurrentUser() user: User,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    return this.scoreService.getScoreByQuery(user, startDate, endDate);
   }
 }
