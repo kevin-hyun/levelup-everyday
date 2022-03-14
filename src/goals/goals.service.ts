@@ -27,7 +27,9 @@ export class GoalsService {
 
   async getAllGoals(user: User) {
     const userId = user._id;
-    return this.goalsRepository.getAllGoals(userId);
+    const result = this.goalsRepository.getAllGoals(userId);
+    console.log(result);
+    return result;
   }
 
   async deleteGoal(user: User, id: string) {

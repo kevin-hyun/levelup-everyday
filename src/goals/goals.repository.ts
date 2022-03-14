@@ -35,4 +35,8 @@ export class GoalsRepository {
     goal.softDelete = true;
     return await goal.save();
   }
+
+  async getGoal(id: string | Types.ObjectId) {
+    return await this.goalsModel.findById(id);
+  }
 }

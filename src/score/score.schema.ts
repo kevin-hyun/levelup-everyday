@@ -16,7 +16,7 @@ export class Score extends Document {
   })
   @Prop({
     required: true,
-    default: 10,
+    default: 100,
   })
   @IsNotEmpty()
   score: number;
@@ -36,16 +36,18 @@ export class Score extends Document {
   goal: Types.ObjectId;
 
   @ApiProperty({
-    example: 3,
-    description: '목표 이름 ',
+    example: '6cssfaj12340198asd',
+    description: 'userId',
     required: true,
   })
   @Prop({
+    type: Types.ObjectId,
     required: true,
+    ref: 'users',
   })
-  @IsNotEmpty()
   @IsString()
-  continuity: number;
+  @IsNotEmpty()
+  author: Types.ObjectId;
 
   //   readonly graphData: {
   //     score: number;

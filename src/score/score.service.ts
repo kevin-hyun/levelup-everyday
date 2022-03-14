@@ -14,35 +14,58 @@ export class ScoreService {
   ) {}
 
   async createScore(user: User, data: ScoreCreateDto) {
-    const { date, goalsArray } = data;
+    const comboWeight = 10;
+    let continuity = 0;
+    const userId = user._id;
 
-    // conntinuous logic
-    // this.scoreRepository.getScoreDateBetween(date, date);
+    //previous data check
+    const prevScore = await this.scoreRepository.getScoreLastData(userId);
+    console.log(prevScore);
+    if (prevScore.length === 0) {
+      const user = await this.usersRepository.findUserAndUpdateContinuity(
+        userId,
+        false,
+      );
+      continuity = user.continuity;
+    } else {
+      //continuity check
+      const lastUpdatedDate = new Date(prevScore[0]['createdAt']);
+      lastUpdatedDate.setHours(lastUpdatedDate.getHours() + 9);
+      const nowUTC = new Date();
+      nowUTC.setHours(nowUTC.getHours() + 9);
+      const dateDiff = nowUTC.getTime() - lastUpdatedDate.getTime();
+      const oneDay = 1000 * 60 * 60 * 24;
+      // const sameDay = lastUpdatedDate.getDate() === nowUTC.getDate()
 
-    const isContinuos = false;
+      if (dateDiff > oneDay) {
+        const user = await this.usersRepository.findUserAndUpdateContinuity(
+          userId,
+          false,
+        );
+        continuity = user.continuity;
+      } else {
+        const user = await this.usersRepository.findUserAndUpdateContinuity(
+          userId,
+          true,
+        );
+        continuity = user.continuity;
+      }
+    }
 
-    const updatedUser = await this.usersRepository.findUserAndUpdateContinuity(
-      user.id.toString(),
-      isContinuos,
-    );
-    const goalScore = new Object();
+    //data insert
 
-    // for (const goal of goalsArray) {
-    //   const score = await this.scoreRepository.findScoreByGoalId(goal)
-    //   console.log(goal);
-    const result = updatedUser._id.getTimestamp();
-    const result_minus = new Date(result - 1000 * 3600 * 24);
+    for (const el of data['goalsArray']) {
+      const goal = await this.goalsRepository.getGoal(el);
+      const goalId = goal['_id'];
+      console.log(continuity);
+      const data = {
+        score: 100 + continuity * comboWeight,
+        author: userId,
+        goal: goalId,
+      };
+      await this.scoreRepository.InsertData(data);
+    }
 
-    console.log(result);
-    console.log(result_minus);
-    // const dateStart = '2022-03-02T09:58:53';
-    // const dateEnd = '2022-03-03T00:00:00';
-
-    return this.scoreRepository.getScoreDateBetween(result_minus, result);
-    return '1';
-
-    // const score = 10 + 0.1*updatedUser.continuity
-
-    // return await this.scoreRepository.create(score);
+    return 1;
   }
 }
