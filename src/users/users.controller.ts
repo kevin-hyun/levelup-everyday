@@ -74,8 +74,6 @@ export class UsersController {
     @UploadedFiles() files: Array<Express.Multer.File>,
     @CurrentUser() user: User,
   ) {
-    // console.log(files);
-    // return { image: `http://localhost:8000/media/users/${files[0].filename}` };
     return this.usersService.uploadImg(user, files);
   }
 }
