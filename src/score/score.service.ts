@@ -4,6 +4,10 @@ import { ScoreCreateDto } from './dto/score.create.dto';
 import { User } from './../users/users.schema';
 import { ScoreRepository } from './score.repository';
 import { Injectable } from '@nestjs/common';
+import * as moment from 'moment';
+
+const dateSeoul = moment().format('YYYY-MM-DD');
+const dayBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
 
 @Injectable()
 export class ScoreService {
@@ -18,9 +22,10 @@ export class ScoreService {
     let continuity = 0;
     const userId = user._id;
 
-    //previous data check
     const prevScore = await this.scoreRepository.getScoreLastData(userId);
-    console.log(prevScore);
+
+    //previous data check
+    //기존 자료 없음
     if (prevScore.length === 0) {
       const user = await this.usersRepository.findUserAndUpdateContinuity(
         userId,
@@ -29,21 +34,18 @@ export class ScoreService {
       continuity = user.continuity;
     } else {
       //continuity check
-      const lastUpdatedDate = new Date(prevScore[0]['createdAt']);
-      lastUpdatedDate.setHours(lastUpdatedDate.getHours() + 9);
-      const nowUTC = new Date();
-      nowUTC.setHours(nowUTC.getHours() + 9);
-      const dateDiff = nowUTC.getTime() - lastUpdatedDate.getTime();
-      const oneDay = 1000 * 60 * 60 * 24;
-      // const sameDay = lastUpdatedDate.getDate() === nowUTC.getDate()
-
-      if (dateDiff > oneDay) {
+      const lastUpdatedDate = prevScore[0]['createdAt'];
+      //같은날짜 업데이트
+      if (lastUpdatedDate === dateSeoul) {
+      } else if (lastUpdatedDate !== dayBefore) {
+        // 하루이상 차이
         const user = await this.usersRepository.findUserAndUpdateContinuity(
           userId,
           false,
         );
         continuity = user.continuity;
-      } else {
+      } else if (lastUpdatedDate === dayBefore) {
+        // 하루 차이 - 연속
         const user = await this.usersRepository.findUserAndUpdateContinuity(
           userId,
           true,
@@ -58,7 +60,6 @@ export class ScoreService {
       for (const el of data['goalsArray']) {
         const goal = await this.goalsRepository.getGoal(el);
         const goalId = goal['_id'];
-        console.log(continuity);
         const data = {
           score: 100 + continuity * comboWeight,
           author: userId,
@@ -80,19 +81,10 @@ export class ScoreService {
 
   async getScoreByQuery(user: User, startDate: string, endDate: string) {
     const userId = user._id;
-    const timeZone = 1000 * 60 * 60 * 9;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const startDateTimezone = new Date(
-      new Date(startDate).getTime() - timeZone,
-    );
-    const endDateTimezone = new Date(
-      new Date(endDate).getTime() + oneDay - timeZone,
-    );
-
     const data = {
       userId,
-      startDate: startDateTimezone,
-      endDate: endDateTimezone,
+      startDate,
+      endDate,
     };
     console.log(data);
     return this.scoreRepository.getScoreBetweenDate(data);

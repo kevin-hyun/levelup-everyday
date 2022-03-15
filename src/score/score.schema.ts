@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions, Types } from 'mongoose';
+import * as moment from 'moment';
+const dateSeoul = moment().format('YYYY-MM-DD');
+
 const options: SchemaOptions = {
   timestamps: true,
   collection: 'score',
@@ -49,17 +52,32 @@ export class Score extends Document {
   @IsNotEmpty()
   author: Types.ObjectId;
 
-  //   readonly graphData: {
-  //     score: number;
-  //     timestamps : Date;
+  @ApiProperty({
+    example: '2022-03-14T23:56:43+09:00',
+    description: 'createdAt',
+    required: true,
+  })
+  @Prop({
+    type: String,
+    required: false,
+    default: dateSeoul,
+  })
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: string;
 
-  //   };
+  @ApiProperty({
+    example: '2022-03-14T23:56:43+09:00',
+    description: 'updatedAt',
+    required: true,
+  })
+  @Prop({
+    type: String,
+    required: false,
+    default: dateSeoul,
+  })
+  @IsDate()
+  @IsNotEmpty()
+  updatedAt: string;
 }
 export const ScoreSchema = SchemaFactory.createForClass(Score);
-
-// ScoreSchema.virtual('readOnlyData').get(function (this: Score) {
-//   return {
-//     category: this.category,
-//     contents: this.contents,
-//   };
-// });
