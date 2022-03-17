@@ -43,7 +43,6 @@ export const NavLogo = styled(LinkRouter)`
 
 export const NavIcon = styled.img`
   height: 100px;
-  weight: 100px;
 `;
 
 export const MobileIcon = styled.div`
@@ -99,6 +98,23 @@ export const NavBtn = styled.nav`
   align-items: center;
   @media screen and (max-width: 768px) {
     display: none;
+  }
+`;
+
+export const NavRouterLink = styled(LinkRouter)`
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  &.active {
+    border-bottom: 3px solid #ffff80;
+    color: #ffff80;
+    transition: 0.3s ease-out;
   }
 `;
 

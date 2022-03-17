@@ -73,7 +73,7 @@ export const SocialMediaWrap = styled.div`
   justify-content: space-around;
   align-items: center;
   max-width: 1100px;
-  margin: 40px auto 0 auto;
+  margin: 0 auto;
   flex-direction: column;
 
   @media screen and (max-width: 820px) {
@@ -89,7 +89,7 @@ export const SocialLogo = styled(Link)`
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin: 16px auto;
   font-weight: bold;
 `;
 export const WedsiteRights = styled.small`

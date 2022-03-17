@@ -10,6 +10,7 @@ import {
   NavItem,
   NavBtnLink,
   NavBtn,
+  NavRouterLink,
 } from './NavbarElements';
 import { FaBars } from 'react-icons/fa';
 import { animateScroll as scroll } from 'react-scroll';
@@ -59,7 +60,7 @@ const Navbar = ({ toggle }) => {
             </NavItem>
             <NavItem>
               <NavLinks
-                to="discover"
+                to="목표설정"
                 smooth={true}
                 duration={500}
                 spy={true}
@@ -82,16 +83,14 @@ const Navbar = ({ toggle }) => {
               </NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks
-                to="signUp"
-                smooth={true}
+              <NavRouterLink
+                to="/signup"
                 duration={500}
-                spy={true}
                 exact="true"
                 offset={-80}
               >
                 회원가입
-              </NavLinks>
+              </NavRouterLink>
             </NavItem>
           </NavMenu>
           <NavBtn>

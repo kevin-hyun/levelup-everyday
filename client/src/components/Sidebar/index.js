@@ -8,12 +8,13 @@ import {
   SidebarLink,
   SideBtnWrap,
   SidebarRoute,
+  SidebarRouter,
 } from './SidebarElements';
 
 const Sidebar = ({ isOpen, toggle }) => {
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
-      <Icon onClikck={toggle}>
+      <Icon onClick={toggle}>
         <CloseIcon />
       </Icon>
       <SidebarWrapper>
@@ -27,9 +28,9 @@ const Sidebar = ({ isOpen, toggle }) => {
           <SidebarLink to="services" onClick={toggle}>
             성장곡선
           </SidebarLink>
-          <SidebarLink to="signup" onClick={toggle}>
+          <SidebarRouter to="/signup" onClick={toggle}>
             회원가입
-          </SidebarLink>
+          </SidebarRouter>
         </SidebarMenu>
         <SideBtnWrap>
           <SidebarRoute to="/signin"> 로그인 </SidebarRoute>

@@ -8,9 +8,9 @@ export const homeObjOne = {
   lightText: false,
   lightTextDesc: false,
   topLine: '오늘도 레벨업?',
-  headline: '자신의 성장곡선을 한눈에 파악',
+  headline: '자신의 성장곡선을 한눈에 파악해보세요',
   description:
-    ' 다른 사람들과 비교하는 데 지치셨나요? 어제의 나와 비교하며 레벨업하는 자신을 확인하세요!',
+    ' 다른 사람들과 비교하는 데 지치셨나요? 어제의 나와 비교하며 레벨업하는 자신을 확인할 수 있어요!',
   buttonLabel: '서비스 시작',
   imgStart: true,
   img: img1,
