@@ -94,16 +94,7 @@ const Navbar = ({ toggle }) => {
             </NavItem>
           </NavMenu>
           <NavBtn>
-            <NavBtnLink
-              to="/signin"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-            >
-              로그인
-            </NavBtnLink>
+            <NavBtnLink to="/signin">로그인</NavBtnLink>
           </NavBtn>
         </NavbarContainer>
       </Nav>
