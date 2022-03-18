@@ -7,9 +7,7 @@ import {
   Form,
   FormButton,
   FormContent,
-  FormH1,
   FormInput,
-  FormLabel,
   FormWrap,
   Icon,
   Text,
@@ -33,15 +31,20 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(loginUser(body)).then((response) => {
-      if (response.payload.success) {
-        console.log(response.payload);
-        localStorage.setItem('token', response.data);
-        props.history.push('/');
-      } else {
-        alert('이메일과 비밀번호를 확인해주세요');
-      }
-    });
+    dispatch(loginUser(body))
+      .then((response) => {
+        if (response.payload.success) {
+          console.log(response.payload);
+          localStorage.setItem('token', response.data);
+          props.history.push('/');
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        if (statusCode === '400') {
+          alert('이메일 또는 비밀번호를 확인해주세요');
+        }
+      });
   };
 
   return (

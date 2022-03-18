@@ -28,21 +28,24 @@ const SignUp = (props) => {
   const [name, setName] = useState('');
   const onSubmitHandler = (event) => {
     // 자동 새로고침 방지
-    event.prevent.Default();
-
+    event.preventDefault();
+    console.log(11);
     let body = {
       email,
       password,
       passwordConfirm,
       name,
     };
-    dispatch(registerUser(body)).then((response) => {
-      if (response.payload.registersuccess) {
-        props.history('/signin');
-      } else {
-        alert('Error');
-      }
-    });
+    dispatch(registerUser(body))
+      .then((response) => {
+        console.log(response);
+        // if (response.payload.registersuccess) {
+        //   props.history('/signin');
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
