@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import {
   Container,
@@ -17,34 +17,39 @@ import {
 } from './SignUpElements.js';
 import logo from '../../images/logo.png';
 
-import { registerUser } from '../_actions/user_action';
-
 const SignUp = (props) => {
-  const dispatch = useDispatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [name, setName] = useState('');
+
+  const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
   const onSubmitHandler = (event) => {
     // 자동 새로고침 방지
     event.preventDefault();
-    console.log(11);
+
     let body = {
       email,
       password,
       passwordConfirm,
       name,
     };
-    dispatch(registerUser(body))
+
+    axios
+      .post('http://localhost:5000/users/register', body)
       .then((response) => {
-        console.log(response);
-        // if (response.payload.registersuccess) {
-        //   props.history('/signin');
-        // }
+        if (response.data.success) {
+          props.history.push('/signin');
+        }
       })
       .catch((err) => {
-        console.log(err);
+        const statusCode = err.message.slice(-3, err.message.length);
+        if (statusCode === '401') {
+          alert('중복된 이메일이 존재합니다.');
+        } else if (statusCode === '400') {
+          alert('내용을 입력해주세요');
+        }
       });
   };
 
@@ -76,8 +81,17 @@ const SignUp = (props) => {
                   setPassword(e.target.value);
                 }}
               />
-              <Text>영문,숫자, 특수문자 각 한개이상 포함하여 8자 이상</Text>
 
+              {regex.test(password) === true && (
+                <Text correct={true}>
+                  영문,숫자, 특수문자 각 한개이상 포함하여 8자 이상
+                </Text>
+              )}
+              {regex.test(password) === false && (
+                <Text correct={false}>
+                  영문,숫자, 특수문자 각 한개이상 포함하여 8자 이상
+                </Text>
+              )}
               <FormInput
                 type="password"
                 required
@@ -86,7 +100,12 @@ const SignUp = (props) => {
                   setpasswordConfirm(e.target.value);
                 }}
               />
-
+              {(password === '' || password !== passwordConfirm) && (
+                <Text correct={false}>비밀번호가 일치하지 않습니다.</Text>
+              )}
+              {password !== '' && password === passwordConfirm && (
+                <Text correct={true}>비밀번호가 일치합니다.</Text>
+              )}
               <FormInput
                 type="string"
                 required

@@ -6,15 +6,15 @@ import SignUpPage from './pages/SignUpPage';
 import Auth from './hoc/auth';
 
 function App() {
-  // const NewLandingPage = Auth(Home, null);
-  // const NewSignInPage = Auth(SignInPage, false);
-  // const NewSignUpPage = Auth(SignUpPage, false);
+  const NewLandingPage = Auth(Home, null);
+  const NewSignInPage = Auth(SignInPage, false);
+  const NewSignUpPage = Auth(SignUpPage, false);
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Home} exact />
-        <Route path="/signin" component={SignInPage} exact />
-        <Route path="/signup" component={SignUpPage} exact />
+        <Route path="/" component={NewLandingPage} exact />
+        <Route path="/signin" component={NewSignInPage} exact />
+        <Route path="/signup" component={NewSignUpPage} exact />
       </Switch>
     </Router>
   );

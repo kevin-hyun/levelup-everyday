@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
+import axios from 'axios';
 import {
   Container,
   Form,
@@ -15,11 +15,7 @@ import {
 } from './SignInElements.js';
 import logo from '../../images/logo.png';
 
-import { loginUser } from '../_actions/user_action';
-
 const SignIn = (props) => {
-  const dispatch = useDispatch();
-
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [token, setToken] = React.useState('');
@@ -31,17 +27,19 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(loginUser(body))
+    axios
+      .post('http://localhost:5000/users/login', body)
       .then((response) => {
-        if (response.payload.success) {
-          console.log(response.payload);
-          localStorage.setItem('token', response.data);
+        console.log(response);
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.data.token);
           props.history.push('/');
+          // console.log(localStorage.getItem('token'));
         }
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        if (statusCode === '400') {
+        if (statusCode === '401') {
           alert('이메일 또는 비밀번호를 확인해주세요');
         }
       });

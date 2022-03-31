@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { animateScroll as scroll } from 'react-scroll';
+
 import {
   Nav,
   NavLogo,
@@ -12,11 +15,9 @@ import {
   NavBtn,
   NavRouterLink,
 } from './NavbarElements';
-import { FaBars } from 'react-icons/fa';
-import { animateScroll as scroll } from 'react-scroll';
 import logo from '../../images/logo.png';
 
-const Navbar = ({ toggle }) => {
+const Navbar = ({ token, toggle }) => {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -94,7 +95,11 @@ const Navbar = ({ toggle }) => {
             </NavItem>
           </NavMenu>
           <NavBtn>
-            <NavBtnLink to="/signin">로그인</NavBtnLink>
+            {/* {token ? (
+              <NavBtnLink to="/signin">로그아웃</NavBtnLink>
+            ) : (
+              <NavBtnLink to="/signin">로그인</NavBtnLink>
+            )} */}
           </NavBtn>
         </NavbarContainer>
       </Nav>

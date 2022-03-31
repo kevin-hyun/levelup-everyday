@@ -131,7 +131,10 @@ export const Text = styled.small`
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  color: #b2b2b2;
-
+  color: ${({ correct }) => (correct ? '#01c471' : '#ea4e59')};
   font-weight: 400;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.68rem;
+  }
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero/index';
@@ -6,6 +7,7 @@ import Info from '../components/Info/index';
 import { homeObjOne, homeObjThree, homeObjTwo } from '../components/Info/Data';
 // import Services from "../components/Services";
 import Footer from '../components/Footer';
+
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
