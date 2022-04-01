@@ -3,18 +3,26 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
-import Auth from './hoc/auth';
+import PublicRoute from './components/utils/PublicRoute';
+import PrivateRoute from './components/utils/PrivateRoute';
 
 function App() {
-  const NewLandingPage = Auth(Home, null);
-  const NewSignInPage = Auth(SignInPage, false);
-  const NewSignUpPage = Auth(SignUpPage, false);
   return (
     <Router>
       <Switch>
-        <Route path="/" component={NewLandingPage} exact />
-        <Route path="/signin" component={NewSignInPage} exact />
-        <Route path="/signup" component={NewSignUpPage} exact />
+        <PublicRoute restricted={false} path="/" component={Home} exact />
+        <PublicRoute
+          restricted={true}
+          path="/signin"
+          component={SignInPage}
+          exact
+        />
+        <PublicRoute
+          restricted={true}
+          path="/signup"
+          component={SignUpPage}
+          exact
+        />
       </Switch>
     </Router>
   );

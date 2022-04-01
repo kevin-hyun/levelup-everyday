@@ -18,7 +18,6 @@ import logo from '../../images/logo.png';
 const SignIn = (props) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [token, setToken] = React.useState('');
 
   let body = {
     email,
@@ -34,7 +33,6 @@ const SignIn = (props) => {
         if (response.data.success) {
           localStorage.setItem('token', response.data.data.token);
           props.history.push('/');
-          // console.log(localStorage.getItem('token'));
         }
       })
       .catch((err) => {
@@ -43,6 +41,11 @@ const SignIn = (props) => {
           alert('이메일 또는 비밀번호를 확인해주세요');
         }
       });
+  };
+
+  const signUpRedirect = (event) => {
+    event.preventDefault();
+    props.history.push('/signup');
   };
 
   return (
@@ -76,6 +79,7 @@ const SignIn = (props) => {
               <FormButton type="submit" onClick={onSubmitHandler}>
                 로그인
               </FormButton>
+              <Text onClick={signUpRedirect}>회원가입</Text>
               <Text> 비밀번호를 잊어버렸어요.</Text>
             </Form>
           </FormContent>

@@ -115,4 +115,5 @@ export const Text = styled.span`
   color: #010106;
   font-size: 14px;
   font-weight: 700;
+  cursor: pointer;
 `;

@@ -11,7 +11,7 @@ import {
   SidebarRouter,
 } from './SidebarElements';
 
-const Sidebar = ({ isOpen, toggle }) => {
+const Sidebar = ({ isOpen, toggle, isLogin }) => {
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
@@ -32,9 +32,15 @@ const Sidebar = ({ isOpen, toggle }) => {
             회원가입
           </SidebarRouter>
         </SidebarMenu>
-        <SideBtnWrap>
-          <SidebarRoute to="/signin"> 로그인 </SidebarRoute>
-        </SideBtnWrap>
+        {isLogin ? (
+          <SideBtnWrap>
+            <SidebarRoute to="/signin"> 로그아웃 </SidebarRoute>
+          </SideBtnWrap>
+        ) : (
+          <SideBtnWrap>
+            <SidebarRoute to="/signin"> 로그인 </SidebarRoute>
+          </SideBtnWrap>
+        )}
       </SidebarWrapper>
     </SidebarContainer>
   );

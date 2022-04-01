@@ -17,7 +17,7 @@ import {
 } from './NavbarElements';
 import logo from '../../images/logo.png';
 
-const Navbar = ({ token, toggle }) => {
+const Navbar = ({ toggle, isLogin }) => {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -95,11 +95,11 @@ const Navbar = ({ token, toggle }) => {
             </NavItem>
           </NavMenu>
           <NavBtn>
-            {/* {token ? (
+            {isLogin ? (
               <NavBtnLink to="/signin">로그아웃</NavBtnLink>
             ) : (
               <NavBtnLink to="/signin">로그인</NavBtnLink>
-            )} */}
+            )}
           </NavBtn>
         </NavbarContainer>
       </Nav>

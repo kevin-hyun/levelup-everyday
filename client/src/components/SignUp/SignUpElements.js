@@ -22,10 +22,11 @@ export const Container = styled.div`
 `;
 
 export const FormWrap = styled.div`
-  height: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 32px;
   margin-bottom: 64px;
 
   @media screen and (max-width: 400px) {
