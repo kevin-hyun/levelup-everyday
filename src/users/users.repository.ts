@@ -20,9 +20,7 @@ export class UsersRepository {
 
   async findUserByIdWithoutPassword(userId: string): Promise<User | null> {
     //password 제외하고
-    const user = await await this.userModel
-      .findById(userId)
-      .select('-password');
+    const user = await this.userModel.findById(userId).select('-password');
     return user;
   }
 

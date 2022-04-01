@@ -18,6 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       payload.sub,
     );
     if (user) {
+      user['isAuth'] = true;
       return user;
     } else {
       throw new UnauthorizedException('접근오류');

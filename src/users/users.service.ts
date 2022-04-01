@@ -10,7 +10,7 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async signUp(body: UsersCreateDto) {
-    const { email, name, password, imgUrl, role } = body;
+    const { email, name, password } = body;
     //duplicated email
     const isUserExist = await this.usersRepository.existsByEmail(email);
 
@@ -24,8 +24,6 @@ export class UsersService {
       name,
       password: hashedPassword,
       passwordConfirm: hashedPassword,
-      imgUrl,
-      role,
     });
 
     return user.readOnlyData;

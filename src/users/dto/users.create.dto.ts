@@ -6,8 +6,6 @@ export class UsersCreateDto extends PickType(User, [
   'email',
   'password',
   'name',
-  'role',
-  'imgUrl',
 ] as const) {
   @ApiProperty({
     example: 'password123!',
