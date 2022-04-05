@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AuthContext from '../../store/auth-context';
 import {
   SidebarContainer,
   Icon,
@@ -9,9 +10,15 @@ import {
   SideBtnWrap,
   SidebarRoute,
   SidebarRouter,
+  SidebarRouteNoBtn,
 } from './SidebarElements';
 
-const Sidebar = ({ isOpen, toggle, isLogin }) => {
+const Sidebar = ({ isOpen, toggle }) => {
+  const authCtx = useContext(AuthContext);
+  const isLoggendIn = authCtx.isLoggendIn;
+  const logoutHandler = () => {
+    authCtx.logout();
+  };
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
@@ -22,9 +29,8 @@ const Sidebar = ({ isOpen, toggle, isLogin }) => {
           <SidebarLink to="about" onClick={toggle}>
             오늘도레벨업?
           </SidebarLink>
-          <SidebarLink to="discover" onClick={toggle}>
-            목표 설정
-          </SidebarLink>
+          <SidebarRouteNoBtn to="/goal"> 목표 설정 </SidebarRouteNoBtn>
+
           <SidebarLink to="services" onClick={toggle}>
             성장곡선
           </SidebarLink>
@@ -32,9 +38,11 @@ const Sidebar = ({ isOpen, toggle, isLogin }) => {
             회원가입
           </SidebarRouter>
         </SidebarMenu>
-        {isLogin ? (
+        {isLoggendIn ? (
           <SideBtnWrap>
-            <SidebarRoute to="/signin"> 로그아웃 </SidebarRoute>
+            <SidebarRoute to="/signin" onClick={logoutHandler}>
+              로그아웃
+            </SidebarRoute>
           </SideBtnWrap>
         ) : (
           <SideBtnWrap>

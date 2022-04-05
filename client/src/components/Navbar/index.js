@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { animateScroll as scroll } from 'react-scroll';
 
@@ -14,11 +14,19 @@ import {
   NavBtnLink,
   NavBtn,
   NavRouterLink,
+  NavLogOut,
 } from './NavbarElements';
 import logo from '../../images/logo.png';
+import AuthContext from '../../store/auth-context';
 
-const Navbar = ({ toggle, isLogin }) => {
+const Navbar = ({ toggle }) => {
+  const authCtx = useContext(AuthContext);
   const [scrollNav, setScrollNav] = useState(false);
+
+  const isLoggendIn = authCtx.isLoggendIn;
+  const logoutHandler = () => {
+    authCtx.logout();
+  };
 
   const changeNav = () => {
     if (window.scrollY >= 80) {
@@ -30,6 +38,7 @@ const Navbar = ({ toggle, isLogin }) => {
 
   useEffect(() => {
     window.addEventListener('scroll', changeNav);
+    return () => {};
   }, []);
 
   const togglehome = () => {
@@ -60,16 +69,14 @@ const Navbar = ({ toggle, isLogin }) => {
               </NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks
-                to="목표설정"
-                smooth={true}
+              <NavRouterLink
+                to="/goal"
                 duration={500}
-                spy={true}
                 exact="true"
                 offset={-80}
               >
-                목표설정
-              </NavLinks>
+                목표 설정
+              </NavRouterLink>
             </NavItem>
             <NavItem>
               <NavLinks
@@ -95,8 +102,10 @@ const Navbar = ({ toggle, isLogin }) => {
             </NavItem>
           </NavMenu>
           <NavBtn>
-            {isLogin ? (
-              <NavBtnLink to="/signin">로그아웃</NavBtnLink>
+            {isLoggendIn ? (
+              <NavBtnLink to="/signin" onClick={logoutHandler}>
+                로그아웃
+              </NavBtnLink>
             ) : (
               <NavBtnLink to="/signin">로그인</NavBtnLink>
             )}

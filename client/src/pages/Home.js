@@ -7,7 +7,6 @@ import Info from '../components/Info/index';
 import { homeObjOne, homeObjThree, homeObjTwo } from '../components/Info/Data';
 // import Services from "../components/Services";
 import Footer from '../components/Footer';
-import isLogin from '../components/utils/isLogin';
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,8 +17,8 @@ const Home = () => {
 
   return (
     <>
-      <Sidebar isOpen={isOpen} toggle={toggle} isLogin={isLogin()} />
-      <Navbar toggle={toggle} isLogin={isLogin()} />
+      <Sidebar isOpen={isOpen} toggle={toggle} />
+      <Navbar toggle={toggle} />
       <Hero />
       <Info {...homeObjOne} />
       <Info {...homeObjTwo} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import axios from 'axios';
@@ -14,8 +14,10 @@ import {
   LogoIcon,
 } from './SignInElements.js';
 import logo from '../../images/logo.png';
+import AuthContext from '../../store/auth-context.js';
 
 const SignIn = (props) => {
+  const authCtx = useContext(AuthContext);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -29,9 +31,9 @@ const SignIn = (props) => {
     axios
       .post('http://localhost:5000/users/login', body)
       .then((response) => {
-        console.log(response);
         if (response.data.success) {
-          localStorage.setItem('token', response.data.data.token);
+          authCtx.login(response.data.data.token);
+          // localStorage.setItem('token', response.data.data.token);
           props.history.push('/');
         }
       })

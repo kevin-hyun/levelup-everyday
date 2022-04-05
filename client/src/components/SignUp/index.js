@@ -40,6 +40,7 @@ const SignUp = (props) => {
       .post('http://localhost:5000/users/register', body)
       .then((response) => {
         if (response.data.success) {
+          alert('가입 완료!');
           props.history.push('/signin');
         }
       })
