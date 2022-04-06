@@ -61,13 +61,9 @@ const Goal = (props) => {
     if (checked) {
       setCheckedItem([...checkedItem, id]);
       setCompletedGoal([...completedGoal, id]);
-      console.log('체크 반영');
-      console.log(completedGoal);
     } else {
       setCheckedItem(checkedItem.filter((item) => item !== id));
       setCompletedGoal(completedGoal.filter((goal) => goal !== id));
-      console.log('체크 해제');
-      console.log(completedGoal);
     }
   };
 
@@ -106,6 +102,7 @@ const Goal = (props) => {
         if (response.data.success) {
           alert('목표 점수 생성! ');
         }
+        //나중에 점수 화면 완성되면 그리로 리다이렉트
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
@@ -116,7 +113,7 @@ const Goal = (props) => {
   return (
     <GoalContainer>
       <GoalContent>
-        <GoalCreateBtn to="/goal/create">목표 설정하기</GoalCreateBtn>
+        <GoalCreateBtn to="/goal/create">목표 설정/변경</GoalCreateBtn>
         {isEmpty ? (
           <GoalShow>
             <NoGoalImg src={emptyGoal} />

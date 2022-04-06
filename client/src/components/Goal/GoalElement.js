@@ -8,8 +8,6 @@ export const GoalContainer = styled('div')`
   align-items: center;
   padding: 0 30px;
   margin-top: 80px;
-
-  /* height: 1000px; */
   position: relative;
   z-index: 1;
 
@@ -42,6 +40,7 @@ export const GoalCreateBtn = styled(LinkRouter)`
   border-radius: 50px;
   background: #ffff80;
   white-space: nowrap;
+
   padding: 16px 30px;
   color: #010606;
   font-size: 16px;
@@ -93,27 +92,6 @@ export const NoGoalText = styled('h3')`
     font-size: 16px;
   }
 `;
-export const GoalSubmitBtn = styled('button')`
-  border-radius: 50px;
-  background: #ffff80;
-  white-space: nowrap;
-  padding: 16px 30px;
-  color: #010606;
-  font-size: 16px;
-  font-weight: 700;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  margin-top: 30px;
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
-  }
-`;
 
 export const GoalCategoryImg = styled('img')`
   width: 500px;
@@ -148,56 +126,6 @@ export const GoalCreateText = styled('span')`
   }
 `;
 
-export const GoalCreateForm = styled('form')`
-  width: 70%;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-export const FormInput = styled.input`
-  width: 60%;
-  padding: 16px 16px;
-  margin: 20px;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-
-  @media screen and (max-width: 400px) {
-    width: 100px;
-    margin: 10px 5px;
-    margin-bottom: 16px;
-  }
-`;
-
-export const FormSelect = styled('select')`
-  border-radius: 5px;
-  border: none;
-  height: 45px;
-  width: 110px;
-  font-weight: 700;
-  font-size: 13px;
-  text-align: center;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-`;
-
-export const FormButton = styled.button`
-  background: #ffff80;
-  height: 45px;
-  width: 15%;
-  margin: 10px 30px;
-  padding: 5px;
-  border: none;
-  border-radius: 10px;
-  color: black;
-  font-size: 16px;
-  font-weight: 550;
-  cursor: pointer;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-`;
-
 export const GoalForm = styled.form``;
 export const GoalWrapper = styled.div`
   display: flex;
@@ -219,4 +147,27 @@ export const CheckboxAll = styled.input``;
 export const Checkbox = styled.input`
   vertical-align: top;
   margin: 10px;
+`;
+
+export const GoalSubmitBtn = styled('button')`
+  border-radius: 50px;
+  background: #ffff80;
+  white-space: nowrap;
+  padding: 16px 30px;
+  color: #010606;
+  font-size: 16px;
+  font-weight: 700;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  margin-top: 30px;
+  margin-left: 40px;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #010606;
+  }
 `;

@@ -1,14 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   GoalContainer,
   GoalContent,
-  GoalCreateBtn,
-  GoalShow,
-  GoalSubmitBtn,
-  NoGoalImg,
-  NoGoalText,
   GoalCategoryImg,
   GoalCreateText,
   GoalCreateH1,
@@ -24,24 +19,34 @@ import AuthContext from '../../store/auth-context';
 const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
-  const categoryArray = [
-    { key: 0, category: '건강' },
-    { key: 1, category: '경제관리' },
-    { key: 2, category: '커리어' },
-    { key: 3, category: '어학' },
-    { key: 4, category: '습관 가지기' },
-    { key: 5, category: '취미생활' },
-  ];
-  const categoryElements = categoryArray.map((category) => {
+  const [goal, setGoal] = useState('');
+  const [category, setCategory] = useState([]);
+
+  const getCategory = () => {
+    axios
+      .get('http://localhost:5000/category/default')
+      .then((response) => {
+        if (response.data.success) {
+          setCategory(response.data.data);
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        console.log(err.message);
+      });
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, [category]);
+
+  const categoryElements = category.map((category) => {
     return (
-      <option key={category.key} value={category.category}>
-        {category.category}
+      <option key={category._id} value={category.name}>
+        {category.name}
       </option>
     );
   });
-
-  const [goal, setGoal] = useState('');
-  const [category, setCategory] = useState({});
 
   const onSubmitHandler = (event) => {
     // 자동 새로고침 방지
@@ -77,10 +82,6 @@ const CreateIndex = () => {
         <GoalCreateH1>목표 설정 </GoalCreateH1>
         <GoalCategoryImg src={categoryImg} />
         <GoalCreateText>6개의 카테고리가 있어요.</GoalCreateText>
-        {/* <GoalCreateBtn>목표 설정하기</GoalCreateBtn> */}
-        {/* <GoalShow isEmpty={true}>text</GoalShow> */}
-        {/* <GoalSubmitBtn>하루 목표 완료!</GoalSubmitBtn> */}
-
         <GoalCreateForm>
           <FormInput
             type="text"
@@ -102,12 +103,6 @@ const CreateIndex = () => {
             레벨업
           </FormButton>
         </GoalCreateForm>
-        <GoalShow>
-          <NoGoalText>
-            현재 설정된 목표가 없어요! <br />
-            목표를 설정해주세요.
-          </NoGoalText>
-        </GoalShow>
       </GoalContent>
     </GoalContainer>
   );
