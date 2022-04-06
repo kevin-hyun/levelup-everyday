@@ -32,7 +32,7 @@ const Goal = (props) => {
       setIsEmpty(false);
     }
     return () => {};
-  }, [goals]);
+  }, []);
 
   const getAllGoals = () => {
     // event.preventDefault();

@@ -38,7 +38,7 @@ const CreateIndex = () => {
 
   useEffect(() => {
     getCategory();
-  }, [category]);
+  }, []);
 
   const categoryElements = category.map((category) => {
     return (

@@ -11,7 +11,7 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import GoalPage from './pages/GoalPage';
 import GoalCreatePage from './pages/GoalCreatePage';
-
+import ScoreMainPage from './pages/ScoreMainPage';
 import AuthContext from './store/auth-context';
 
 function App() {
@@ -33,6 +33,9 @@ function App() {
 
         {authCtx.isLoggendIn && (
           <Route path="/goal/create" component={GoalCreatePage} exact />
+        )}
+        {authCtx.isLoggendIn && (
+          <Route path="/score/main" component={ScoreMainPage} exact />
         )}
 
         <Route path="*">
