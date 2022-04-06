@@ -37,7 +37,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@CurrentUser() user: User) {
+  getCurrentUser(@CurrentUser() user: User) {
     return user.readOnlyData;
   }
 

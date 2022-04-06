@@ -86,6 +86,7 @@ export class User extends Document {
     name: string;
     role: number;
     imgUrl: string;
+    continuity: number;
   };
   readonly adminData: {
     id: string;
@@ -104,6 +105,7 @@ UserSchema.virtual('readOnlyData').get(function (this: User) {
     name: this.name,
     role: this.role,
     imgUrl: this.imgUrl,
+    continuity: this.continuity,
   };
 });
 
