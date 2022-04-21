@@ -20,14 +20,15 @@ const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
   const [goal, setGoal] = useState('');
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
 
   const getCategory = () => {
     axios
       .get('http://localhost:5000/category/default')
       .then((response) => {
         if (response.data.success) {
-          setCategory(response.data.data);
+          setCategoryList(response.data.data);
         }
       })
       .catch((err) => {
@@ -39,8 +40,9 @@ const CreateIndex = () => {
   useEffect(() => {
     getCategory();
   }, []);
+  console.log(categoryList);
 
-  const categoryElements = category.map((category) => {
+  const categoryElements = categoryList.map((category) => {
     return (
       <option key={category._id} value={category.name}>
         {category.name}
