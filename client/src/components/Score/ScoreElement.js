@@ -49,8 +49,33 @@ export const ScoreCircle = styled('div')`
     height: 150px;
   }
 `;
-export const ScoreContinuity = styled('div')``;
-export const ScoreCalc = styled('h1')``;
+export const ScoreContinuity = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 15px;
+`;
+export const ScoreText = styled('small')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  font-size: 12px;
+`;
+
+export const ScoreCalc = styled('h1')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 15px;
+`;
 export const ScoreGraphLink = styled(LinkRouter)`
   border-radius: 50px;
   background: #ffff80;
@@ -73,4 +98,3 @@ export const ScoreGraphLink = styled(LinkRouter)`
     color: #010606;
   }
 `;
-export const ScoreText = styled('small')``;
