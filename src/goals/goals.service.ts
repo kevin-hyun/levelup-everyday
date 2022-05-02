@@ -1,3 +1,4 @@
+import { GoalsUpdateDto } from './dto/goals.updatedto';
 import { CategoryRepository } from './../category/category.repository';
 import { GoalsCreateDto } from './dto/goals.createdto';
 import { User } from './../users/users.schema';
@@ -29,6 +30,19 @@ export class GoalsService {
     const userId = user._id;
     const result = this.goalsRepository.getAllGoals(userId);
     return result;
+  }
+
+  async updateGoal(user: User, id: string, data: GoalsUpdateDto) {
+    const categoryName = data.category;
+    const category = await this.categoryRepository.findCategoryByName(
+      categoryName,
+    );
+
+    const changedContents = {
+      category: category._id,
+      contents: data.contents,
+    };
+    return this.goalsRepository.updateGoal(id, changedContents);
   }
 
   async deleteGoal(user: User, id: string) {

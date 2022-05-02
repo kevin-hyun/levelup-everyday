@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -18,6 +19,7 @@ import { SuccessInterceptor } from '../common/interceptors/success.interceptor';
 import { HttpExceptionFilter } from '../common/exceptions/http-exception.filter';
 import { User } from '../users/users.schema';
 import { GoalsCreateDto } from './dto/goals.createdto';
+import { GoalsUpdateDto } from './dto/goals.updatedto';
 
 @UseInterceptors(SuccessInterceptor)
 @UseFilters(HttpExceptionFilter)
@@ -37,6 +39,17 @@ export class GoalsController {
   @Get()
   getAllGoal(@CurrentUser() user: User) {
     return this.goalsService.getAllGoals(user);
+  }
+
+  @ApiOperation({ summary: 'goal 수정하기' })
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  updateGoal(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Body() data: GoalsUpdateDto,
+  ) {
+    return this.goalsService.updateGoal(user, id, data);
   }
 
   @ApiOperation({ summary: 'goal 삭제하기' })

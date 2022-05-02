@@ -1,10 +1,11 @@
+import { GoalsUpdateDto } from './dto/goals.updatedto';
 import { User } from './../users/users.schema';
 import { Category } from './../category/category.schema';
 import { Goals } from './goals.schema';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { GoalsDBInsertDto } from './dto/goals.createdto';
+import { GoalsCreateDto, GoalsDBInsertDto } from './dto/goals.createdto';
 
 @Injectable()
 export class GoalsRepository {
@@ -14,6 +15,14 @@ export class GoalsRepository {
 
   async createGoal(goal: GoalsDBInsertDto) {
     return await this.goalsModel.create(goal);
+  }
+
+  async updateGoal(id: string, changedContents: GoalsUpdateDto) {
+    const goal = await this.getGoal(id);
+    goal.category = changedContents.category;
+    goal.contents = changedContents.contents;
+
+    return await goal.save();
   }
 
   async getAllGoals(userId: string | Types.ObjectId) {
