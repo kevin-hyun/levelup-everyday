@@ -26,17 +26,21 @@ const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink to="about" onClick={toggle}>
-            오늘도레벨업?
-          </SidebarLink>
+          {!isLoggendIn && (
+            <SidebarLink to="about" onClick={toggle}>
+              오늘도레벨업?
+            </SidebarLink>
+          )}
           <SidebarRouteNoBtn to="/goal"> 목표 설정 </SidebarRouteNoBtn>
 
-          <SidebarLink to="services" onClick={toggle}>
+          <SidebarLink to="/score/main" onClick={toggle}>
             성장곡선
           </SidebarLink>
-          <SidebarRouter to="/signup" onClick={toggle}>
-            회원가입
-          </SidebarRouter>
+          {!isLoggendIn && (
+            <SidebarRouter to="/signup" onClick={toggle}>
+              회원가입
+            </SidebarRouter>
+          )}
         </SidebarMenu>
         {isLoggendIn ? (
           <SideBtnWrap>

@@ -7,7 +7,8 @@ import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 
 const dateSeoul = moment().format('YYYY-MM-DD');
-const dayBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
+
+const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
 
 @Injectable()
 export class ScoreService {
@@ -18,14 +19,15 @@ export class ScoreService {
   ) {}
 
   async createScore(user: User, data: ScoreCreateDto) {
-    const comboWeight = 10;
+    const comboWeight = 3;
     let continuity = 0;
     const userId = user._id;
 
     const prevScore = await this.scoreRepository.getScoreLastData(userId);
+    console.log(prevScore);
 
     //previous data check
-    //기존 자료 없음
+
     if (prevScore.length === 0) {
       const user = await this.usersRepository.findUserAndUpdateContinuity(
         userId,
@@ -33,45 +35,50 @@ export class ScoreService {
       );
       continuity = user.continuity;
     } else {
+      //자료 있음
       //continuity check
-      const lastUpdatedDate = prevScore[0]['createdAt'];
-      //같은날짜 업데이트
-      if (lastUpdatedDate === dateSeoul) {
-      } else if (lastUpdatedDate !== dayBefore) {
-        // 하루이상 차이
-        const user = await this.usersRepository.findUserAndUpdateContinuity(
-          userId,
-          false,
-        );
-        continuity = user.continuity;
-      } else if (lastUpdatedDate === dayBefore) {
-        // 하루 차이 - 연속
-        const user = await this.usersRepository.findUserAndUpdateContinuity(
-          userId,
-          true,
-        );
-        continuity = user.continuity;
+      const lastUpdatedDate = prevScore[0]['updatedAt'].slice(0, 10);
+      //다른날짜 업데이트
+      if (lastUpdatedDate !== dateSeoul) {
+        if (lastUpdatedDate !== dateBefore) {
+          // 하루이상 차이
+          const user = await this.usersRepository.findUserAndUpdateContinuity(
+            userId,
+            false,
+          );
+          continuity = user.continuity;
+        } else {
+          // 하루 차이 - 연속
+          const user = await this.usersRepository.findUserAndUpdateContinuity(
+            userId,
+            true,
+          );
+          continuity = user.continuity;
+        }
       }
     }
 
     //data insert
+    let result = new Object();
 
     try {
       for (const el of data['goalsArray']) {
         const goal = await this.goalsRepository.getGoal(el);
         const goalId = goal['_id'];
+        console.log(continuity);
         const data = {
-          score: 100 + continuity * comboWeight,
+          score: 10 + continuity * comboWeight,
           author: userId,
           goal: goalId,
         };
-        await this.scoreRepository.InsertData(data);
+        result = await this.scoreRepository.InsertData(data);
       }
     } catch (err) {
       console.log(err);
     }
 
-    return 1;
+    return result;
+    // return 1;
   }
 
   async getAllScores(user: User) {

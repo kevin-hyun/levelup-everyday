@@ -7,8 +7,8 @@ export const ScoreContainer = styled('div')`
   justify-content: center;
   align-items: center;
   padding: 0 30px;
-  margin-top: 80px;
   position: relative;
+  height: 150vh;
   z-index: 1;
 
   @media screen and (max-width: 400px) {
@@ -39,7 +39,7 @@ export const ScoreCircle = styled('div')`
   width: 350px;
   height: 350px;
   margin: 32px;
-  background-color: #ffff80;
+  background-color: #8080ff;
   border-radius: 100%;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.3);
   border: none;
@@ -49,6 +49,10 @@ export const ScoreCircle = styled('div')`
     height: 150px;
   }
 `;
+
+export const ScoreWrapper = styled('div')`
+  margin-top: 70px;
+`;
 export const ScoreContinuity = styled('div')`
   display: flex;
   justify-content: center;
@@ -56,7 +60,8 @@ export const ScoreContinuity = styled('div')`
   position: relative;
   padding: 10px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 40px;
+  color: #ffff80;
 `;
 export const ScoreText = styled('small')`
   display: flex;
@@ -64,7 +69,8 @@ export const ScoreText = styled('small')`
   align-items: center;
   position: relative;
   padding: 10px;
-  font-size: 12px;
+  font-size: 25px;
+  color: #fff;
 `;
 
 export const ScoreCalc = styled('h1')`
@@ -74,9 +80,10 @@ export const ScoreCalc = styled('h1')`
   position: relative;
   padding: 10px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 30px;
+  color: #ffff80;
 `;
-export const ScoreGraphLink = styled(LinkRouter)`
+export const GraphButton = styled('button')`
   border-radius: 50px;
   background: #ffff80;
   white-space: nowrap;
@@ -89,12 +96,16 @@ export const ScoreGraphLink = styled(LinkRouter)`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  margin-top: 30px;
-  margin-left: 40px;
+  margin: 30px;
 
   &:hover {
     transition: all 0.2s ease-in-out;
     background: #fff;
     color: #010606;
   }
+`;
+
+export const GraphContainer = styled('div')`
+  padding: 30px;
+  margin: 30px;
 `;

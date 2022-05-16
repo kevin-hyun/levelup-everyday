@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions, Types } from 'mongoose';
 import * as moment from 'moment';
-const dateSeoul = moment().format('YYYY-MM-DD');
+const dateSeoul = moment().format();
 
 const options: SchemaOptions = {
   timestamps: true,

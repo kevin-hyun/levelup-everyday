@@ -11,7 +11,6 @@ import {
   GoalForm,
   GoalList,
   GoalWrapper,
-  CheckboxAll,
   Checkbox,
 } from './GoalElement';
 
@@ -101,8 +100,8 @@ const Goal = (props) => {
       .then((response) => {
         if (response.data.success) {
           alert('목표 점수 생성! ');
+          props.history.push('/score/main');
         }
-        //나중에 점수 화면 완성되면 그리로 리다이렉트
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);

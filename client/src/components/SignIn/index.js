@@ -34,7 +34,7 @@ const SignIn = (props) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);
           // localStorage.setItem('token', response.data.data.token);
-          props.history.push('/');
+          props.history.push('/score/main');
         }
       })
       .catch((err) => {

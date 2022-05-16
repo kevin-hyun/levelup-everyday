@@ -7,9 +7,9 @@ export const GoalContainer = styled('div')`
   justify-content: center;
   align-items: center;
   padding: 0 30px;
-  margin-top: 80px;
   position: relative;
   z-index: 1;
+  height: 1000px;
 
   @media screen and (max-width: 400px) {
     padding: 10px 24px;
@@ -17,8 +17,9 @@ export const GoalContainer = styled('div')`
 `;
 
 export const GoalContent = styled('div')`
-  margin-top: 90px;
-  width: 70%;
+  /* margin-top: 90px; */
+  height: 80vh;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +41,7 @@ export const GoalCreateBtn = styled(LinkRouter)`
   border-radius: 50px;
   background: #ffff80;
   white-space: nowrap;
-
+  margin-top: 30px;
   padding: 16px 30px;
   color: #010606;
   font-size: 16px;
@@ -130,23 +131,25 @@ export const GoalForm = styled.form``;
 export const GoalWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin: 10px;
   border: none;
   border-radius: 10px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-  padding: 3px;
+  padding: 10px;
   background-color: #8080ff;
   color: #fff;
+  width: 100%;
 `;
 export const GoalList = styled.li`
   list-style-type: none;
   margin: 0;
   padding: 0;
 `;
-export const CheckboxAll = styled.input``;
+
 export const Checkbox = styled.input`
-  vertical-align: top;
   margin: 10px;
+  border-radius: 20px;
 `;
 
 export const GoalSubmitBtn = styled('button')`
