@@ -100,7 +100,8 @@ const Goal = (props) => {
       .then((response) => {
         if (response.data.success) {
           alert('목표 점수 생성! ');
-          props.history.push('/score/main');
+          window.location = '/score/main';
+          // props.history.push('/score/main');
         }
       })
       .catch((err) => {

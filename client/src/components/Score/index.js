@@ -38,21 +38,14 @@ const Score = (props) => {
   const [continuity, setContinuity] = useState(0);
 
   useLayoutEffect(() => {
-    let x = am4core.create('chartdiv', am4charts.XYChart);
+    let chart = am4core.create('chartdiv', am4charts.XYChart);
+    // Increase contrast by taking evey second color
+    chart.colors.step = 2;
 
-    x.paddingRight = 20;
+    chart.paddingRight = 20;
+    chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
     let data = [];
-
-    // for (let i = 0; i < 10; i++) {
-    //   // visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-    //   visits += i;
-    //   data.push({
-    //     date: new Date(`2018-10-${i}`),
-    //     name: 'name' + i,
-    //     value: visits,
-    //   });
-    // }
 
     for (let i = 0; i < dates.length; i++) {
       data.push({
@@ -62,33 +55,33 @@ const Score = (props) => {
       });
     }
 
-    x.data = data;
+    chart.data = data;
 
-    let dateAxis = x.xAxes.push(new am4charts.DateAxis());
-    dateAxis.dateFormatter = new am4core.DateFormatter();
-    dateAxis.dateFormatter.dateFormat = 'MM-dd';
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    // dateAxis.dateFormatter = new am4core.DateFormatter();
+    // dateAxis.dateFormatter.dateFormat = 'mm-dd';
     dateAxis.renderer.grid.template.location = 0;
     dateAxis.title.text = '날짜';
 
-    let valueAxis = x.yAxes.push(new am4charts.ValueAxis());
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = false;
     valueAxis.renderer.minWidth = 35;
 
-    let series = x.series.push(new am4charts.LineSeries());
+    let series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.dateX = 'date';
     series.dataFields.valueY = 'value';
     series.tooltipText = '{valueY.value}';
-    x.cursor = new am4charts.XYCursor();
+    chart.cursor = new am4charts.XYCursor();
 
     // * 위쪽에 보이는 전체 그래프
     let scrollbarX = new am4charts.XYChartScrollbar();
     scrollbarX.series.push(series);
-    x.scrollbarX = scrollbarX;
+    chart.scrollbarX = scrollbarX;
 
-    chart.current = x;
+    chart.current = chart;
 
     return () => {
-      x.dispose();
+      chart.dispose();
     };
   }, [dates]);
 
@@ -175,7 +168,7 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          <div id="chartdiv" style={{ width: '700px', height: '500px' }}></div>
+          <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div>
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>

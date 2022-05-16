@@ -40,7 +40,6 @@ const CreateIndex = () => {
   useEffect(() => {
     getCategory();
   }, []);
-  console.log(categoryList);
 
   const categoryElements = categoryList.map((category) => {
     return (
