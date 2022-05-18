@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 
 const dateSeoul = moment().format('YYYY-MM-DD');
-
+const timeSeoul = moment().format();
 const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
 
 @Injectable()
@@ -23,8 +23,7 @@ export class ScoreService {
     let continuity = 0;
     const userId = user._id;
 
-    const prevScore = await this.scoreRepository.getScoreLastData(userId);
-    console.log(prevScore);
+    const prevScore = await this.scoreRepository.getScoreData(userId);
 
     //previous data check
 
@@ -37,7 +36,10 @@ export class ScoreService {
     } else {
       //자료 있음
       //continuity check
-      const lastUpdatedDate = prevScore[0]['updatedAt'].slice(0, 10);
+      const lastUpdatedDate = prevScore[prevScore.length - 1][
+        'updatedAt'
+      ].slice(0, 10);
+
       //다른날짜 업데이트
       if (lastUpdatedDate !== dateSeoul) {
         if (lastUpdatedDate !== dateBefore) {
@@ -70,6 +72,8 @@ export class ScoreService {
           score: 10 + continuity * comboWeight,
           author: userId,
           goal: goalId,
+          updatedAt: moment().format(),
+          createdAt: moment().format(),
         };
         result = await this.scoreRepository.InsertData(data);
       }
@@ -93,7 +97,7 @@ export class ScoreService {
       startDate,
       endDate,
     };
-    console.log(data);
+
     return this.scoreRepository.getScoreBetweenDate(data);
   }
 }

@@ -24,11 +24,9 @@ export class ScoreRepository {
       },
     });
   }
-  async getScoreLastData(userId: Types.ObjectId) {
+  async getScoreData(userId: Types.ObjectId) {
     try {
-      const result = await this.scoreModel
-        .find({ author: userId })
-        .sort({ dateCreated: -1 });
+      const result = await this.scoreModel.find({ author: userId });
       return result;
     } catch (err) {
       console.log(err);
