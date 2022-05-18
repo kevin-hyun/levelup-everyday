@@ -68,7 +68,7 @@ const CreateIndex = () => {
       .then((response) => {
         if (response.data.success) {
           alert('목표 생성 완료!');
-          history.replace('/goal/create');
+          window.location('goal');
         }
       })
       .catch((err) => {

@@ -109,7 +109,7 @@ export const GoalCreateForm = styled('form')`
   width: 70%;
   margin-top: 30px;
   margin-bottom: 30px;
-  margin-left: -90px;
+  margin-left: -30px;
   display: flex;
   flex-direction: row;
   align-items: center;

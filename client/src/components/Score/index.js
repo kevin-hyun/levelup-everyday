@@ -36,6 +36,7 @@ const Score = (props) => {
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
+  const [chartType, setChartType] = useState('line');
 
   useLayoutEffect(() => {
     let chart = am4core.create('chartdiv', am4charts.XYChart);
@@ -45,38 +46,91 @@ const Score = (props) => {
     chart.paddingRight = 20;
     chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
-    let data = [];
+    let data = [
+      {
+        date: '2022-05-11',
+        '아주아주 긴 텍스트1': 10,
+        obj2: 0,
+        obj3: 13,
+        accum: 23,
+      },
+      {
+        date: '2022-05-12',
+        '아주아주 긴 텍스트1': 0,
+        obj2: 10,
+        obj3: 13,
+        accum: 46,
+      },
+      {
+        date: '2022-05-13',
+        '아주아주 긴 텍스트1': 0,
+        obj2: 0,
+        obj3: 0,
+        accum: 46,
+      },
+      {
+        date: '2022-05-14',
+        '아주아주 긴 텍스트1': 0,
+        obj2: 10,
+        obj3: 13,
+        accum: 69,
+      },
+    ];
 
-    for (let i = 0; i < dates.length; i++) {
-      data.push({
-        date: dates[i],
-        name: 'name' + i,
-        value: scoreAccum[i],
-      });
-    }
+    // for (let i = 0; i < obj.length; i++) {
+    //   data.push({
+    //     date: obj[i]['date'],
+    //     name: 'name' + i,
+    //     value: obj[i]['obj2'],
+    //   });
+    // }
 
     chart.data = data;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    // dateAxis.dateFormatter = new am4core.DateFormatter();
-    // dateAxis.dateFormatter.dateFormat = 'mm-dd';
     dateAxis.renderer.grid.template.location = 0;
-    dateAxis.title.text = '날짜';
+    // dateAxis.title.text = '날짜';
 
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = false;
     valueAxis.renderer.minWidth = 35;
 
-    let series = chart.series.push(new am4charts.LineSeries());
-    series.dataFields.dateX = 'date';
-    series.dataFields.valueY = 'value';
-    series.tooltipText = '{valueY.value}';
+    // Create series
+    function createSeries(field, name) {
+      var series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.valueY = field;
+      series.dataFields.dateX = 'date';
+      series.name = name;
+      series.tooltipText = '{name}: [b]{valueY}[/]';
+      series.strokeWidth = 2;
+
+      series.smoothing = 'monotoneX';
+
+      var bullet = series.bullets.push(new am4charts.CircleBullet());
+      bullet.circle.stroke = am4core.color('#fff');
+      bullet.circle.strokeWidth = 2;
+
+      return series;
+    }
+
+    createSeries('아주아주 긴 텍스트1', '아주아주 긴 텍스트1');
+    createSeries('obj2', 'Obj2');
+    createSeries('obj3', 'Obj3');
+    createSeries('accum', '누적점수');
+
+    chart.legend = new am4charts.Legend();
     chart.cursor = new am4charts.XYCursor();
 
+    // let series = chart.series.push(new am4charts.LineSeries());
+    // series.dataFields.dateX = 'date';
+    // series.dataFields.valueY = 'value';
+    // series.tooltipText = '{valueY.value}';
+    // chart.cursor = new am4charts.XYCursor();
+
     // * 위쪽에 보이는 전체 그래프
-    let scrollbarX = new am4charts.XYChartScrollbar();
-    scrollbarX.series.push(series);
-    chart.scrollbarX = scrollbarX;
+    // let scrollbarX = new am4charts.XYChartScrollbar();
+    // scrollbarX.series.push(series);
+    // chart.scrollbarX = scrollbarX;
 
     chart.current = chart;
 
@@ -84,6 +138,62 @@ const Score = (props) => {
       chart.dispose();
     };
   }, [dates]);
+
+  // //PieChaet
+  // useLayoutEffect(() => {
+  //   let chart = am4core.create('piediv', am4charts.PieChart);
+  //   // Increase contrast by taking evey second color
+  //   //state로 점수/ 횟수 변환
+
+  //   // Add data
+  //   chart.data = [
+  //     {
+  //       country: 'Lithuania',
+  //       litres: 501.9,
+  //     },
+  //     {
+  //       country: 'Czech Republic',
+  //       litres: 301.9,
+  //     },
+  //     {
+  //       country: 'Ireland',
+  //       litres: 201.1,
+  //     },
+  //     {
+  //       country: 'Germany',
+  //       litres: 165.8,
+  //     },
+  //     {
+  //       country: 'Australia',
+  //       litres: 139.9,
+  //     },
+  //     {
+  //       country: 'Austria',
+  //       litres: 128.3,
+  //     },
+  //     {
+  //       country: 'UK',
+  //       litres: 99,
+  //     },
+  //     {
+  //       country: 'Belgium',
+  //       litres: 60,
+  //     },
+  //     {
+  //       country: 'The Netherlands',
+  //       litres: 50,
+  //     },
+  //   ];
+
+  //   // Add and configure Series
+  //   let pieSeries = chart.series.push(new am4charts.PieSeries());
+  //   pieSeries.dataFields.value = 'litres';
+  //   pieSeries.dataFields.category = 'country';
+
+  //   return () => {
+  //     chart.dispose();
+  //   };
+  // }, [dates]);
 
   useEffect(() => {
     getAllScore();
@@ -153,6 +263,7 @@ const Score = (props) => {
   };
   console.log(scoreAccum);
   console.log(dates);
+  console.log(score);
 
   return (
     <ScoreContainer>
@@ -169,6 +280,7 @@ const Score = (props) => {
         </ScoreCircle>
         <GraphContainer>
           <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div>
+          {/* <div id="piediv" style={{ width: '800px', height: '500px' }}></div> */}
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>
