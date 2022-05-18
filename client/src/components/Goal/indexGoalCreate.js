@@ -15,10 +15,11 @@ import {
 import categoryImg from '../../images/category.png';
 
 import AuthContext from '../../store/auth-context';
+import GoalContext from '../../store/goal-context';
 
 const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
-  const history = useHistory();
+  const goalCtx = useContext(GoalContext);
   const [goal, setGoal] = useState('');
   const [category, setCategory] = useState('');
   const [categoryList, setCategoryList] = useState([]);
@@ -36,6 +37,8 @@ const CreateIndex = () => {
         console.log(err.message);
       });
   };
+
+  console.log(goalCtx.goals);
 
   useEffect(() => {
     getCategory();

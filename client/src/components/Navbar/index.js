@@ -18,14 +18,17 @@ import {
 } from './NavbarElements';
 import logo from '../../images/logo.png';
 import AuthContext from '../../store/auth-context';
+import GoalContext from '../../store/goal-context';
 
 const Navbar = ({ toggle }) => {
   const authCtx = useContext(AuthContext);
+  const goalCtx = useContext(GoalContext);
   const [scrollNav, setScrollNav] = useState(false);
 
   const isLoggendIn = authCtx.isLoggendIn;
   const logoutHandler = () => {
     authCtx.logout();
+    goalCtx.reset();
   };
 
   const changeNav = () => {

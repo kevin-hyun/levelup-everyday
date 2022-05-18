@@ -18,41 +18,22 @@ import emptyGoal from '../../images/empty_goal.svg';
 
 import axios from 'axios';
 import AuthContext from '../../store/auth-context';
+import GoalContext from '../../store/goal-context';
 
 const Goal = (props) => {
   const [goals, setGoals] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
   const [completedGoal, setCompletedGoal] = useState([]);
   const authCtx = useContext(AuthContext);
+  const goalCtx = useContext(GoalContext);
 
   useEffect(() => {
-    getAllGoals();
-    if (!!goals) {
+    console.log(goalCtx.goals.length);
+    if (goalCtx.goals.length !== 0) {
       setIsEmpty(false);
     }
     return () => {};
   }, []);
-
-  const getAllGoals = () => {
-    // event.preventDefault();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authCtx.token}`,
-      },
-    };
-
-    axios
-      .get('http://localhost:5000/goals', config)
-      .then((response) => {
-        if (response.data.success) {
-          setGoals(response.data.data);
-        }
-      })
-      .catch((err) => {
-        const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
-      });
-  };
 
   const [checkedItem, setCheckedItem] = useState([]);
 
@@ -66,7 +47,7 @@ const Goal = (props) => {
     }
   };
 
-  const goalList = goals.map((goal) => {
+  const goalList = goalCtx.goals.map((goal) => {
     return (
       <GoalWrapper key={goal._id}>
         <GoalList>{goal.contents}</GoalList>
@@ -101,7 +82,6 @@ const Goal = (props) => {
         if (response.data.success) {
           alert('목표 점수 생성! ');
           window.location = '/score/main';
-          // props.history.push('/score/main');
         }
       })
       .catch((err) => {
@@ -109,6 +89,9 @@ const Goal = (props) => {
         console.log(err.message);
       });
   };
+
+  console.log(goalCtx.goals);
+  console.log(isEmpty);
 
   return (
     <GoalContainer>

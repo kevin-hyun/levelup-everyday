@@ -4,11 +4,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './store/auth-context';
+import { GoalContextProvider } from './store/goal-context';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+      <GoalContextProvider>
+        <App />
+      </GoalContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root'),
