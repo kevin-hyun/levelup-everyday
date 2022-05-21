@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link as LinkRouter } from 'react-router-dom';
 
+import { GoalList, GoalWrapper, Checkbox } from './GoalElement';
 export const GoalContainer = styled('div')`
   background: #8080ff;
   display: flex;
@@ -8,7 +9,7 @@ export const GoalContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   padding: 0 30px;
-  height: 1000px;
+  height: auto;
   position: relative;
   z-index: 1;
 
@@ -191,5 +192,47 @@ export const NoGoalText = styled('h3')`
   @media screen and (max-width: 400px) {
     width: 80%;
     font-size: 16px;
+  }
+`;
+
+export const GoalListContainer = styled('div')`
+  margin-bottom: 50px;
+`;
+
+export const ChangeBtn = styled.button`
+  background: #ffff80;
+  height: 30px;
+  width: 45px;
+  margin-left: auto;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    margin-left: 5px;
+
+    font-size: 13px;
+  }
+`;
+
+export const GoalListWrapper = styled(GoalWrapper)`
+  margin-left: 30px;
+  padding: 20px;
+  width: 100%;
+  background-color: ${(props) => props.color};
+`;
+
+export const Iconwrapper = styled('div')`
+  display: flex;
+  flex-direction: rows;
+  margin-left: auto;
+
+  .button {
+    margin: 10px;
+    padding: 10px;
   }
 `;

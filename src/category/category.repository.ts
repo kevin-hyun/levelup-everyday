@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../users/users.schema';
 import { InjectModel } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class CategoryRepository {
@@ -11,8 +12,8 @@ export class CategoryRepository {
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}
 
-  async findCategoryByName(categoryName: string | Types.ObjectId) {
-    const result = await this.categoryModel.findOne({ name: categoryName });
+  async findCategoryById(categoryId: string | Types.ObjectId) {
+    const result = await this.categoryModel.findById({ _id: categoryId });
     if (!result) {
       throw new UnauthorizedException('해당하는 카테고리가 없습니다.');
     }

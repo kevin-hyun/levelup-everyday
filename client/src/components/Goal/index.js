@@ -23,19 +23,17 @@ import GoalContext from '../../store/goal-context';
 const Goal = (props) => {
   const [goals, setGoals] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [checkedItem, setCheckedItem] = useState([]);
   const [completedGoal, setCompletedGoal] = useState([]);
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
 
   useEffect(() => {
-    console.log(goalCtx.goals.length);
     if (goalCtx.goals.length !== 0) {
       setIsEmpty(false);
     }
     return () => {};
   }, []);
-
-  const [checkedItem, setCheckedItem] = useState([]);
 
   const changeHandler = (checked, id) => {
     if (checked) {
@@ -90,9 +88,6 @@ const Goal = (props) => {
       });
   };
 
-  console.log(goalCtx.goals);
-  console.log(isEmpty);
-
   return (
     <GoalContainer>
       <GoalContent>
@@ -111,8 +106,6 @@ const Goal = (props) => {
             <GoalSubmitBtn onClick={submitGoals}>하루 끝!</GoalSubmitBtn>
           </GoalForm>
         )}
-
-        {/* {goal && <GoalSubmitBtn>하루 목표 완료!</GoalSubmitBtn>} */}
       </GoalContent>
     </GoalContainer>
   );

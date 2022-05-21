@@ -13,7 +13,7 @@ export class GoalsService {
   ) {}
   async createGoal(user: User, data: GoalsCreateDto) {
     const categoryName = data.category;
-    const category = await this.categoryRepository.findCategoryByName(
+    const category = await this.categoryRepository.findCategoryById(
       categoryName,
     );
 
@@ -34,13 +34,15 @@ export class GoalsService {
 
   async updateGoal(user: User, id: string, data: GoalsUpdateDto) {
     const categoryName = data.category;
-    const category = await this.categoryRepository.findCategoryByName(
+    const softDelete = data.softDelete;
+    const category = await this.categoryRepository.findCategoryById(
       categoryName,
     );
 
     const changedContents = {
       category: category._id,
       contents: data.contents,
+      softDelete,
     };
     return this.goalsRepository.updateGoal(id, changedContents);
   }

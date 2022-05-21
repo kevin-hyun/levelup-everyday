@@ -166,7 +166,7 @@ export const GoalSubmitBtn = styled('button')`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   margin-top: 30px;
-  margin-left: 40px;
+  margin-left: 60px;
 
   &:hover {
     transition: all 0.2s ease-in-out;

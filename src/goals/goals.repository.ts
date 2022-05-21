@@ -21,6 +21,7 @@ export class GoalsRepository {
     const goal = await this.getGoal(id);
     goal.category = changedContents.category;
     goal.contents = changedContents.contents;
+    goal.softDelete = changedContents.softDelete;
 
     return await goal.save();
   }
@@ -35,7 +36,7 @@ export class GoalsRepository {
   }
 
   async deleteGoal(user: User, id: string | Types.ObjectId) {
-    const goal = await this.goalsModel.findById(id);
+    const goal = await this.goalsModel.findById({ _id: id });
     if (user.role === 0) {
       if (goal.author !== user._id.toString()) {
         throw new UnauthorizedException('삭제 권한이 없습니다.');

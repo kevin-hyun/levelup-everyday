@@ -4,4 +4,5 @@ import { PickType } from '@nestjs/swagger';
 export class GoalsUpdateDto extends PickType(Goals, [
   'category',
   'contents',
+  'softDelete',
 ] as const) {}
