@@ -49,9 +49,16 @@ export class ScoreController {
     return this.scoreService.getAllScores(user);
   }
 
-  @ApiOperation({ summary: 'score 필터링' })
+  @ApiOperation({ summary: '그래프 그리기 위한 score자료 조회' })
   @UseGuards(JwtAuthGuard)
   @Get('graph')
+  getGraphScore(@CurrentUser() user: User) {
+    return this.scoreService.getGraphScore(user);
+  }
+
+  @ApiOperation({ summary: 'score 필터링' })
+  @UseGuards(JwtAuthGuard)
+  @Get('graph1')
   getScoreByQuery(
     @CurrentUser() user: User,
     @Query('startDate') startDate: string,

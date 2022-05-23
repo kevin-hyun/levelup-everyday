@@ -6,6 +6,7 @@ import { ScoreRepository } from './score.repository';
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class ScoreService {
@@ -43,6 +44,7 @@ export class ScoreService {
     return insertData;
   }
 
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
   async createScoreScheduled(user: User) {
     const userId = user._id;
     const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
@@ -131,6 +133,12 @@ export class ScoreService {
   async getAllScores(user: User) {
     const userId = user._id;
     return await this.scoreRepository.getAllScore(userId);
+  }
+
+  async getGraphScore(user: User) {
+    const userId = user._id;
+    const scores = await this.scoreRepository.getAllScore(userId);
+    return scores;
   }
 
   async getScoreByQuery(user: User, startDate: string, endDate: string) {

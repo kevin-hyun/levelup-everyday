@@ -1,3 +1,4 @@
+import { ScheduleModule } from '@nestjs/schedule';
 import { ScoreModule } from './score/score.module';
 import { GoalsModule } from './goals/goals.module';
 import { UsersModule } from './users/users.module';
@@ -18,6 +19,7 @@ import { CategoryModule } from './category/category.module';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
+    ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
     CategoryModule,

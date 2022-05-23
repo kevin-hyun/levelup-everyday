@@ -36,7 +36,6 @@ const Score = (props) => {
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
-  const [chartType, setChartType] = useState('line');
 
   useLayoutEffect(() => {
     let chart = am4core.create('chartdiv', am4charts.XYChart);
@@ -46,44 +45,43 @@ const Score = (props) => {
     chart.paddingRight = 20;
     chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
-    let data = [
-      {
-        date: '2022-05-11',
-        '아주아주 긴 텍스트1': 10,
-        obj2: 0,
-        obj3: 13,
-        accum: 23,
-      },
-      {
-        date: '2022-05-12',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 10,
-        obj3: 13,
-        accum: 46,
-      },
-      {
-        date: '2022-05-13',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 0,
-        obj3: 0,
-        accum: 46,
-      },
-      {
-        date: '2022-05-14',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 10,
-        obj3: 13,
-        accum: 69,
-      },
-    ];
+    // let data = [
+    //   {
+    //     date: '2022-05-11',
+    //     '아주아주 긴 텍스트1': 10,
+    //     obj2: 0,
+    //     obj3: 13,
+    //     accum: 23,
+    //   },
+    //   {
+    //     date: '2022-05-12',
+    //     '아주아주 긴 텍스트1': 0,
+    //     obj2: 10,
+    //     obj3: 13,
+    //     accum: 46,
+    //   },
+    //   {
+    //     date: '2022-05-13',
+    //     '아주아주 긴 텍스트1': 0,
+    //     obj2: 0,
+    //     obj3: 0,
+    //     accum: 46,
+    //   },
+    //   {
+    //     date: '2022-05-14',
+    //     '아주아주 긴 텍스트1': 0,
+    //     obj2: 10,
+    //     obj3: 13,
+    //     accum: 69,
+    //   },
+    // ];
 
-    // for (let i = 0; i < obj.length; i++) {
-    //   data.push({
-    //     date: obj[i]['date'],
-    //     name: 'name' + i,
-    //     value: obj[i]['obj2'],
-    //   });
-    // }
+    const data = score.map((score) => {
+      let obj = {
+        date: score.updatedAt,
+      };
+      return obj;
+    });
 
     chart.data = data;
 

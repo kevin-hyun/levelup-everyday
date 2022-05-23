@@ -145,6 +145,7 @@ export const GoalList = styled.li`
   list-style-type: none;
   margin: 0;
   padding: 0;
+  color: ${(props) => props.color};
 `;
 
 export const Checkbox = styled.input`

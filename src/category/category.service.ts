@@ -1,5 +1,5 @@
 import { CategoryCreateDto } from './dto/category.create.dto';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { User } from '../users/users.schema';
 import { CategoryRepository } from './category.repository';
 

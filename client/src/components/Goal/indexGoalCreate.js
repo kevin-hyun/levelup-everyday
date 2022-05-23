@@ -57,7 +57,7 @@ const CreateIndex = () => {
 
   const categoryElements = categoryList.map((category) => {
     return (
-      <option key={category._id} value={category.name}>
+      <option key={category._id} value={category._id}>
         {category.name}
       </option>
     );
@@ -103,7 +103,7 @@ const CreateIndex = () => {
     };
 
     let body = {
-      category,
+      category: category,
       contents: goal,
     };
 
@@ -112,7 +112,7 @@ const CreateIndex = () => {
       .then((response) => {
         if (response.data.success) {
           alert('목표 생성 완료!');
-          window.location = 'goal/create';
+          window.location = '/goal/create';
         }
       })
       .catch((err) => {
@@ -120,8 +120,6 @@ const CreateIndex = () => {
         console.log(err.message);
       });
   };
-
-  console.log(categoryList);
 
   const getName = (array, id) => {
     for (const element of array) {
@@ -139,22 +137,31 @@ const CreateIndex = () => {
   };
 
   const goalList = goalCtx.goals.map((goal) => {
-    const style = { color: '#fff', fontSize: '1.3em', margin: '5px' };
-    const style2 = { color: '#f84f31', fontSize: '1.3em', margin: '5px' };
-    console.log(getColor(categoryList, goal.category));
+    const categoryName = getName(categoryList, goal.category);
+    const black = ['어학', '습관 가지기', '취미생활'];
+    const color = black.includes(categoryName) ? '#000000e8' : '#fff';
+
+    const styleEditBtn = { color: color, fontSize: '1.3em', margin: '5px' };
+
+    const styleDeleteBtn = {
+      color: '#f84f31',
+      fontSize: '1.3em',
+      margin: '5px',
+    };
+
     return (
       <GoalListWrapper
         key={goal._id}
         color={getColor(categoryList, goal.category)}
       >
-        <GoalList>
-          {goal.contents} / {getName(categoryList, goal.category)}
+        <GoalList color={color}>
+          {goal.contents} / {categoryName}
         </GoalList>
 
         <Iconwrapper>
-          <AiFillEdit style={style} />
+          <AiFillEdit style={styleEditBtn} />
           <BsFillTrashFill
-            style={style2}
+            style={styleDeleteBtn}
             onClick={function () {
               deleteGoal(goal._id, goal.category, goal.contents);
             }}
