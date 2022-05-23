@@ -22,6 +22,9 @@ export class ScoreRepository {
         $gte: data.startDate,
         $lte: data.endDate,
       },
+      score: {
+        $gt: 0,
+      },
     });
   }
   async getScoreData(userId: Types.ObjectId) {
@@ -60,5 +63,8 @@ export class ScoreRepository {
 
   async InsertData(score: ScoreInsertDto) {
     return await this.scoreModel.create(score);
+  }
+  async InsertManyData(insertData: Array<any>) {
+    return await this.scoreModel.insertMany(insertData);
   }
 }

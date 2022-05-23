@@ -35,6 +35,13 @@ export class ScoreController {
     return this.scoreService.createScore(user, data);
   }
 
+  @ApiOperation({ summary: 'score 추가- 스케쥴' })
+  @UseGuards(JwtAuthGuard)
+  @Post('schedule')
+  createScoreScheduled(@CurrentUser() user: User) {
+    return this.scoreService.createScoreScheduled(user);
+  }
+
   @ApiOperation({ summary: 'score 모두 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()

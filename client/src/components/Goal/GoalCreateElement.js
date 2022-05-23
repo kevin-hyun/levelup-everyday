@@ -199,26 +199,6 @@ export const GoalListContainer = styled('div')`
   margin-bottom: 50px;
 `;
 
-export const ChangeBtn = styled.button`
-  background: #ffff80;
-  height: 30px;
-  width: 45px;
-  margin-left: auto;
-  padding: 5px;
-  border: none;
-  border-radius: 10px;
-  color: black;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-
-  @media screen and (max-width: 400px) {
-    margin-left: 5px;
-
-    font-size: 13px;
-  }
-`;
-
 export const GoalListWrapper = styled(GoalWrapper)`
   margin-left: 30px;
   padding: 20px;

@@ -105,14 +105,13 @@ const CreateIndex = () => {
     let body = {
       category,
       contents: goal,
-      softDelete: false,
     };
 
     axios
       .post('http://localhost:5000/goals', body, config)
       .then((response) => {
         if (response.data.success) {
-          alert('목표 생성/수정 완료!');
+          alert('목표 생성 완료!');
           window.location = 'goal/create';
         }
       })
