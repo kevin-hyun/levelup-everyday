@@ -47,38 +47,6 @@ const Score = (props) => {
     chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
     const data = graphData;
-    console.log(data);
-
-    // let data = [
-    //   {
-    //     date: '2022-05-11',
-    //     '아주아주 긴 텍스트1': 10,
-    //     obj2: 0,
-    //     obj3: 13,
-    //     accum: 23,
-    //   },
-    //   {
-    //     date: '2022-05-12',
-    //     '아주아주 긴 텍스트1': 0,
-    //     obj2: 10,
-    //     obj3: 13,
-    //     accum: 46,
-    //   },
-    //   {
-    //     date: '2022-05-13',
-    //     '아주아주 긴 텍스트1': 0,
-    //     obj2: 0,
-    //     obj3: 0,
-    //     accum: 46,
-    //   },
-    //   {
-    //     date: '2022-05-14',
-    //     '아주아주 긴 텍스트1': 0,
-    //     obj2: 10,
-    //     obj3: 13,
-    //     accum: 69,
-    //   },
-    // ];
 
     chart.data = data;
 
@@ -274,8 +242,6 @@ const Score = (props) => {
         console.log(err.message);
       });
   };
-  console.log(score);
-  console.log(scoreAccum);
 
   return (
     <ScoreContainer>
