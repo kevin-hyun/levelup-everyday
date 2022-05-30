@@ -33,6 +33,7 @@ const Score = (props) => {
   const authCtx = useContext(AuthContext);
   const [score, setScore] = useState([]);
   const [scoreTotal, setScoreTotal] = useState(0);
+  const [graphData, setGraphData] = useState([]);
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
@@ -44,6 +45,9 @@ const Score = (props) => {
 
     chart.paddingRight = 20;
     chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
+
+    const data = graphData;
+    console.log(data);
 
     // let data = [
     //   {
@@ -76,16 +80,10 @@ const Score = (props) => {
     //   },
     // ];
 
-    const data = score.map((score) => {
-      let obj = {
-        date: score.updatedAt,
-      };
-      return obj;
-    });
-
     chart.data = data;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.groupData = true;
     dateAxis.renderer.grid.template.location = 0;
     // dateAxis.title.text = '날짜';
 
@@ -102,40 +100,36 @@ const Score = (props) => {
       series.tooltipText = '{name}: [b]{valueY}[/]';
       series.strokeWidth = 2;
 
-      series.smoothing = 'monotoneX';
+      // series.smoothing = 'monotoneX';
 
       var bullet = series.bullets.push(new am4charts.CircleBullet());
       bullet.circle.stroke = am4core.color('#fff');
       bullet.circle.strokeWidth = 2;
 
+      // * 위쪽에 보이는 전체 그래프
+      let scrollbarX = new am4charts.XYChartScrollbar();
+      scrollbarX.series.push(series);
+      chart.scrollbarX = scrollbarX;
+
       return series;
     }
 
-    createSeries('아주아주 긴 텍스트1', '아주아주 긴 텍스트1');
-    createSeries('obj2', 'Obj2');
-    createSeries('obj3', 'Obj3');
-    createSeries('accum', '누적점수');
+    const lstData = graphData[graphData.length - 1];
+    const keyArr = Object.keys(lstData);
+
+    for (let i = 1; i < keyArr.length; i++) {
+      createSeries(keyArr[i], keyArr[i]);
+    }
 
     chart.legend = new am4charts.Legend();
     chart.cursor = new am4charts.XYCursor();
-
-    // let series = chart.series.push(new am4charts.LineSeries());
-    // series.dataFields.dateX = 'date';
-    // series.dataFields.valueY = 'value';
-    // series.tooltipText = '{valueY.value}';
-    // chart.cursor = new am4charts.XYCursor();
-
-    // * 위쪽에 보이는 전체 그래프
-    // let scrollbarX = new am4charts.XYChartScrollbar();
-    // scrollbarX.series.push(series);
-    // chart.scrollbarX = scrollbarX;
 
     chart.current = chart;
 
     return () => {
       chart.dispose();
     };
-  }, [dates]);
+  }, [graphData]);
 
   // //PieChaet
   // useLayoutEffect(() => {
@@ -195,6 +189,7 @@ const Score = (props) => {
 
   useEffect(() => {
     getAllScore();
+    getGraphData();
   }, []);
 
   useEffect(() => {
@@ -219,6 +214,26 @@ const Score = (props) => {
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        console.log(err.message);
+      });
+  };
+
+  const getGraphData = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authCtx.token}`,
+      },
+    };
+
+    await axios
+      .get('http://localhost:5000/score/graph', config)
+      .then((response) => {
+        if (response.data.success) {
+          setGraphData(response.data.data);
         }
       })
       .catch((err) => {
@@ -259,9 +274,8 @@ const Score = (props) => {
         console.log(err.message);
       });
   };
-  console.log(scoreAccum);
-  console.log(dates);
   console.log(score);
+  console.log(scoreAccum);
 
   return (
     <ScoreContainer>

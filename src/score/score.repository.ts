@@ -1,3 +1,4 @@
+import { Goals } from './../goals/goals.schema';
 import { Injectable, UnauthorizedException, Type } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -27,9 +28,12 @@ export class ScoreRepository {
       },
     });
   }
+
   async getScoreData(userId: Types.ObjectId) {
     try {
-      const result = await this.scoreModel.find({ author: userId });
+      const result = await this.scoreModel
+        .find({ author: userId })
+        .populate({ path: 'goal', model: Goals, select: 'contents' });
       return result;
     } catch (err) {
       console.log(err);

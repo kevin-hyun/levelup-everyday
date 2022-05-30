@@ -1,12 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import * as moment from 'moment';
+import mongoose from 'mongoose';
+import { Cron, CronExpression } from '@nestjs/schedule';
+
 import { UsersRepository } from './../users/users.repository';
 import { GoalsRepository } from './../goals/goals.repository';
 import { ScoreCreateDto } from './dto/score.create.dto';
 import { User } from './../users/users.schema';
 import { ScoreRepository } from './score.repository';
-import { Injectable } from '@nestjs/common';
-import * as moment from 'moment';
-import mongoose from 'mongoose';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { groupBy } from '../common/utils/groupby';
+import { resourceLimits } from 'worker_threads';
 
 @Injectable()
 export class ScoreService {
@@ -44,7 +47,6 @@ export class ScoreService {
     return insertData;
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
   async createScoreScheduled(user: User) {
     const userId = user._id;
     const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
@@ -132,13 +134,71 @@ export class ScoreService {
 
   async getAllScores(user: User) {
     const userId = user._id;
+    console.log(userId);
     return await this.scoreRepository.getAllScore(userId);
   }
 
   async getGraphScore(user: User) {
     const userId = user._id;
-    const scores = await this.scoreRepository.getAllScore(userId);
-    return scores;
+    const scores = await this.scoreRepository.getScoreData(userId);
+
+    const makeGraphData = (scoreData) => {
+      const data = scoreData.map((data) => {
+        const obj = {
+          date: data.updatedAt.slice(0, 10),
+          goal: data.goal.contents,
+          score: data.score,
+        };
+        return obj;
+      });
+      const groupedData = groupBy(data, 'date');
+      console.log(groupedData);
+
+      const result = [];
+
+      for (const key in groupedData) {
+        const value = groupedData[key];
+        const obj = {};
+        obj['date'] = key;
+        for (const e of value) {
+          obj[e.goal] = e.score;
+        }
+        result.push(obj);
+
+        // Use `key` and `value`
+      }
+
+      return result;
+    };
+
+    const data = makeGraphData(scores);
+
+    // const makeGraphData = (scoreData) => {
+    //   const data = scoreData.map((data) => {
+    //     const obj = {
+    //       date: data.updatedAt.slice(0, 10),
+    //       goal: data.goal.contents,
+    //       score: data.score,
+    //     };
+    //     return obj;
+    //   });
+    //   const groupedData = groupBy(data, 'date');
+    //   const result = new Array();
+    //   for (let [key, value] of Object.entries(groupedData)) {
+    //     const obj = new Object();
+    //     obj['date'] = key;
+    //     for (const e of value) {
+    //       obj[e.goal] = e.score;
+    //     }
+    //     result.push(obj);
+
+    //     return result;
+    //   }
+
+    // };
+    // return scores;
+
+    return data;
   }
 
   async getScoreByQuery(user: User, startDate: string, endDate: string) {

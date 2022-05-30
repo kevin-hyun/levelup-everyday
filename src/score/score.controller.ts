@@ -21,6 +21,7 @@ import { SuccessInterceptor } from '../common/interceptors/success.interceptor';
 import { HttpExceptionFilter } from '../common/exceptions/http-exception.filter';
 import { User } from '../users/users.schema';
 import { ScoreCreateDto } from './dto/score.create.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @UseInterceptors(SuccessInterceptor)
 @UseFilters(HttpExceptionFilter)
@@ -35,13 +36,15 @@ export class ScoreController {
     return this.scoreService.createScore(user, data);
   }
 
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
   @ApiOperation({ summary: 'score 추가- 스케쥴' })
   @UseGuards(JwtAuthGuard)
   @Post('schedule')
   createScoreScheduled(@CurrentUser() user: User) {
     return this.scoreService.createScoreScheduled(user);
   }
-
+  //
+  // @Cron(CronExpression.EVERY_5_SECONDS, { timeZone: 'Asia/Seoul' })
   @ApiOperation({ summary: 'score 모두 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()

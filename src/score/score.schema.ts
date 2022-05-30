@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions, Types } from 'mongoose';
+import * as mongoose from 'mongoose';
 import * as moment from 'moment';
 const dateSeoul = moment().format();
 
