@@ -152,7 +152,6 @@ export class ScoreService {
         return obj;
       });
       const groupedData = groupBy(data, 'date');
-      console.log(groupedData);
 
       const result = [];
 

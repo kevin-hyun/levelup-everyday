@@ -33,7 +33,7 @@ const Goal = (props) => {
       setIsEmpty(false);
     }
     return () => {};
-  }, []);
+  }, [goalCtx]);
 
   const changeHandler = (checked, id) => {
     if (checked) {

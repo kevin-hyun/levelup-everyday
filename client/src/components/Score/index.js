@@ -46,10 +46,6 @@ const Score = (props) => {
     chart.paddingRight = 20;
     chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
-    const data = graphData;
-
-    chart.data = data;
-
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.groupData = true;
     dateAxis.renderer.grid.template.location = 0;
@@ -58,6 +54,9 @@ const Score = (props) => {
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = false;
     valueAxis.renderer.minWidth = 35;
+
+    const data = graphData;
+    chart.data = data;
 
     // Create series
     function createSeries(field, name) {
@@ -97,63 +96,7 @@ const Score = (props) => {
     return () => {
       chart.dispose();
     };
-  }, [graphData]);
-
-  // //PieChaet
-  // useLayoutEffect(() => {
-  //   let chart = am4core.create('piediv', am4charts.PieChart);
-  //   // Increase contrast by taking evey second color
-  //   //state로 점수/ 횟수 변환
-
-  //   // Add data
-  //   chart.data = [
-  //     {
-  //       country: 'Lithuania',
-  //       litres: 501.9,
-  //     },
-  //     {
-  //       country: 'Czech Republic',
-  //       litres: 301.9,
-  //     },
-  //     {
-  //       country: 'Ireland',
-  //       litres: 201.1,
-  //     },
-  //     {
-  //       country: 'Germany',
-  //       litres: 165.8,
-  //     },
-  //     {
-  //       country: 'Australia',
-  //       litres: 139.9,
-  //     },
-  //     {
-  //       country: 'Austria',
-  //       litres: 128.3,
-  //     },
-  //     {
-  //       country: 'UK',
-  //       litres: 99,
-  //     },
-  //     {
-  //       country: 'Belgium',
-  //       litres: 60,
-  //     },
-  //     {
-  //       country: 'The Netherlands',
-  //       litres: 50,
-  //     },
-  //   ];
-
-  //   // Add and configure Series
-  //   let pieSeries = chart.series.push(new am4charts.PieSeries());
-  //   pieSeries.dataFields.value = 'litres';
-  //   pieSeries.dataFields.category = 'country';
-
-  //   return () => {
-  //     chart.dispose();
-  //   };
-  // }, [dates]);
+  }, []);
 
   useEffect(() => {
     getAllScore();
