@@ -41,6 +41,10 @@ export class UsersRepository {
     }
   }
 
+  async getAllUserId() {
+    return await this.userModel.find().select('_id');
+  }
+
   async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.userModel.findOne({ email });
     return user;

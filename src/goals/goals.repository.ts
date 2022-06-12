@@ -17,6 +17,13 @@ export class GoalsRepository {
     return await this.goalsModel.create(goal);
   }
 
+  async getExcludedGoals(goalExcluded: Array<string | Types.ObjectId>) {
+    return await this.goalsModel.find({
+      _id: { $nin: goalExcluded },
+      softDelete: false,
+    });
+  }
+
   async updateGoal(id: string, changedContents: GoalsUpdateDto) {
     const goal = await this.getGoal(id);
     goal.category = changedContents.category;

@@ -46,89 +46,63 @@ export class ScoreService {
     return insertData;
   }
 
-  // async createScoreScheduled() {
-  //   const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
-  //   const dateSeoul = moment().format('YYYY-MM-DD');
+  async createScoreScheduled() {
+    const dateBefore = moment().subtract(1, 'day').format('YYYY-MM-DD');
+    const dateSeoul = moment().format('YYYY-MM-DD');
 
-  //   const scoreReadDto = {
-  //     userId,
-  //     startDate: dateBefore,
-  //     endDate: dateSeoul,
-  //   };
-  //   const prevScore = await this.scoreRepository.getScoreBetweenDate(
-  //     scoreReadDto,
-  //   );
+    const data = {
+      startDate: dateBefore,
+      endDate: dateSeoul,
+    };
 
-  //   const goals = await this.goalsRepository.getAllGoals(userId);
-  //   const goalsList = goals.map((goal) => {
-  //     return goal._id.toString();
-  //   });
+    const getScoreBefore = await this.scoreRepository.getScoreBetweenDate(data);
 
-  //   // previous data check
-  //   // 하루 목표 10점 이상 없음 - 다 0 점
-  //   if (prevScore.length === 0) {
-  //     //연속 점수 업데이트 - 0 reset
-  //     const user = await this.usersRepository.findUserAndUpdateContinuity(
-  //       userId,
-  //       false,
-  //     );
+    //* 유저 연속성 업데이트
+    let userSubmitted = getScoreBefore.map((score) => {
+      return score['author'].toString(); //mongoose typeId -> new로 새로 정의됌 - 고유한 값으로 인식
+    });
+    userSubmitted = [...new Set(userSubmitted)];
 
-  //     //data 삽입
-  //     const insertData = goals.map((goal) => {
-  //       const obj = {
-  //         score: 0,
-  //         author: userId,
-  //         goal: goal.id,
-  //         updatedAt: moment().subtract(1, 'day').format(),
-  //         createdAt: moment().subtract(1, 'day').format(),
-  //       };
-  //       return obj;
-  //     });
+    const users = await this.usersRepository.getAllUserId();
+    for (const user of users) {
+      if (userSubmitted.includes(user['_id'].toString())) {
+        await this.usersRepository.findUserAndUpdateContinuity(
+          user['id'].toString(),
+          true,
+        );
+      } else {
+        await this.usersRepository.findUserAndUpdateContinuity(
+          user['id'].toString(),
+          false,
+        );
+      }
+    }
 
-  //     try {
-  //       const result = await this.scoreRepository.InsertManyData(insertData);
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   } else {
-  //     //자료 있음
-  //     //continuity check
-  //     //연속 점수 업데이트 - 0 reset
-  //     const user = await this.usersRepository.findUserAndUpdateContinuity(
-  //       userId,
-  //       true,
-  //     );
+    //* 빈 점수 생성
+    const goalSubmitted = getScoreBefore.map((score) => {
+      return score['goal'].toString();
+    });
+    const goals = await this.goalsRepository.getExcludedGoals(goalSubmitted);
+    console.log(goalSubmitted);
+    console.log(goals);
 
-  //     // 제출하지 않은 score 골 확인
-  //     const completedGoal = prevScore.map((score) => {
-  //       return score.goal.toString();
-  //     });
+    for (const goal of goals) {
+      const insertData = {
+        score: 0,
+        author: goal['author'],
+        goal: goal['_id'],
+        updatedAt: moment().subtract(1, 'day').format(),
+        createdAt: moment().subtract(1, 'day').format(),
+      };
+      try {
+        await this.scoreRepository.InsertData(insertData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-  //     const difference = goalsList.filter((x) => !completedGoal.includes(x));
-
-  //     const insertData = difference.map((goal) => {
-  //       const obj = {
-  //         score: 0,
-  //         author: userId,
-  //         goal: new mongoose.Types.ObjectId(goal),
-  //         updatedAt: moment().subtract(1, 'day').format(),
-  //         createdAt: moment().subtract(1, 'day').format(),
-  //       };
-  //       return obj;
-  //     });
-
-  //     try {
-  //       const result = await this.scoreRepository.InsertManyData(insertData);
-  //       console.log(result);
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-
-  //   return 1;
-  // }
+    return 1;
+  }
 
   async getAllScores(user: User) {
     const userId = user._id;

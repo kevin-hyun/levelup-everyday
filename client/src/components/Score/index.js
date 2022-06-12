@@ -38,65 +38,65 @@ const Score = (props) => {
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
 
-  useLayoutEffect(() => {
-    let chart = am4core.create('chartdiv', am4charts.XYChart);
-    // Increase contrast by taking evey second color
-    chart.colors.step = 2;
+  // useLayoutEffect(() => {
+  //   let chart = am4core.create('chartdiv', am4charts.XYChart);
+  //   // Increase contrast by taking evey second color
+  //   chart.colors.step = 2;
 
-    chart.paddingRight = 20;
-    chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
+  //   chart.paddingRight = 20;
+  //   chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.groupData = true;
-    dateAxis.renderer.grid.template.location = 0;
-    // dateAxis.title.text = '날짜';
+  //   let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+  //   dateAxis.groupData = true;
+  //   dateAxis.renderer.grid.template.location = 0;
+  //   // dateAxis.title.text = '날짜';
 
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.tooltip.disabled = false;
-    valueAxis.renderer.minWidth = 35;
+  //   let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  //   valueAxis.tooltip.disabled = false;
+  //   valueAxis.renderer.minWidth = 35;
 
-    const data = graphData;
-    chart.data = data;
+  //   const data = graphData;
+  //   chart.data = data;
 
-    // Create series
-    function createSeries(field, name) {
-      var series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = field;
-      series.dataFields.dateX = 'date';
-      series.name = name;
-      series.tooltipText = '{name}: [b]{valueY}[/]';
-      series.strokeWidth = 2;
+  //   // Create series
+  //   function createSeries(field, name) {
+  //     var series = chart.series.push(new am4charts.LineSeries());
+  //     series.dataFields.valueY = field;
+  //     series.dataFields.dateX = 'date';
+  //     series.name = name;
+  //     series.tooltipText = '{name}: [b]{valueY}[/]';
+  //     series.strokeWidth = 2;
 
-      // series.smoothing = 'monotoneX';
+  //     // series.smoothing = 'monotoneX';
 
-      var bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.stroke = am4core.color('#fff');
-      bullet.circle.strokeWidth = 2;
+  //     var bullet = series.bullets.push(new am4charts.CircleBullet());
+  //     bullet.circle.stroke = am4core.color('#fff');
+  //     bullet.circle.strokeWidth = 2;
 
-      // * 위쪽에 보이는 전체 그래프
-      let scrollbarX = new am4charts.XYChartScrollbar();
-      scrollbarX.series.push(series);
-      chart.scrollbarX = scrollbarX;
+  //     // * 위쪽에 보이는 전체 그래프
+  //     let scrollbarX = new am4charts.XYChartScrollbar();
+  //     scrollbarX.series.push(series);
+  //     chart.scrollbarX = scrollbarX;
 
-      return series;
-    }
+  //     return series;
+  //   }
 
-    const lstData = graphData[graphData.length - 1];
-    const keyArr = Object.keys(lstData);
+  //   const lstData = graphData[graphData.length - 1];
+  //   const keyArr = Object.keys(lstData);
 
-    for (let i = 1; i < keyArr.length; i++) {
-      createSeries(keyArr[i], keyArr[i]);
-    }
+  //   for (let i = 1; i < keyArr.length; i++) {
+  //     createSeries(keyArr[i], keyArr[i]);
+  //   }
 
-    chart.legend = new am4charts.Legend();
-    chart.cursor = new am4charts.XYCursor();
+  //   chart.legend = new am4charts.Legend();
+  //   chart.cursor = new am4charts.XYCursor();
 
-    chart.current = chart;
+  //   chart.current = chart;
 
-    return () => {
-      chart.dispose();
-    };
-  }, []);
+  //   return () => {
+  //     chart.dispose();
+  //   };
+  // }, []);
 
   useEffect(() => {
     getAllScore();
@@ -200,7 +200,7 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div>
+          {/* <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div> */}
           {/* <div id="piediv" style={{ width: '800px', height: '500px' }}></div> */}
         </GraphContainer>
       </ScoreContent>

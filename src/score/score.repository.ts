@@ -6,6 +6,7 @@ import { Score } from './score.schema';
 import { ScoreInsertDto } from './dto/score.insert.dto';
 import { ScoreReadParamsDto } from './dto/score.read.params';
 import mongoose from 'mongoose';
+import { ScoreReadBtwParamsDto } from './dto/score.read.btw.dto';
 
 @Injectable()
 export class ScoreRepository {
@@ -16,9 +17,8 @@ export class ScoreRepository {
     return await this.scoreModel.create({ score });
   }
 
-  async getScoreBetweenDate(data: ScoreReadParamsDto) {
+  async getScoreBetweenDate(data: ScoreReadBtwParamsDto) {
     return await this.scoreModel.find({
-      author: data.userId,
       updatedAt: {
         $gte: data.startDate,
         $lte: data.endDate,
