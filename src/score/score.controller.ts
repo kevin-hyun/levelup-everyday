@@ -43,8 +43,6 @@ export class ScoreController {
     return this.scoreService.createScoreScheduled();
   }
 
-  //
-  // @Cron(CronExpression.EVERY_5_SECONDS, { timeZone: 'Asia/Seoul' })
   @ApiOperation({ summary: 'score 모두 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
