@@ -49,4 +49,8 @@ export class GoalsRepository {
   async getGoal(id: string | Types.ObjectId) {
     return await this.goalsModel.findById(id);
   }
+
+  async getAllUserGoals(): Promise<Goals[]> {
+    return await this.goalsModel.find();
+  }
 }

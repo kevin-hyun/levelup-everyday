@@ -36,13 +36,13 @@ export class ScoreController {
     return this.scoreService.createScore(user, data);
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
-  @ApiOperation({ summary: 'score 추가- 스케쥴' })
-  @UseGuards(JwtAuthGuard)
-  @Post('schedule')
-  createScoreScheduled(@CurrentUser() user: User) {
-    return this.scoreService.createScoreScheduled(user);
-  }
+  // @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
+  // @ApiOperation({ summary: 'score 추가- 스케쥴' })
+  // @Post('schedule')
+  // createScoreScheduled() {
+  //   return this.scoreService.createScoreScheduled();
+  // }
+
   //
   // @Cron(CronExpression.EVERY_5_SECONDS, { timeZone: 'Asia/Seoul' })
   @ApiOperation({ summary: 'score 모두 가져오기' })
