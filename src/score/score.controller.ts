@@ -36,7 +36,7 @@ export class ScoreController {
     return this.scoreService.createScore(user, data);
   }
 
-  // @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
   @ApiOperation({ summary: 'score 추가- 스케쥴' })
   @Post('schedule')
   createScoreScheduled() {
