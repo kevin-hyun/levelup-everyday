@@ -1,3 +1,4 @@
+import { ScoreReadDateEndParamsDto } from './dto/score.read.DateEnd.dto copy';
 import { Goals } from './../goals/goals.schema';
 import { Injectable, UnauthorizedException, Type } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
@@ -25,6 +26,18 @@ export class ScoreRepository {
       },
       score: {
         $gt: 0,
+      },
+    });
+  }
+
+  async getScoreEndDate(
+    userId: Types.ObjectId | string,
+    data: ScoreReadDateEndParamsDto,
+  ) {
+    return await this.scoreModel.find({
+      author: userId,
+      updatedAt: {
+        $lte: data.endDate,
       },
     });
   }

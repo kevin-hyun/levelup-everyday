@@ -111,7 +111,11 @@ export class ScoreService {
 
   async getGraphScore(user: User) {
     const userId = user._id;
-    const scores = await this.scoreRepository.getScoreData(userId);
+    const dataEnd = {
+      startDate: moment('2022-01-01').startOf('day').format(),
+      endDate: moment().subtract(1, 'day').endOf('day').format(),
+    };
+    const scores = await this.scoreRepository.getScoreEndDate(userId, dataEnd);
 
     console.log(scores);
 

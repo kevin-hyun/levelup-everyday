@@ -17,6 +17,7 @@ import {
   ScoreContinuity,
   ScoreCalc,
   GraphButton,
+  GraphInfo,
   ScoreText,
   ScoreWrapper,
   GraphContainer,
@@ -38,118 +39,124 @@ const Score = (props) => {
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
 
-  useLayoutEffect(() => {
-    let chart = am4core.create('chartdiv', am4charts.XYChart);
-    // Increase contrast by taking evey second color
-    chart.colors.step = 2;
+  // useLayoutEffect(() => {
+  //   let chart = am4core.create('chartdiv', am4charts.XYChart);
+  //   // Increase contrast by taking evey second color
 
-    chart.paddingRight = 20;
-    chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
+  //   //* chart option
+  //   chart.colors.step = 2;
+  //   chart.paddingRight = 20;
+  //   chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
 
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.groupData = true;
-    dateAxis.renderer.grid.template.location = 0;
-    // dateAxis.title.text = '날짜';
+  //   //* Xaxis - date
+  //   let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+  //   dateAxis.groupData = true;
+  //   dateAxis.renderer.grid.template.location = 0;
+  //   // dateAxis.title.text = '날짜';
 
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.tooltip.disabled = false;
-    valueAxis.renderer.minWidth = 35;
+  //   //* Yaxis - value
+  //   let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  //   valueAxis.tooltip.disabled = false;
+  //   valueAxis.renderer.minWidth = 35;
 
-    // const data = graphData;
-    let data = [
-      {
-        date: '2022-05-11',
-        '아주아주 긴 텍스트1': 10,
-        obj2: 0,
-        obj3: 13,
-        accum: 23,
-      },
-      {
-        date: '2022-05-12',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 10,
-        obj3: 13,
-        accum: 46,
-      },
-      {
-        date: '2022-05-13',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 0,
-        obj3: 0,
-        accum: 46,
-      },
-      {
-        date: '2022-05-14',
-        '아주아주 긴 텍스트1': 0,
-        obj2: 10,
-        obj3: 13,
-        accum: 69,
-      },
-    ];
-    chart.data = data;
+  //   const data = graphData;
 
-    // // Create series
-    // function createSeries(field, name) {
-    //   var series = chart.series.push(new am4charts.LineSeries());
-    //   series.dataFields.valueY = field;
-    //   series.dataFields.dateX = 'date';
-    //   series.name = name;
-    //   series.tooltipText = '{name}: [b]{valueY}[/]';
-    //   series.strokeWidth = 2;
+  //   chart.data = data;
 
-    //   // series.smoothing = 'monotoneX';
+  //   // Create series
+  //   function createSeries(field, name) {
+  //     var series = chart.series.push(new am4charts.LineSeries());
+  //     series.dataFields.valueY = field;
+  //     series.dataFields.dateX = 'date';
+  //     series.name = name;
+  //     series.tooltipText = '{name}: [b]{valueY}[/]';
+  //     series.strokeWidth = 2;
 
-    //   var bullet = series.bullets.push(new am4charts.CircleBullet());
-    //   bullet.circle.stroke = am4core.color('#fff');
-    //   bullet.circle.strokeWidth = 2;
+  //     // series.smoothing = 'monotoneX';
 
-    //   // * 위쪽에 보이는 전체 그래프
-    //   let scrollbarX = new am4charts.XYChartScrollbar();
-    //   scrollbarX.series.push(series);
-    //   chart.scrollbarX = scrollbarX;
+  //     var bullet = series.bullets.push(new am4charts.CircleBullet());
+  //     bullet.circle.stroke = am4core.color('#fff');
+  //     bullet.circle.strokeWidth = 2;
 
-    //   return series;
-    // }
+  //     // // * 위쪽에 보이는 전체 그래프
+  //     // let scrollbarX = new am4charts.XYChartScrollbar();
+  //     // scrollbarX.series.push(series);
+  //     // chart.scrollbarX = scrollbarX;
 
-    // const lstData = graphData[graphData.length - 1];
-    // const keyArr = Object.keys(lstData);
+  //     return series;
+  //   }
 
-    // for (let i = 1; i < keyArr.length; i++) {
-    //   createSeries(keyArr[i], keyArr[i]);
-    // }
+  //   const lstData = graphData[graphData.length - 1];
+  //   const keyArr = Object.keys(lstData);
+  //   keyArr.shift();
 
-    // Create series
-    function createSeries(field, name) {
-      var series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = field;
-      series.dataFields.dateX = 'date';
-      series.name = name;
-      series.tooltipText = '{name}: [b]{valueY}[/]';
-      series.strokeWidth = 2;
+  //   for (const e of keyArr) {
+  //     createSeries(e, e);
+  //   }
+  //   // // Create series
+  //   // function createSeries(field, name) {
+  //   //   var series = chart.series.push(new am4charts.LineSeries());
+  //   //   series.dataFields.valueY = field;
+  //   //   series.dataFields.dateX = 'date';
+  //   //   series.name = name;
+  //   //   series.tooltipText = '{name}: [b]{valueY}[/]';
+  //   //   series.strokeWidth = 2;
 
-      series.smoothing = 'monotoneX';
+  //   //   series.smoothing = 'monotoneX';
 
-      var bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.stroke = am4core.color('#fff');
-      bullet.circle.strokeWidth = 2;
+  //   //   var bullet = series.bullets.push(new am4charts.CircleBullet());
+  //   //   bullet.circle.stroke = am4core.color('#fff');
+  //   //   bullet.circle.strokeWidth = 2;
 
-      return series;
-    }
+  //   //   return series;
+  //   // }
 
-    createSeries('아주아주 긴 텍스트1', '아주아주 긴 텍스트1');
-    createSeries('obj2', 'Obj2');
-    createSeries('obj3', 'Obj3');
-    createSeries('accum', '누적점수');
+  //   // let data = [
+  //   //   {
+  //   //     date: '2022-05-11',
+  //   //     '아주아주 긴 텍스트1': 10,
+  //   //     obj2: 0,
+  //   //     obj3: 13,
+  //   //     accum: 23,
+  //   //   },
+  //   //   {
+  //   //     date: '2022-05-12',
+  //   //     '아주아주 긴 텍스트1': 0,
+  //   //     obj2: 10,
+  //   //     obj3: 13,
+  //   //     accum: 46,
+  //   //   },
+  //   //   {
+  //   //     date: '2022-05-13',
+  //   //     '아주아주 긴 텍스트1': 0,
+  //   //     obj2: 0,
+  //   //     obj3: 0,
+  //   //     accum: 46,
+  //   //   },
+  //   //   {
+  //   //     date: '2022-05-14',
+  //   //     '아주아주 긴 텍스트1': 0,
+  //   //     obj2: 10,
+  //   //     obj3: 13,
+  //   //     accum: 69,
+  //   //   },
+  //   // ];
+  //   // chart.data = data;
 
-    chart.legend = new am4charts.Legend();
-    chart.cursor = new am4charts.XYCursor();
+  //   // createSeries('아주아주 긴 텍스트1', '아주아주 긴 텍스트1');
+  //   // createSeries('obj2', 'Obj2');
+  //   // createSeries('obj3', 'Obj3');
+  //   // createSeries('accum', '누적점수');
 
-    chart.current = chart;
+  //   chart.legend = new am4charts.Legend();
+  //   chart.cursor = new am4charts.XYCursor();
 
-    return () => {
-      chart.dispose();
-    };
-  }, []);
+  //   chart.current = chart;
+
+  //   return () => {
+  //     chart.dispose();
+  //   };
+  // }, []);
 
   useEffect(() => {
     getAllScore();
@@ -239,7 +246,7 @@ const Score = (props) => {
       });
   };
 
-  console.log(graphData);
+  console.log(score);
 
   return (
     <ScoreContainer>
@@ -255,7 +262,8 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div>
+          <GraphInfo>하루 이전의 그래프까지 확인 가능합니다.</GraphInfo>
+          {/* <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div> */}
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>

@@ -109,3 +109,8 @@ export const GraphContainer = styled('div')`
   padding: 30px;
   margin: 30px;
 `;
+
+export const GraphInfo = styled('p')`
+  padding: 30px;
+  margin: 30px;
+`;
