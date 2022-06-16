@@ -31,6 +31,7 @@ export const AuthContextProvider = (props) => {
 
   return (
     <AuthContext.Provider value={contextvalue}>
+      {console.log('auth 렌더링')}
       {props.children}
     </AuthContext.Provider>
   );

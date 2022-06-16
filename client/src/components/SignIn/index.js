@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
+import history from '../utils/history';
 
 import axios from 'axios';
 import {
@@ -18,6 +19,7 @@ import AuthContext from '../../store/auth-context.js';
 
 const SignIn = (props) => {
   const authCtx = useContext(AuthContext);
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -33,8 +35,8 @@ const SignIn = (props) => {
       .then((response) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);
-          // localStorage.setItem('token', response.data.data.token);
-          props.history.push('/score/main');
+          //작동은 하는데 버벅임-
+          window.location.replace('score/main');
         }
       })
       .catch((err) => {

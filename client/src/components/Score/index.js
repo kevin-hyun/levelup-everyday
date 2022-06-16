@@ -30,8 +30,6 @@ import GoalContext from '../../store/goal-context';
 am4core.useTheme(am4themes_animated);
 
 const Score = (props) => {
-  const chart = useRef(null);
-
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
   const [score, setScore] = useState([]);
@@ -40,17 +38,21 @@ const Score = (props) => {
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
-  const [userData, setUserData] = useState({});
-  // const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({ basic: 1 });
 
   // console.log(goalCtx.goals);
   // console.log(graphData);
-  console.log(userData);
+  // console.log(userData);
 
   useEffect(() => {
+    console.log('score-useEffect');
     getAllScore();
+    console.log(`돌기 전에 ${goalCtx.loading}`);
+    console.log(`돌기 전에 ${userData['basic']}`);
     getGraphData();
-  }, []);
+    console.log(`돌고 나서 ${goalCtx.loading}`);
+    console.log(`돌고 나서 ${userData['basic']}`);
+  }, [goalCtx.loading]);
 
   useEffect(() => {
     if (!!score) {
@@ -95,25 +97,23 @@ const Score = (props) => {
         if (response.data.success) {
           setGraphData(response.data.data);
           const labels = graphData.map((data) => data.date);
-          console.log(labels);
-          console.log(goalCtx.goals);
-          const color = ['#8080ff', '#ffff80', '#101021'];
+
+          const color = ['#8080ff', '#ffff80'];
           const datasets = goalCtx.goals.map((goal) => {
             const obj = {};
             const title = goal.contents;
-            console.log(title);
 
             obj['label'] = title;
             obj['data'] = graphData.map((score) => score[title]);
-            obj['backgroundColor'] = color[0];
+            obj['backgroundColor'] = color[1];
             return obj;
           });
           const dataSet = {
             labels,
             datasets,
           };
-          setUserData(dataSet);
           console.log(userData);
+          setUserData(dataSet);
         }
       })
       .catch((err) => {
@@ -169,8 +169,9 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
+          {console.log('score 렌더링')}
           <GraphInfo>당일 이전의 그래프까지 확인 가능합니다.</GraphInfo>
-          <Graph chartData={userData}></Graph>
+          <Graph chartData={userData} loading={goalCtx.loading}></Graph>
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>
