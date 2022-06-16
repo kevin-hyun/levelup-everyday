@@ -25,6 +25,7 @@ import {
 
 import Graph from '../Graph/index';
 import AuthContext from '../../store/auth-context';
+import GoalContext from '../../store/goal-context';
 
 am4core.useTheme(am4themes_animated);
 
@@ -32,131 +33,19 @@ const Score = (props) => {
   const chart = useRef(null);
 
   const authCtx = useContext(AuthContext);
+  const goalCtx = useContext(GoalContext);
   const [score, setScore] = useState([]);
   const [scoreTotal, setScoreTotal] = useState(0);
   const [graphData, setGraphData] = useState([]);
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
+  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
 
-  // useLayoutEffect(() => {
-  //   let chart = am4core.create('chartdiv', am4charts.XYChart);
-  //   // Increase contrast by taking evey second color
-
-  //   //* chart option
-  //   chart.colors.step = 2;
-  //   chart.paddingRight = 20;
-  //   chart.dateFormatter.dateFormat = 'yyyy-MM-dd';
-
-  //   //* Xaxis - date
-  //   let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-  //   dateAxis.groupData = true;
-  //   dateAxis.renderer.grid.template.location = 0;
-  //   // dateAxis.title.text = '날짜';
-
-  //   //* Yaxis - value
-  //   let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-  //   valueAxis.tooltip.disabled = false;
-  //   valueAxis.renderer.minWidth = 35;
-
-  //   const data = graphData;
-
-  //   chart.data = data;
-
-  //   // Create series
-  //   function createSeries(field, name) {
-  //     var series = chart.series.push(new am4charts.LineSeries());
-  //     series.dataFields.valueY = field;
-  //     series.dataFields.dateX = 'date';
-  //     series.name = name;
-  //     series.tooltipText = '{name}: [b]{valueY}[/]';
-  //     series.strokeWidth = 2;
-
-  //     // series.smoothing = 'monotoneX';
-
-  //     var bullet = series.bullets.push(new am4charts.CircleBullet());
-  //     bullet.circle.stroke = am4core.color('#fff');
-  //     bullet.circle.strokeWidth = 2;
-
-  //     // // * 위쪽에 보이는 전체 그래프
-  //     // let scrollbarX = new am4charts.XYChartScrollbar();
-  //     // scrollbarX.series.push(series);
-  //     // chart.scrollbarX = scrollbarX;
-
-  //     return series;
-  //   }
-
-  //   const lstData = graphData[graphData.length - 1];
-  //   const keyArr = Object.keys(lstData);
-  //   keyArr.shift();
-
-  //   for (const e of keyArr) {
-  //     createSeries(e, e);
-  //   }
-  //   // // Create series
-  //   // function createSeries(field, name) {
-  //   //   var series = chart.series.push(new am4charts.LineSeries());
-  //   //   series.dataFields.valueY = field;
-  //   //   series.dataFields.dateX = 'date';
-  //   //   series.name = name;
-  //   //   series.tooltipText = '{name}: [b]{valueY}[/]';
-  //   //   series.strokeWidth = 2;
-
-  //   //   series.smoothing = 'monotoneX';
-
-  //   //   var bullet = series.bullets.push(new am4charts.CircleBullet());
-  //   //   bullet.circle.stroke = am4core.color('#fff');
-  //   //   bullet.circle.strokeWidth = 2;
-
-  //   //   return series;
-  //   // }
-
-  //   // let data = [
-  //   //   {
-  //   //     date: '2022-05-11',
-  //   //     '아주아주 긴 텍스트1': 10,
-  //   //     obj2: 0,
-  //   //     obj3: 13,
-  //   //     accum: 23,
-  //   //   },
-  //   //   {
-  //   //     date: '2022-05-12',
-  //   //     '아주아주 긴 텍스트1': 0,
-  //   //     obj2: 10,
-  //   //     obj3: 13,
-  //   //     accum: 46,
-  //   //   },
-  //   //   {
-  //   //     date: '2022-05-13',
-  //   //     '아주아주 긴 텍스트1': 0,
-  //   //     obj2: 0,
-  //   //     obj3: 0,
-  //   //     accum: 46,
-  //   //   },
-  //   //   {
-  //   //     date: '2022-05-14',
-  //   //     '아주아주 긴 텍스트1': 0,
-  //   //     obj2: 10,
-  //   //     obj3: 13,
-  //   //     accum: 69,
-  //   //   },
-  //   // ];
-  //   // chart.data = data;
-
-  //   // createSeries('아주아주 긴 텍스트1', '아주아주 긴 텍스트1');
-  //   // createSeries('obj2', 'Obj2');
-  //   // createSeries('obj3', 'Obj3');
-  //   // createSeries('accum', '누적점수');
-
-  //   chart.legend = new am4charts.Legend();
-  //   chart.cursor = new am4charts.XYCursor();
-
-  //   chart.current = chart;
-
-  //   return () => {
-  //     chart.dispose();
-  //   };
-  // }, []);
+  // console.log(goalCtx.goals);
+  // console.log(graphData);
+  console.log(userData);
 
   useEffect(() => {
     getAllScore();
@@ -205,6 +94,26 @@ const Score = (props) => {
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
+          const labels = graphData.map((data) => data.date);
+          console.log(labels);
+          console.log(goalCtx.goals);
+          const color = ['#8080ff', '#ffff80', '#101021'];
+          const datasets = goalCtx.goals.map((goal) => {
+            const obj = {};
+            const title = goal.contents;
+            console.log(title);
+
+            obj['label'] = title;
+            obj['data'] = graphData.map((score) => score[title]);
+            obj['backgroundColor'] = color[0];
+            return obj;
+          });
+          const dataSet = {
+            labels,
+            datasets,
+          };
+          setUserData(dataSet);
+          console.log(userData);
         }
       })
       .catch((err) => {
@@ -246,8 +155,6 @@ const Score = (props) => {
       });
   };
 
-  console.log(score);
-
   return (
     <ScoreContainer>
       <ScoreContent>
@@ -262,8 +169,8 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          <GraphInfo>하루 이전의 그래프까지 확인 가능합니다.</GraphInfo>
-          {/* <div id="chartdiv" style={{ width: '800px', height: '500px' }}></div> */}
+          <GraphInfo>당일 이전의 그래프까지 확인 가능합니다.</GraphInfo>
+          <Graph chartData={userData}></Graph>
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>

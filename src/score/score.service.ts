@@ -117,13 +117,17 @@ export class ScoreService {
     };
     const scores = await this.scoreRepository.getScoreEndDate(userId, dataEnd);
 
-    console.log(scores);
+    const makeGraphData = async (scoreData) => {
+      const goals = await this.goalsRepository.getAllGoals(userId);
 
-    const makeGraphData = (scoreData) => {
+      const goalObj = {};
+      for (const goal of goals) {
+        goalObj[goal._id] = goal.contents;
+      }
       const data = scoreData.map((data) => {
         const obj = {
           date: data.updatedAt.slice(0, 10),
-          goal: data.goal.contents,
+          goal: goalObj[data.goal],
           score: data.score,
         };
         return obj;
@@ -132,13 +136,20 @@ export class ScoreService {
 
       const result = [];
 
+      let id = 0;
+
       for (const key in groupedData) {
         const value = groupedData[key];
         const obj = {};
+        obj['id'] = id;
+        id += 1;
         obj['date'] = key;
+        let accum = 0;
         for (const e of value) {
           obj[e.goal] = e.score;
+          accum += e.score;
         }
+        obj['total'] = accum;
         result.push(obj);
       }
 
