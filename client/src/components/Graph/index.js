@@ -6,12 +6,10 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 import { GraphContainer, GraphContent } from './GraphElement';
 
-const Graph = ({ chartData, loading }) => {
+const Graph = ({ chartData }) => {
   return (
     <GraphContainer>
-      {console.log('graph 렌더링')}
-
-      {loading ? <p>로딩중...</p> : <Line data={chartData} />}
+      <Line data={chartData} />
     </GraphContainer>
   );
 };

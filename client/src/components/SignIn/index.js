@@ -36,7 +36,7 @@ const SignIn = (props) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);
           //작동은 하는데 버벅임-
-          window.location.replace('score/main');
+          window.location.replace('goal');
         }
       })
       .catch((err) => {

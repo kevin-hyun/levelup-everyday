@@ -153,7 +153,23 @@ export class ScoreService {
         result.push(obj);
       }
 
-      return result;
+      const labels = result.map((data) => data.date);
+
+      const dataSet = goals.map((goal) => {
+        const obj = {};
+        const title = goal.contents;
+
+        obj['label'] = title;
+        obj['data'] = result.map((score) => score[title]);
+
+        return obj;
+      });
+      const dataSets = {
+        labels,
+        datasets: dataSet,
+      };
+
+      return dataSets;
     };
 
     const data = makeGraphData(scores);

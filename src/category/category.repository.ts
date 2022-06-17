@@ -24,7 +24,7 @@ export class CategoryRepository {
   async createCategory(user: User, data: CategoryCreateDto): Promise<Category> {
     console.log(data.name);
     const name = await this.categoryModel.find({ name: data.name });
-    console.log(name);
+
     if (name.length !== 0) {
       throw new UnauthorizedException(
         `이미 해당 카테고리(${data.name})가 존재합니다`,

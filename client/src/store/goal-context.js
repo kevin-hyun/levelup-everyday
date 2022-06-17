@@ -5,20 +5,17 @@ import AuthContext from './auth-context';
 
 const GoalContext = React.createContext({
   goals: [],
-  loading: true,
   reset: () => {},
 });
 
 export const GoalContextProvider = (props) => {
   const authCtx = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log('goalcontext-useEffect');
     getAllGoals();
-    setLoading(false);
-    console.log(loading);
+
     return () => {};
   }, []);
 
@@ -47,12 +44,9 @@ export const GoalContextProvider = (props) => {
     setGoals([]);
   };
 
-  console.log('실행 시점');
-
   const contextvalue = {
     goals,
     reset: resetGoal,
-    loading,
   };
 
   return (

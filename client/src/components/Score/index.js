@@ -34,25 +34,19 @@ const Score = (props) => {
   const goalCtx = useContext(GoalContext);
   const [score, setScore] = useState([]);
   const [scoreTotal, setScoreTotal] = useState(0);
-  const [graphData, setGraphData] = useState([]);
+
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [continuity, setContinuity] = useState(0);
-  const [userData, setUserData] = useState({ basic: 1 });
 
-  // console.log(goalCtx.goals);
-  // console.log(graphData);
-  // console.log(userData);
+  const [graphData, setGraphData] = useState([]);
+  const [chartConfig, setChartConfig] = useState([]);
 
   useEffect(() => {
     console.log('score-useEffect');
     getAllScore();
-    console.log(`돌기 전에 ${goalCtx.loading}`);
-    console.log(`돌기 전에 ${userData['basic']}`);
     getGraphData();
-    console.log(`돌고 나서 ${goalCtx.loading}`);
-    console.log(`돌고 나서 ${userData['basic']}`);
-  }, [goalCtx.loading]);
+  }, []);
 
   useEffect(() => {
     if (!!score) {
@@ -96,30 +90,23 @@ const Score = (props) => {
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
-          const labels = graphData.map((data) => data.date);
-
-          const color = ['#8080ff', '#ffff80'];
-          const datasets = goalCtx.goals.map((goal) => {
-            const obj = {};
-            const title = goal.contents;
-
-            obj['label'] = title;
-            obj['data'] = graphData.map((score) => score[title]);
-            obj['backgroundColor'] = color[1];
-            return obj;
-          });
-          const dataSet = {
-            labels,
-            datasets,
-          };
-          console.log(userData);
-          setUserData(dataSet);
         }
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
         console.log(err.message);
       });
+  };
+
+  const lineChartConfig = (graphData) => {
+    const color = ['#FFEBA8', '#FFFFBD', '#BAE9F7', '#B2D2F7', '#A3BAF0'];
+    // console.log(graphData.datasets[0]);
+
+    for (let i = 0; i < graphData.datasets.length; i++) {
+      graphData.datasets[i].backgroundColor = color[i];
+    }
+
+    // console.log(graphData.datasets);
   };
 
   const calcScore = (score) => {
@@ -155,6 +142,8 @@ const Score = (props) => {
       });
   };
 
+  console.log(graphData);
+
   return (
     <ScoreContainer>
       <ScoreContent>
@@ -169,9 +158,13 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          {console.log('score 렌더링')}
+          {/* {console.log('score 렌더링')} */}
           <GraphInfo>당일 이전의 그래프까지 확인 가능합니다.</GraphInfo>
-          <Graph chartData={userData} loading={goalCtx.loading}></Graph>
+          {graphData.length === 0 ? (
+            <p>로딩중....</p>
+          ) : (
+            <Graph chartData={graphData}></Graph>
+          )}
         </GraphContainer>
       </ScoreContent>
     </ScoreContainer>
