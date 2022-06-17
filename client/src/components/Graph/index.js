@@ -6,10 +6,12 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 import { GraphContainer, GraphContent } from './GraphElement';
 
-const Graph = ({ chartData, LineData }) => {
+const Graph = ({ chartData, lineData }) => {
+  useEffect(() => {}, [lineData]);
   return (
     <GraphContainer>
-      <Line data={chartData} />
+      {/* <Line data={chartData} /> */}
+      {lineData && <Line data={lineData} />}
     </GraphContainer>
   );
 };

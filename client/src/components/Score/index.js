@@ -40,7 +40,10 @@ const Score = (props) => {
   const [continuity, setContinuity] = useState(0);
 
   const [graphData, setGraphData] = useState([]);
-  const [chartConfig, setChartConfig] = useState([]);
+  const [lineData, setLineData] = useState({
+    labels: ['label1', 'label2'],
+    datasets: [{ label: 'label1', data: [1, 2] }],
+  });
 
   useEffect(() => {
     console.log('score-useEffect');
@@ -105,20 +108,31 @@ const Score = (props) => {
   };
 
   const lineChartConfig = (data) => {
-    const color = ['#FFEBA8', '#FFFFBD', '#BAE9F7', '#B2D2F7', '#A3BAF0'];
+    const color = ['#ffeba8', '#FFFB8C', '#bae9f7', '#b2d2f7', '#a3baf0'];
     const dataSet = data.datasets;
 
     for (let e of dataSet) {
       let obj = {
         ...e,
       };
-      obj['backgroundColor'] = color[dataSet.indexOf(e)];
+      obj['backgroundColor'] = [color[dataSet.indexOf(e)]];
+      obj['borderColor'] = [color[dataSet.indexOf(e)]];
+      obj['lineTension'] = 0.5;
       dataSet[dataSet.indexOf(e)] = obj;
     }
-    console.log('체크');
-    console.log(dataSet);
 
-    setChartConfig(dataSet);
+    console.log(data);
+
+    const dateFormat = data.labels.map((date) => {
+      const month = date.slice(5, 7);
+      const day = date.slice(8, 10);
+      const result = `${month}-${day}`;
+      return result;
+    });
+
+    let result = { labels: dateFormat, datasets: dataSet };
+
+    setLineData(result);
   };
 
   const calcScore = (score) => {
@@ -154,8 +168,6 @@ const Score = (props) => {
       });
   };
 
-  console.log(graphData);
-
   return (
     <ScoreContainer>
       <ScoreContent>
@@ -175,7 +187,7 @@ const Score = (props) => {
           {graphData.length === 0 ? (
             <p>로딩중....</p>
           ) : (
-            <Graph chartData={graphData} lineData={chartConfig}></Graph>
+            <Graph chartData={graphData} lineData={lineData}></Graph>
           )}
         </GraphContainer>
       </ScoreContent>

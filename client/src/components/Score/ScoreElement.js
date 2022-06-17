@@ -112,5 +112,5 @@ export const GraphContainer = styled('div')`
 
 export const GraphInfo = styled('p')`
   padding: 30px;
-  margin: 30px;
+  margin-left: 30px;
 `;
