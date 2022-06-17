@@ -161,7 +161,6 @@ export class ScoreService {
 
         obj['label'] = title;
         obj['data'] = result.map((score) => score[title]);
-
         return obj;
       });
       const dataSets = {

@@ -49,6 +49,12 @@ const Score = (props) => {
   }, []);
 
   useEffect(() => {
+    if (graphData.length !== 0) {
+      lineChartConfig(graphData);
+    }
+  }, [graphData]);
+
+  useEffect(() => {
     if (!!score) {
       calcScore(score);
       getContinuity();
@@ -98,15 +104,21 @@ const Score = (props) => {
       });
   };
 
-  const lineChartConfig = (graphData) => {
+  const lineChartConfig = (data) => {
     const color = ['#FFEBA8', '#FFFFBD', '#BAE9F7', '#B2D2F7', '#A3BAF0'];
-    // console.log(graphData.datasets[0]);
+    const dataSet = data.datasets;
 
-    for (let i = 0; i < graphData.datasets.length; i++) {
-      graphData.datasets[i].backgroundColor = color[i];
+    for (let e of dataSet) {
+      let obj = {
+        ...e,
+      };
+      obj['backgroundColor'] = color[dataSet.indexOf(e)];
+      dataSet[dataSet.indexOf(e)] = obj;
     }
+    console.log('체크');
+    console.log(dataSet);
 
-    // console.log(graphData.datasets);
+    setChartConfig(dataSet);
   };
 
   const calcScore = (score) => {
@@ -163,7 +175,7 @@ const Score = (props) => {
           {graphData.length === 0 ? (
             <p>로딩중....</p>
           ) : (
-            <Graph chartData={graphData}></Graph>
+            <Graph chartData={graphData} lineData={chartConfig}></Graph>
           )}
         </GraphContainer>
       </ScoreContent>

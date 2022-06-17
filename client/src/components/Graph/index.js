@@ -6,7 +6,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 import { GraphContainer, GraphContent } from './GraphElement';
 
-const Graph = ({ chartData }) => {
+const Graph = ({ chartData, LineData }) => {
   return (
     <GraphContainer>
       <Line data={chartData} />
