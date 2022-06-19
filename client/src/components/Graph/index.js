@@ -10,7 +10,7 @@ const Graph = ({ chartData, lineData }) => {
   useEffect(() => {}, [lineData]);
   return (
     <GraphContainer>
-      {/* <Line data={chartData} /> */}
+      {/* {lineData && <Line data={chartData} />} */}
       {lineData && <Line data={lineData} />}
     </GraphContainer>
   );

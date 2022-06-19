@@ -6,9 +6,6 @@ import React, {
   useLayoutEffect,
 } from 'react';
 import axios from 'axios';
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4charts from '@amcharts/amcharts4/charts';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 import {
   ScoreContainer,
@@ -26,8 +23,7 @@ import {
 import Graph from '../Graph/index';
 import AuthContext from '../../store/auth-context';
 import GoalContext from '../../store/goal-context';
-
-am4core.useTheme(am4themes_animated);
+import { groupBy } from '../utils/groupby';
 
 const Score = (props) => {
   const authCtx = useContext(AuthContext);
@@ -107,6 +103,22 @@ const Score = (props) => {
       });
   };
 
+  const accumChartConfig = (data, scoreArr) => {
+    const color = '#8080ff';
+    const dataSet = data.datasets;
+
+    const score = scoreArr;
+
+    const dateFormat = data.labels.map((date) => {
+      const month = date.slice(5, 7);
+      const day = date.slice(8, 10);
+      const result = `${month}-${day}`;
+      return result;
+    });
+
+    let result = { labels: dateFormat, datasets: dataSet };
+  };
+
   const lineChartConfig = (data) => {
     const color = ['#ffeba8', '#FFFB8C', '#bae9f7', '#b2d2f7', '#a3baf0'];
     const dataSet = data.datasets;
@@ -167,6 +179,8 @@ const Score = (props) => {
         console.log(err.message);
       });
   };
+  // console.log(dates);
+  // console.log(scoreAccum);
 
   return (
     <ScoreContainer>
