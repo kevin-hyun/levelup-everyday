@@ -1,5 +1,6 @@
-import React from 'react';
-import { Button } from '../ButtonElement';
+import React, { useContext } from "react";
+import AuthContext from "../../store/auth-context";
+import { Button } from "../ButtonElement";
 import {
   InfoContainer,
   InfoWrapper,
@@ -13,7 +14,7 @@ import {
   BtnWrap,
   ImgWrap,
   Img,
-} from './InfoElements';
+} from "./InfoElements";
 
 const Info = ({
   lightBg,
@@ -30,6 +31,8 @@ const Info = ({
   primary,
   dark,
 }) => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggendIn;
   return (
     <>
       <InfoContainer lightBg={lightBg} id={id}>
@@ -41,13 +44,23 @@ const Info = ({
                 <Heading lightText={lightText}>{headline}</Heading>
                 <Subtitle darkText={darkText}>{description}</Subtitle>
                 <BtnWrap>
-                  <Button
-                    to="home"
-                    primary={primary ? 1 : 0}
-                    dark={dark ? 1 : 0}
-                  >
-                    {buttonLabel}
-                  </Button>
+                  {!isLoggedIn ? (
+                    <Button
+                      to="/signin"
+                      primary={primary ? 1 : 0}
+                      dark={dark ? 1 : 0}
+                    >
+                      {buttonLabel}
+                    </Button>
+                  ) : (
+                    <Button
+                      to="/score/main"
+                      primary={primary ? 1 : 0}
+                      dark={dark ? 1 : 0}
+                    >
+                      {buttonLabel}
+                    </Button>
+                  )}
                 </BtnWrap>
               </TextWrapper>
             </Column1>
