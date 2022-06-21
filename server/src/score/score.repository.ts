@@ -68,9 +68,11 @@ export class ScoreRepository {
 
   async getAllScore(userId: Types.ObjectId) {
     try {
-      const result = await this.scoreModel.find({
-        author: userId,
-      });
+      const result = await this.scoreModel
+        .find({
+          author: userId,
+        })
+        .sort({ createdAt: 'asc' });
 
       return result;
     } catch (err) {

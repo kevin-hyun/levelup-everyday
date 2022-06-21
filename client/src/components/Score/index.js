@@ -4,8 +4,8 @@ import React, {
   useEffect,
   useRef,
   useLayoutEffect,
-} from 'react';
-import axios from 'axios';
+} from "react";
+import axios from "axios";
 
 import {
   ScoreContainer,
@@ -18,12 +18,12 @@ import {
   ScoreText,
   ScoreWrapper,
   GraphContainer,
-} from './ScoreElement';
+} from "./ScoreElement";
 
-import Graph from '../Graph/index';
-import AuthContext from '../../store/auth-context';
-import GoalContext from '../../store/goal-context';
-import { groupBy } from '../utils/groupby';
+import Graph from "../Graph/index";
+import AuthContext from "../../store/auth-context";
+import GoalContext from "../../store/goal-context";
+import { groupBy } from "../utils/groupby";
 
 const Score = (props) => {
   const authCtx = useContext(AuthContext);
@@ -37,12 +37,12 @@ const Score = (props) => {
 
   const [graphData, setGraphData] = useState([]);
   const [lineData, setLineData] = useState({
-    labels: ['label1', 'label2'],
-    datasets: [{ label: 'label1', data: [1, 2] }],
+    labels: ["label1", "label2"],
+    datasets: [{ label: "label1", data: [1, 2] }],
   });
 
   useEffect(() => {
-    console.log('score-useEffect');
+    console.log("score-useEffect");
     getAllScore();
     getGraphData();
   }, []);
@@ -71,7 +71,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get('http://localhost:5000/score', config)
+      .get("http://localhost:5000/score", config)
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
@@ -91,7 +91,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get('http://localhost:5000/score/graph', config)
+      .get("http://localhost:5000/score/graph", config)
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
@@ -104,7 +104,7 @@ const Score = (props) => {
   };
 
   const accumChartConfig = (data, scoreArr) => {
-    const color = '#8080ff';
+    const color = "#8080ff";
     const dataSet = data.datasets;
 
     const score = scoreArr;
@@ -120,20 +120,18 @@ const Score = (props) => {
   };
 
   const lineChartConfig = (data) => {
-    const color = ['#ffeba8', '#FFFB8C', '#bae9f7', '#b2d2f7', '#a3baf0'];
+    const color = ["#ffeba8", "#FFFB8C", "#bae9f7", "#b2d2f7", "#a3baf0"];
     const dataSet = data.datasets;
 
     for (let e of dataSet) {
       let obj = {
         ...e,
       };
-      obj['backgroundColor'] = [color[dataSet.indexOf(e)]];
-      obj['borderColor'] = [color[dataSet.indexOf(e)]];
-      obj['lineTension'] = 0.5;
+      obj["backgroundColor"] = [color[dataSet.indexOf(e)]];
+      obj["borderColor"] = [color[dataSet.indexOf(e)]];
+      obj["lineTension"] = 0.5;
       dataSet[dataSet.indexOf(e)] = obj;
     }
-
-    console.log(data);
 
     const dateFormat = data.labels.map((date) => {
       const month = date.slice(5, 7);
@@ -154,8 +152,9 @@ const Score = (props) => {
     for (const element of score) {
       sum += element.score;
       scoreAccumArray.push(sum);
-      dateArray.push(element.createdAt);
+      dateArray.push(element.createdAt.slice(0, 10));
     }
+
     setScoreAccum(scoreAccumArray);
     setDates(dateArray);
     setScoreTotal(sum);
@@ -168,7 +167,7 @@ const Score = (props) => {
       },
     };
     axios
-      .get('http://localhost:5000/users', config)
+      .get("http://localhost:5000/users", config)
       .then((response) => {
         if (response.data.success) {
           setContinuity(response.data.data.continuity);
@@ -179,8 +178,12 @@ const Score = (props) => {
         console.log(err.message);
       });
   };
+
+  console.log(dates);
+  console.log(scoreAccum);
   // console.log(dates);
   // console.log(scoreAccum);
+  // console.log(graphData);
 
   return (
     <ScoreContainer>

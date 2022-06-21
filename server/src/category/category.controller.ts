@@ -31,7 +31,6 @@ export class CategoryController {
     return this.categoryService.createCategory(user, body);
   }
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
   @ApiOperation({ summary: '기본 카테고리 가져오기' })
   @Get('default')
   getAllCategory() {
