@@ -6,13 +6,14 @@ import { Chart as ChartJS } from "chart.js/auto";
 
 import { GraphContainer, GraphContent } from "./GraphElement";
 
-const Graph = ({ chartData, lineData }) => {
+const Graph = ({ accumData, lineData }) => {
   useEffect(() => {}, [lineData]);
+  console.log(accumData);
+  console.log(lineData);
   return (
     <GraphContainer>
-      <p>누적 점수</p>
-      {lineData && <Line data={lineData} />}
-      <p>목표별 점수</p>
+      {accumData && <Line data={accumData} />}
+
       {lineData && <Line data={lineData} />}
     </GraphContainer>
   );

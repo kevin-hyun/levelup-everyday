@@ -33,6 +33,10 @@ const Score = (props) => {
 
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
+  const [accumData, setAccumData] = useState({
+    labels: ["label1", "label2"],
+    datasets: [{ label: "label1", data: [1, 2] }],
+  });
   const [continuity, setContinuity] = useState(0);
 
   const [graphData, setGraphData] = useState([]);
@@ -48,12 +52,6 @@ const Score = (props) => {
   }, []);
 
   useEffect(() => {
-    if (graphData.length !== 0) {
-      lineChartConfig(graphData);
-    }
-  }, [graphData]);
-
-  useEffect(() => {
     if (!!score) {
       calcScore(score);
       getContinuity();
@@ -62,6 +60,18 @@ const Score = (props) => {
     }
     return () => {};
   }, [score]);
+
+  useEffect(() => {
+    if (graphData.length !== 0) {
+      lineChartConfig(graphData);
+    }
+  }, [graphData]);
+
+  useEffect(() => {
+    if (dates.length !== 0) {
+      accumChartConfig(dates, scoreAccum);
+    }
+  }, [dates]);
 
   const getAllScore = async () => {
     const config = {
@@ -103,20 +113,26 @@ const Score = (props) => {
       });
   };
 
-  const accumChartConfig = (data, scoreArr) => {
+  const accumChartConfig = (label, data) => {
     const color = "#8080ff";
-    const dataSet = data.datasets;
 
-    const score = scoreArr;
-
-    const dateFormat = data.labels.map((date) => {
+    const dateFormat = label.map((date) => {
       const month = date.slice(5, 7);
       const day = date.slice(8, 10);
       const result = `${month}-${day}`;
       return result;
     });
 
-    let result = { labels: dateFormat, datasets: dataSet };
+    let obj = {};
+    obj["label"] = "누적점수";
+    obj["data"] = data;
+    obj["backgroundColor"] = [color];
+    obj["borderColor"] = [color];
+
+    const result = { labels: dateFormat, datasets: [obj] };
+    // console.log(result);
+
+    setAccumData(result);
   };
 
   const lineChartConfig = (data) => {
@@ -155,8 +171,18 @@ const Score = (props) => {
       dateArray.push(element.createdAt.slice(0, 10));
     }
 
-    setScoreAccum(scoreAccumArray);
-    setDates(dateArray);
+    const newScore = [];
+    const newDate = [];
+
+    dateArray.forEach((value, index) => {
+      if (index % goalCtx.goals.length === 2) {
+        newScore.push(scoreAccumArray[index]);
+        newDate.push(value);
+      }
+    });
+
+    setScoreAccum(newScore);
+    setDates(newDate);
     setScoreTotal(sum);
   };
 
@@ -179,8 +205,6 @@ const Score = (props) => {
       });
   };
 
-  console.log(dates);
-  console.log(scoreAccum);
   // console.log(dates);
   // console.log(scoreAccum);
   // console.log(graphData);
@@ -204,7 +228,7 @@ const Score = (props) => {
           {graphData.length === 0 ? (
             <p>로딩중....</p>
           ) : (
-            <Graph chartData={graphData} lineData={lineData}></Graph>
+            <Graph accumData={accumData} lineData={lineData}></Graph>
           )}
         </GraphContainer>
       </ScoreContent>
