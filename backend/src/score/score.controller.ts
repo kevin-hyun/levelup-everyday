@@ -1,5 +1,5 @@
 import { ScoreService } from './score.service';
-import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import {
   Body,
   Controller,

@@ -1,7 +1,7 @@
-import { multerOptions } from './../common/utils/multer.options';
-import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
-import { LoginRequestDto } from './../auth/dto/login.request.dto';
-import { AuthService } from './../auth/auth.service';
+import { multerOptions } from '../common/utils/multer.options';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { LoginRequestDto } from '../auth/dto/login.request.dto';
+import { AuthService } from '../auth/auth.service';
 import { ReadOnlyUserDto } from './dto/users.dto';
 import { UsersService } from './users.service';
 import {

@@ -1,4 +1,4 @@
-import { CategoryModule } from './../category/category.module';
+import { CategoryModule } from '../category/category.module';
 import { Goals, GoalsSchema } from './goals.schema';
 import { Module } from '@nestjs/common';
 import { GoalsService } from './goals.service';

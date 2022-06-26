@@ -1,4 +1,4 @@
-import { UsersRepository } from './../users/users.repository';
+import { UsersRepository } from '../users/users.repository';
 import { Injectable, Scope, UnauthorizedException } from '@nestjs/common';
 import { LoginRequestDto } from './dto/login.request.dto';
 import * as bcrypt from 'bcrypt';

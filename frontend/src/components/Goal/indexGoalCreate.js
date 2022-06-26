@@ -16,11 +16,10 @@ import {
   FormSelect,
   FormButton,
   GoalListContainer,
-  ChangeBtn,
   GoalListWrapper,
   Iconwrapper,
 } from "./GoalCreateElement";
-import { GoalList, GoalWrapper, Checkbox } from "./GoalElement";
+import { GoalList } from "./GoalElement";
 
 import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
@@ -31,8 +30,6 @@ const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
   const [goal, setGoal] = useState("");
-  const [goals, setGoals] = useState([]);
-  const [checkedItem, setCheckedItem] = useState([]);
   const [category, setCategory] = useState("621ef2fb7432c32bc3450b29");
   const [categoryList, setCategoryList] = useState([]);
 
@@ -46,7 +43,7 @@ const CreateIndex = () => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 
@@ -86,7 +83,7 @@ const CreateIndex = () => {
         })
         .catch((err) => {
           const statusCode = err.message.slice(-3, err.message.length);
-          console.log(err.message);
+          console.log(`${statusCode} ${err.message}`);
         });
     } else {
       alert("취소되었습니다.");
@@ -117,7 +114,7 @@ const CreateIndex = () => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 

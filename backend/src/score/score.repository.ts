@@ -1,5 +1,5 @@
 import { ScoreReadDateEndParamsDto } from './dto/score.read.DateEnd.dto copy';
-import { Goals } from './../goals/goals.schema';
+import { Goals } from '../goals/goals.schema';
 import { Injectable, UnauthorizedException, Type } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';

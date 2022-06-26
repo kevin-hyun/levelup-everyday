@@ -1,7 +1,6 @@
-import styled from 'styled-components';
-import { Link as LinkRouter } from 'react-router-dom';
+import styled from "styled-components";
 
-export const ScoreContainer = styled('div')`
+export const ScoreContainer = styled("div")`
   background: #8080ff;
   display: flex;
   justify-content: center;
@@ -15,7 +14,7 @@ export const ScoreContainer = styled('div')`
     padding: 10px 24px;
   }
 `;
-export const ScoreContent = styled('div')`
+export const ScoreContent = styled("div")`
   margin-top: 90px;
   width: 70%;
   display: flex;
@@ -35,7 +34,7 @@ export const ScoreContent = styled('div')`
     font-size: 14px;
   }
 `;
-export const ScoreCircle = styled('div')`
+export const ScoreCircle = styled("div")`
   width: 350px;
   height: 350px;
   margin: 32px;
@@ -50,10 +49,10 @@ export const ScoreCircle = styled('div')`
   }
 `;
 
-export const ScoreWrapper = styled('div')`
+export const ScoreWrapper = styled("div")`
   margin-top: 70px;
 `;
-export const ScoreContinuity = styled('div')`
+export const ScoreContinuity = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,7 +62,7 @@ export const ScoreContinuity = styled('div')`
   font-size: 40px;
   color: #ffff80;
 `;
-export const ScoreText = styled('small')`
+export const ScoreText = styled("small")`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,7 +72,7 @@ export const ScoreText = styled('small')`
   color: #fff;
 `;
 
-export const ScoreCalc = styled('h1')`
+export const ScoreCalc = styled("h1")`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +82,7 @@ export const ScoreCalc = styled('h1')`
   font-size: 30px;
   color: #ffff80;
 `;
-export const GraphButton = styled('button')`
+export const GraphButton = styled("button")`
   border-radius: 50px;
   background: #ffff80;
   white-space: nowrap;
@@ -105,12 +104,12 @@ export const GraphButton = styled('button')`
   }
 `;
 
-export const GraphContainer = styled('div')`
+export const GraphContainer = styled("div")`
   padding: 30px;
   margin: 30px;
 `;
 
-export const GraphInfo = styled('p')`
+export const GraphInfo = styled("p")`
   padding: 30px;
   margin-left: 30px;
 `;

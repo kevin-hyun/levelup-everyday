@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
 
-import { UsersRepository } from './../users/users.repository';
-import { GoalsRepository } from './../goals/goals.repository';
+import { UsersRepository } from '../users/users.repository';
+import { GoalsRepository } from '../goals/goals.repository';
 import { ScoreCreateDto } from './dto/score.create.dto';
-import { User } from './../users/users.schema';
+import { User } from '../users/users.schema';
 import { ScoreRepository } from './score.repository';
 import { groupBy } from '../common/utils/groupby';
 

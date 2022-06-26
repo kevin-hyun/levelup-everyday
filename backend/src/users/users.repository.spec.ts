@@ -6,7 +6,7 @@ import { UsersRepository } from './users.repository';
 import { UsersService } from './users.service';
 import { Module, forwardRef } from '@nestjs/common';
 import { User, UserSchema } from './users.schema';
-import { Category, CategorySchema } from './../category/category.schema';
+import { Category, CategorySchema } from '../category/category.schema';
 
 const mockUserRepository = () => ({
   save: jest.fn(),

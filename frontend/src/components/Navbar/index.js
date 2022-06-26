@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { animateScroll as scroll } from 'react-scroll';
+import React, { useContext } from "react";
+import { FaBars } from "react-icons/fa";
+import { animateScroll as scroll } from "react-scroll";
 
 import {
   Nav,
@@ -14,35 +14,19 @@ import {
   NavBtnLink,
   NavBtn,
   NavRouterLink,
-  NavLogOut,
-} from './NavbarElements';
-import logo from '../../images/logo.png';
-import AuthContext from '../../store/auth-context';
-import GoalContext from '../../store/goal-context';
+} from "./NavbarElements";
+import logo from "../../images/logo.png";
+import AuthContext from "../../store/auth-context";
+import GoalContext from "../../store/goal-context";
 
 const Navbar = ({ toggle }) => {
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
-  const [scrollNav, setScrollNav] = useState(false);
-
   const isLoggendIn = authCtx.isLoggendIn;
   const logoutHandler = () => {
     authCtx.logout();
     goalCtx.reset();
   };
-
-  const changeNav = () => {
-    if (window.scrollY >= 80) {
-      setScrollNav(true);
-    } else {
-      setScrollNav(false);
-    }
-  };
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', changeNav);
-  //   return () => {};
-  // }, []);
 
   const togglehome = () => {
     scroll.scrollToTop();
@@ -50,10 +34,10 @@ const Navbar = ({ toggle }) => {
 
   return (
     <>
-      <Nav scrollNav={scrollNav}>
+      <Nav>
         <NavbarContainer>
           <NavLogo to="/" onClick={togglehome}>
-            <NavIcon src={logo} alt={'logo'} />
+            <NavIcon src={logo} alt={"logo"} />
           </NavLogo>
           <MobileIcon onClick={toggle}>
             <FaBars />

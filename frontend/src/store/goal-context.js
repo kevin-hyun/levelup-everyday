@@ -17,7 +17,7 @@ export const GoalContextProvider = (props) => {
     getAllGoals();
 
     return () => {};
-  }, []);
+  });
 
   const getAllGoals = async () => {
     // event.preventDefault();
@@ -36,7 +36,7 @@ export const GoalContextProvider = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 

@@ -21,7 +21,6 @@ import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
 
 const Goal = (props) => {
-  const [goals, setGoals] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
   const [checkedItem, setCheckedItem] = useState([]);
   const [completedGoal, setCompletedGoal] = useState([]);
@@ -84,7 +83,7 @@ const Goal = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 

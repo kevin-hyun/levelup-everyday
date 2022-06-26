@@ -1,6 +1,6 @@
 import { GoalsUpdateDto } from './dto/goals.updatedto';
-import { User } from './../users/users.schema';
-import { Category } from './../category/category.schema';
+import { User } from '../users/users.schema';
+import { Category } from '../category/category.schema';
 import { Goals } from './goals.schema';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Model, Types } from 'mongoose';

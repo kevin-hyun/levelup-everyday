@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 import {
@@ -13,7 +7,6 @@ import {
   ScoreCircle,
   ScoreContinuity,
   ScoreCalc,
-  GraphButton,
   GraphInfo,
   ScoreText,
   ScoreWrapper,
@@ -23,7 +16,6 @@ import {
 import Graph from "../Graph/index";
 import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
-import { groupBy } from "../utils/groupby";
 
 const Score = (props) => {
   const authCtx = useContext(AuthContext);
@@ -49,7 +41,7 @@ const Score = (props) => {
     console.log("score-useEffect");
     getAllScore();
     getGraphData();
-  }, []);
+  });
 
   useEffect(() => {
     if (!!score) {
@@ -89,7 +81,7 @@ const Score = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 
@@ -109,7 +101,7 @@ const Score = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
 
@@ -130,7 +122,6 @@ const Score = (props) => {
     obj["borderColor"] = [color];
 
     const result = { labels: dateFormat, datasets: [obj] };
-    // console.log(result);
 
     setAccumData(result);
   };
@@ -201,13 +192,9 @@ const Score = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        console.log(err.message);
+        console.log(`${statusCode} ${err.message}`);
       });
   };
-
-  // console.log(dates);
-  // console.log(scoreAccum);
-  // console.log(graphData);
 
   return (
     <ScoreContainer>

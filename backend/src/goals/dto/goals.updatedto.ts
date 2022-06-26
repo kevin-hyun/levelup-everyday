@@ -1,4 +1,4 @@
-import { Goals } from './../goals.schema';
+import { Goals } from '../goals.schema';
 import { PickType } from '@nestjs/swagger';
 
 export class GoalsUpdateDto extends PickType(Goals, [

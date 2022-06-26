@@ -1,5 +1,5 @@
 import { ConfigModule } from '@nestjs/config';
-import { Category, CategorySchema } from './../category/category.schema';
+import { Category, CategorySchema } from '../category/category.schema';
 import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';

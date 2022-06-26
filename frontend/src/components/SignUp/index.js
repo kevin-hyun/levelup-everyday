@@ -9,7 +9,6 @@ import {
   FormContent,
   FormH1,
   FormInput,
-  FormLabel,
   FormWrap,
   Icon,
   LogoIcon,

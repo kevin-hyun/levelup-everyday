@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { withRouter, useHistory } from "react-router-dom";
-import history from "../utils/history";
-
+import { withRouter } from "react-router-dom";
 import axios from "axios";
+
 import {
   Container,
   Form,
@@ -15,11 +14,11 @@ import {
   LogoIcon,
 } from "./SignInElements.js";
 import logo from "../../images/logo.png";
+
 import AuthContext from "../../store/auth-context.js";
 
 const SignIn = (props) => {
   const authCtx = useContext(AuthContext);
-
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 

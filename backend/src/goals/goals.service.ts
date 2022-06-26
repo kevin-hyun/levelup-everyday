@@ -1,7 +1,7 @@
 import { GoalsUpdateDto } from './dto/goals.updatedto';
-import { CategoryRepository } from './../category/category.repository';
+import { CategoryRepository } from '../category/category.repository';
 import { GoalsCreateDto } from './dto/goals.createdto';
-import { User } from './../users/users.schema';
+import { User } from '../users/users.schema';
 import { GoalsRepository } from './goals.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
