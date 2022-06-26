@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import {
   Container,
@@ -14,14 +14,14 @@ import {
   Icon,
   LogoIcon,
   Text,
-} from './SignUpElements.js';
-import logo from '../../images/logo.png';
+} from "./SignUpElements.js";
+import logo from "../../images/logo.png";
 
 const SignUp = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setpasswordConfirm] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setpasswordConfirm] = useState("");
+  const [name, setName] = useState("");
 
   const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
@@ -37,19 +37,19 @@ const SignUp = (props) => {
     };
 
     axios
-      .post('http://localhost:5000/users/register', body)
+      .post("http://localhost:5000/api/users/register", body)
       .then((response) => {
         if (response.data.success) {
-          alert('가입 완료!');
-          props.history.push('/signin');
+          alert("가입 완료!");
+          props.history.push("/signin");
         }
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        if (statusCode === '401') {
-          alert('중복된 이메일이 존재합니다.');
-        } else if (statusCode === '400') {
-          alert('내용을 입력해주세요');
+        if (statusCode === "401") {
+          alert("중복된 이메일이 존재합니다.");
+        } else if (statusCode === "400") {
+          alert("내용을 입력해주세요");
         }
       });
   };
@@ -101,10 +101,10 @@ const SignUp = (props) => {
                   setpasswordConfirm(e.target.value);
                 }}
               />
-              {(password === '' || password !== passwordConfirm) && (
+              {(password === "" || password !== passwordConfirm) && (
                 <Text correct={false}>비밀번호가 일치하지 않습니다.</Text>
               )}
-              {password !== '' && password === passwordConfirm && (
+              {password !== "" && password === passwordConfirm && (
                 <Text correct={true}>비밀번호가 일치합니다.</Text>
               )}
               <FormInput

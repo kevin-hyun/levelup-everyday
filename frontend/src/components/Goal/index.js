@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from "react";
 
 import {
   GoalContainer,
@@ -12,13 +12,13 @@ import {
   GoalList,
   GoalWrapper,
   Checkbox,
-} from './GoalElement';
+} from "./GoalElement";
 
-import emptyGoal from '../../images/empty_goal.svg';
+import emptyGoal from "../../images/empty_goal.svg";
 
-import axios from 'axios';
-import AuthContext from '../../store/auth-context';
-import GoalContext from '../../store/goal-context';
+import axios from "axios";
+import AuthContext from "../../store/auth-context";
+import GoalContext from "../../store/goal-context";
 
 const Goal = (props) => {
   const [goals, setGoals] = useState([]);
@@ -75,11 +75,11 @@ const Goal = (props) => {
     };
 
     axios
-      .post('http://localhost:5000/score', body, config)
+      .post("http://localhost:5000/api/score", body, config)
       .then((response) => {
         if (response.data.success) {
-          alert('목표 점수 생성! ');
-          window.location = '/score/main';
+          alert("목표 점수 생성! ");
+          window.location = "/score/main";
         }
       })
       .catch((err) => {

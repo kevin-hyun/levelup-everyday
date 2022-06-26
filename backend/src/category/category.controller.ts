@@ -1,7 +1,7 @@
 import { CategoryCreateDto } from './dto/category.create.dto';
 import { CategoryService } from './category.service';
-import { CurrentUser } from './../common/decorators/user.decorator';
-import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
+import { CurrentUser } from '../common/decorators/user.decorator';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import {

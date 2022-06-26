@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
-import history from '../utils/history';
+import React, { useContext } from "react";
+import { withRouter, useHistory } from "react-router-dom";
+import history from "../utils/history";
 
-import axios from 'axios';
+import axios from "axios";
 import {
   Container,
   Form,
@@ -13,15 +13,15 @@ import {
   Icon,
   Text,
   LogoIcon,
-} from './SignInElements.js';
-import logo from '../../images/logo.png';
-import AuthContext from '../../store/auth-context.js';
+} from "./SignInElements.js";
+import logo from "../../images/logo.png";
+import AuthContext from "../../store/auth-context.js";
 
 const SignIn = (props) => {
   const authCtx = useContext(AuthContext);
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   let body = {
     email,
@@ -31,26 +31,26 @@ const SignIn = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     axios
-      .post('http://localhost:5000/users/login', body)
+      .post("http://localhost:5000/api/users/login", body)
       .then((response) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);
           //작동은 하는데 버벅임-
-          window.location.replace('goal');
+          window.location.replace("goal");
         }
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        if (statusCode === '401') {
-          alert('이메일 또는 비밀번호를 확인해주세요');
-          window.location = '/signin';
+        if (statusCode === "401") {
+          alert("이메일 또는 비밀번호를 확인해주세요");
+          window.location = "/signin";
         }
       });
   };
 
   const signUpRedirect = (event) => {
     event.preventDefault();
-    props.history.push('/signup');
+    props.history.push("/signup");
   };
 
   return (

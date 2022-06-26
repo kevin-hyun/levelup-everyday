@@ -17,6 +17,7 @@ async function bootstrap() {
   app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
     prefix: '/media',
   });
+  app.setGlobalPrefix('api');
   app.use(
     ['/docs', '/docs-json'],
     expressBasicAuth({

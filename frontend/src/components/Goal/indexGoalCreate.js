@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
-import { AiFillEdit } from 'react-icons/ai';
-import { BsFillTrashFill } from 'react-icons/bs';
+import { AiFillEdit } from "react-icons/ai";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import {
   GoalContainer,
@@ -19,26 +19,26 @@ import {
   ChangeBtn,
   GoalListWrapper,
   Iconwrapper,
-} from './GoalCreateElement';
-import { GoalList, GoalWrapper, Checkbox } from './GoalElement';
+} from "./GoalCreateElement";
+import { GoalList, GoalWrapper, Checkbox } from "./GoalElement";
 
-import AuthContext from '../../store/auth-context';
-import GoalContext from '../../store/goal-context';
+import AuthContext from "../../store/auth-context";
+import GoalContext from "../../store/goal-context";
 
-import categoryImg from '../../images/category.png';
+import categoryImg from "../../images/category.png";
 
 const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
-  const [goal, setGoal] = useState('');
+  const [goal, setGoal] = useState("");
   const [goals, setGoals] = useState([]);
   const [checkedItem, setCheckedItem] = useState([]);
-  const [category, setCategory] = useState('621ef2fb7432c32bc3450b29');
+  const [category, setCategory] = useState("621ef2fb7432c32bc3450b29");
   const [categoryList, setCategoryList] = useState([]);
 
   const getCategory = () => {
     axios
-      .get('http://localhost:5000/category/default')
+      .get("http://localhost:5000/api/category/default")
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -77,11 +77,11 @@ const CreateIndex = () => {
     };
     if (confirmation) {
       await axios
-        .put(`http://localhost:5000/goals/${id}`, body, config)
+        .put(`http://localhost:5000/api/goals/${id}`, body, config)
         .then((response) => {
           if (response.data.success) {
-            alert('목표가 삭제되었습니다.');
-            window.location = '/goal/create';
+            alert("목표가 삭제되었습니다.");
+            window.location = "/goal/create";
           }
         })
         .catch((err) => {
@@ -89,7 +89,7 @@ const CreateIndex = () => {
           console.log(err.message);
         });
     } else {
-      alert('취소되었습니다.');
+      alert("취소되었습니다.");
     }
   };
 
@@ -108,11 +108,11 @@ const CreateIndex = () => {
     };
 
     axios
-      .post('http://localhost:5000/goals', body, config)
+      .post("http://localhost:5000/api/goals", body, config)
       .then((response) => {
         if (response.data.success) {
-          alert('목표 생성 완료!');
-          window.location = '/goal/create';
+          alert("목표 생성 완료!");
+          window.location = "/goal/create";
         }
       })
       .catch((err) => {
@@ -123,30 +123,30 @@ const CreateIndex = () => {
 
   const getName = (array, id) => {
     for (const element of array) {
-      if (element['_id'] === id) {
-        return element['name'];
+      if (element["_id"] === id) {
+        return element["name"];
       }
     }
   };
   const getColor = (array, id) => {
     for (const element of array) {
-      if (element['_id'] === id) {
-        return element['color'];
+      if (element["_id"] === id) {
+        return element["color"];
       }
     }
   };
 
   const goalList = goalCtx.goals.map((goal) => {
     const categoryName = getName(categoryList, goal.category);
-    const black = ['어학', '습관 가지기', '취미생활'];
-    const color = black.includes(categoryName) ? '#000000e8' : '#fff';
+    const black = ["어학", "습관 가지기", "취미생활"];
+    const color = black.includes(categoryName) ? "#000000e8" : "#fff";
 
-    const styleEditBtn = { color: color, fontSize: '1.3em', margin: '5px' };
+    const styleEditBtn = { color: color, fontSize: "1.3em", margin: "5px" };
 
     const styleDeleteBtn = {
-      color: '#f84f31',
-      fontSize: '1.3em',
-      margin: '5px',
+      color: "#f84f31",
+      fontSize: "1.3em",
+      margin: "5px",
     };
 
     return (

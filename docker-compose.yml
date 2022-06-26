@@ -1,0 +1,34 @@
+version: "3"
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    stdin_open: true
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3000:80"
+
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    container_name: app_backend
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    environment:
+      MONGO_URI: mongodb+srv://admin:Qorrha9441@levelup-everyday.yhbj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+      PORT: 5000
+      SECRETKEY: fsdgsdghwewe
+      SWAGGER_USER: levelup_admin
+      SWAGGER_PASSWORD: skygoup!@
+      AUTHOR_EMAIL: test_admin@gmail.com

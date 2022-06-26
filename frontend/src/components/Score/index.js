@@ -81,7 +81,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/score", config)
+      .get("http://localhost:5000/api/score", config)
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
@@ -101,7 +101,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/score/graph", config)
+      .get("http://localhost:5000/api/score/graph", config)
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
@@ -193,7 +193,7 @@ const Score = (props) => {
       },
     };
     axios
-      .get("http://localhost:5000/users", config)
+      .get("http://localhost:5000/api/users", config)
       .then((response) => {
         if (response.data.success) {
           setContinuity(response.data.data.continuity);

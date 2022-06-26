@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
-import AuthContext from './auth-context';
+import AuthContext from "./auth-context";
 
 const GoalContext = React.createContext({
   goals: [],
@@ -13,7 +13,7 @@ export const GoalContextProvider = (props) => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    console.log('goalcontext-useEffect');
+    console.log("goalcontext-useEffect");
     getAllGoals();
 
     return () => {};
@@ -28,7 +28,7 @@ export const GoalContextProvider = (props) => {
     };
 
     await axios
-      .get('http://localhost:5000/goals', config)
+      .get("http://localhost:5000/api/goals", config)
       .then((response) => {
         if (response.data.success) {
           setGoals(response.data.data);
@@ -51,7 +51,7 @@ export const GoalContextProvider = (props) => {
 
   return (
     <GoalContext.Provider value={contextvalue}>
-      {console.log('goalContext 렌더링')}
+      {console.log("goalContext 렌더링")}
       {props.children}
     </GoalContext.Provider>
   );
