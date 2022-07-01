@@ -11,7 +11,6 @@ const Graph = ({ accumData, lineData }) => {
   return (
     <GraphContainer>
       {accumData && <Line data={accumData} />}
-
       {lineData && <Line data={lineData} />}
     </GraphContainer>
   );

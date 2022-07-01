@@ -14,7 +14,6 @@ import {
   LogoIcon,
   Text,
 } from "./SignUpElements.js";
-import logo from "../../images/logo.png";
 
 const SignUp = (props) => {
   const [email, setEmail] = useState("");
@@ -58,7 +57,10 @@ const SignUp = (props) => {
       <Container>
         <FormWrap>
           <Icon to="/">
-            <LogoIcon src={logo} alt={logo}></LogoIcon>
+            <LogoIcon
+              src={process.env.PUBLIC_URL + "/img/logo.png"}
+              alt={`logo`}
+            ></LogoIcon>
           </Icon>
           <FormContent>
             <Form action="#">

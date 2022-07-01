@@ -13,7 +13,6 @@ import {
   Text,
   LogoIcon,
 } from "./SignInElements.js";
-import logo from "../../images/logo.png";
 
 import AuthContext from "../../store/auth-context.js";
 
@@ -57,7 +56,10 @@ const SignIn = (props) => {
       <Container>
         <FormWrap>
           <Icon to="/">
-            <LogoIcon src={logo} alt={logo}></LogoIcon>
+            <LogoIcon
+              src={process.env.PUBLIC_URL + "./img/logo.png"}
+              alt={`logo`}
+            ></LogoIcon>
           </Icon>
           <FormContent>
             <Form action="#">

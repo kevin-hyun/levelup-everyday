@@ -1,7 +1,7 @@
 import { UsersCreateDto } from './dto/users.create.dto';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-import * as bcrypt from 'bcrypt';
+import * as Bcrypt from 'bcryptjs';
 import { UsersRepository } from './users.repository';
 import { User } from './users.schema';
 
@@ -17,7 +17,8 @@ export class UsersService {
     if (isUserExist) {
       throw new UnauthorizedException('해당하는 이메일이 이미 존재합니다.');
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const salt = await Bcrypt.genSalt(10);
+    const hashedPassword = await Bcrypt.hash(password, salt);
 
     const user = await this.usersRepository.create({
       email,

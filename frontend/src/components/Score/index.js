@@ -41,7 +41,7 @@ const Score = (props) => {
     console.log("score-useEffect");
     getAllScore();
     getGraphData();
-  });
+  }, []);
 
   useEffect(() => {
     if (!!score) {

@@ -1,11 +1,17 @@
-FROM node:alpine
+FROM node:12-alpine
 
-WORKDIR /usr/src/app
+RUN mkdir -p /svr/app
 
-COPY ./package.json ./
+WORKDIR /svr/app
 
-RUN npm install
+RUN npm i -g @nestjs/cli --silent
 
-COPY . . 
+COPY package.json .
 
-CMD [ "node", "dist/main.js" ]
+COPY package-lock.json .
+
+RUN npm install --silent
+
+COPY . .
+
+CMD ["npm", "run", "start:debug"]

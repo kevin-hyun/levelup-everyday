@@ -15,7 +15,7 @@ import {
   NavBtn,
   NavRouterLink,
 } from "./NavbarElements";
-import logo from "../../images/logo.png";
+
 import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
 
@@ -37,7 +37,10 @@ const Navbar = ({ toggle }) => {
       <Nav>
         <NavbarContainer>
           <NavLogo to="/" onClick={togglehome}>
-            <NavIcon src={logo} alt={"logo"} />
+            <NavIcon
+              src={process.env.PUBLIC_URL + "/img/logo.png"}
+              alt={"logo11"}
+            />
           </NavLogo>
           <MobileIcon onClick={toggle}>
             <FaBars />
@@ -45,14 +48,7 @@ const Navbar = ({ toggle }) => {
           <NavMenu>
             {!isLoggendIn && (
               <NavItem>
-                <NavLinks
-                  to="about"
-                  smooth={true}
-                  duration={500}
-                  spy={true}
-                  exact="true"
-                  offset={-80}
-                >
+                <NavLinks to="about" duration={500} exact="true" offset={-80}>
                   오늘도레벨업?
                 </NavLinks>
               </NavItem>

@@ -11,7 +11,7 @@ import {
   ArrowRight,
 } from "./HeroElements";
 import { Button } from "../ButtonElement";
-import video from "../../videos/hero.mp4";
+
 import AuthContext from "../../store/auth-context";
 
 const Hero = () => {
@@ -26,7 +26,13 @@ const Hero = () => {
   return (
     <HeroContainer>
       <HeroBg>
-        <VideoBg autoPlay loop muted src={video} type="video/mp4" />
+        <VideoBg
+          autoPlay
+          loop
+          muted
+          src={process.env.PUBLIC_URL + "./video/hero.mp4"}
+          type="video/mp4"
+        />
       </HeroBg>
       <HeroContent>
         <HeroH1>하루에 하나의 행동이라도 꾸준히! </HeroH1>
@@ -51,9 +57,7 @@ const Hero = () => {
               onMouseLeave={onHover}
               primary="true"
               dark="true"
-              smooth={true}
               duration={500}
-              spy={true}
               exact="true"
               offset={-80}
             >

@@ -24,8 +24,6 @@ import { GoalList } from "./GoalElement";
 import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
 
-import categoryImg from "../../images/category.png";
-
 const CreateIndex = () => {
   const authCtx = useContext(AuthContext);
   const goalCtx = useContext(GoalContext);
@@ -172,7 +170,7 @@ const CreateIndex = () => {
     <GoalContainer>
       <GoalContent>
         <GoalCreateH1>목표 설정 </GoalCreateH1>
-        <GoalCategoryImg src={categoryImg} />
+        <GoalCategoryImg src={process.env.PUBLIC_URL + "/img/category.png"} />
         <GoalCreateText>6개의 카테고리가 있어요.</GoalCreateText>
         <GoalCreateForm>
           <FormInput

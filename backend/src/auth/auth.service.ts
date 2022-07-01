@@ -1,7 +1,7 @@
 import { UsersRepository } from '../users/users.repository';
 import { Injectable, Scope, UnauthorizedException } from '@nestjs/common';
 import { LoginRequestDto } from './dto/login.request.dto';
-import * as bcrypt from 'bcrypt';
+import * as Bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class AuthService {
     }
 
     //password correct?
-    const isPasswordValidated: boolean = await bcrypt.compare(
+    const isPasswordValidated: boolean = await Bcrypt.compare(
       password,
       user.password,
     );

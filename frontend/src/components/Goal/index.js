@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 import {
   GoalContainer,
@@ -14,9 +15,6 @@ import {
   Checkbox,
 } from "./GoalElement";
 
-import emptyGoal from "../../images/empty_goal.svg";
-
-import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import GoalContext from "../../store/goal-context";
 
@@ -93,7 +91,7 @@ const Goal = (props) => {
         <GoalCreateBtn to="/goal/create">목표 설정/변경</GoalCreateBtn>
         {isEmpty ? (
           <GoalShow>
-            <NoGoalImg src={emptyGoal} />
+            <NoGoalImg src={process.env.PUBLIC_URL + "/img/empty_goal.svg"} />
             <NoGoalText>
               현재 설정된 목표가 없어요! <br />
               목표를 설정해주세요.

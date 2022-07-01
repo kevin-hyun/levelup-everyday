@@ -1,12 +1,17 @@
-FROM node:alpine
+# FROM node:alpine
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY package.json ./
+# COPY package.json ./
 
-RUN npm install
+# RUN npm install
 
-COPY ./ ./
+# COPY ./ ./
 
-CMD ["npm", "run", "start"]
+# CMD ["npm", "run", "start"]
 
+
+FROM node:12-slim
+WORKDIR /usr/src/app
+COPY . .
+RUN npm install --silent

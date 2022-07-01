@@ -17,7 +17,7 @@ export const GoalContextProvider = (props) => {
     getAllGoals();
 
     return () => {};
-  });
+  }, []);
 
   const getAllGoals = async () => {
     // event.preventDefault();
