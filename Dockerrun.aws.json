@@ -1,0 +1,19 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinition": [
+    {
+      "name": "frontend",
+      "image": "app_frontend",
+      "hostname": "frontend",
+      "essential": "false",
+      "memory": 128
+    },
+    {
+      "name": "backend",
+      "image": "app_backend",
+      "hostname": "backend",
+      "essential": "false",
+      "memory": 128
+    }
+  ]
+}
