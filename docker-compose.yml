@@ -5,8 +5,9 @@ services:
     container_name: app_frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: always
+    image: 541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-frontend
     ports:
       - "3000:3000"
     volumes:
@@ -18,13 +19,14 @@ services:
     container_name: app_backend
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: always
+    image: 541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-backend
+    ports:
+      - "5000:5000"
     volumes:
       - ./backend:/svr/app
       - /svr/app/node_modules
-    ports:
-      - "5000:5000"
 
     environment:
       MONGO_URI: mongodb+srv://admin:Qorrha9441@levelup-everyday.yhbj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority

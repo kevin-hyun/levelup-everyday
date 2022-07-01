@@ -24,8 +24,7 @@
         }
       ],
       "essential": true,
-      "image": "levelup-everyday_backend",
-      "memory": 128,
+      "image": "541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-backend",
       "mountPoints": [
         {
           "containerPath": "/svr/app",
@@ -37,6 +36,7 @@
         }
       ],
       "name": "backend",
+      "memory": 128,
       "portMappings": [
         {
           "containerPort": 5000,
@@ -47,6 +47,7 @@
     {
       "command": ["npm", "start"],
       "essential": true,
+      "image": "541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-frontend",
       "mountPoints": [
         {
           "containerPath": "/usr/src/app/src",
@@ -54,7 +55,6 @@
         }
       ],
       "name": "frontend",
-      "image": "levelup-everyday_frontend",
       "memory": 128,
       "portMappings": [
         {
