@@ -7,13 +7,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     restart: always
-    image: 541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-frontend
+    networks:
+      - backend
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - "./frontend/src:/usr/src/app/src"
-
-    command: "npm start"
 
   backend:
     container_name: app_backend
@@ -21,7 +20,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     restart: always
-    image: 541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-backend
+    networks:
+      - backend
     ports:
       - "5000:5000"
     volumes:
@@ -34,3 +34,7 @@ services:
       SWAGGER_USER: levelup_admin
       SWAGGER_PASSWORD: skygoup!@
       AUTHOR_EMAIL: test_admin@gmail.com
+
+networks:
+  backend:
+    driver: bridge

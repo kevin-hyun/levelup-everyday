@@ -24,7 +24,6 @@
         }
       ],
       "essential": true,
-      "image": "541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-backend",
       "mountPoints": [
         {
           "containerPath": "/svr/app",
@@ -45,9 +44,7 @@
       ]
     },
     {
-      "command": ["npm", "start"],
       "essential": true,
-      "image": "541795963971.dkr.ecr.us-east-2.amazonaws.com/levelup-everyday-frontend",
       "mountPoints": [
         {
           "containerPath": "/usr/src/app/src",
@@ -58,7 +55,7 @@
       "memory": 128,
       "portMappings": [
         {
-          "containerPort": 3000,
+          "containerPort": 80,
           "hostPort": 3000
         }
       ]
