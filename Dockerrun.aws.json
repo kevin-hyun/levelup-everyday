@@ -1,19 +1,88 @@
 {
-  "AWSEBDockerrunVersion": 2,
-  "containerDefinition": [
+  "containerDefinitions": [
     {
-      "name": "frontend",
-      "image": "app_frontend",
-      "hostname": "frontend",
-      "essential": "false",
-      "memory": 128
+      "environment": [
+        {
+          "name": "MONGO_URI",
+          "value": "mongodb+srv://admin:Qorrha9441@levelup-everyday.yhbj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        },
+        {
+          "name": "SECRETKEY",
+          "value": "fsdgsdghwewe"
+        },
+        {
+          "name": "SWAGGER_USER",
+          "value": "levelup_admin"
+        },
+        {
+          "name": "SWAGGER_PASSWORD",
+          "value": "skygoup!@"
+        },
+        {
+          "name": "AUTHOR_EMAIL",
+          "value": "test_admin@gmail.com"
+        }
+      ],
+      "essential": true,
+      "image": "levelup-everyday_backend",
+      "memory": 128,
+      "mountPoints": [
+        {
+          "containerPath": "/svr/app",
+          "sourceVolume": "_Backend"
+        },
+        {
+          "containerPath": "/svr/app/node_modules",
+          "sourceVolume": "SvrAppNode_Modules"
+        }
+      ],
+      "name": "backend",
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "hostPort": 5000
+        }
+      ]
     },
     {
-      "name": "backend",
-      "image": "app_backend",
-      "hostname": "backend",
-      "essential": "false",
-      "memory": 128
+      "command": ["npm", "start"],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/usr/src/app/src",
+          "sourceVolume": "_FrontendSrc"
+        }
+      ],
+      "name": "frontend",
+      "image": "levelup-everyday_frontend",
+      "memory": 128,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ]
+    }
+  ],
+  "family": "",
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "./frontend/src"
+      },
+      "name": "_FrontendSrc"
+    },
+    {
+      "host": {
+        "sourcePath": "./backend"
+      },
+      "name": "_Backend"
+    },
+    {
+      "host": {
+        "sourcePath": "/svr/app/node_modules"
+      },
+      "name": "SvrAppNode_Modules"
     }
   ]
 }
