@@ -32,8 +32,22 @@ const CreateIndex = () => {
   const [categoryList, setCategoryList] = useState([]);
 
   const getCategory = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authCtx.token}`,
+        "Access-Control-Allow-Origin":
+          "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:3000",
+      },
+    };
     axios
+<<<<<<< HEAD
+      .get(
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/category/default",
+        config
+      )
+=======
       .get("http://localhost:5000/api/category/default")
+>>>>>>> parent of 4da0178 (Feat: Change api uri localhost to aws uri)
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -63,6 +77,8 @@ const CreateIndex = () => {
     const config = {
       headers: {
         Authorization: `Bearer ${authCtx.token}`,
+        "Access-Control-Allow-Origin":
+          "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:3000",
       },
     };
     let body = {
@@ -94,9 +110,10 @@ const CreateIndex = () => {
     const config = {
       headers: {
         Authorization: `Bearer ${authCtx.token}`,
+        "Access-Control-Allow-Origin":
+          "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:3000",
       },
     };
-
     let body = {
       category: category,
       contents: goal,

@@ -28,8 +28,23 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authCtx.token}`,
+        "Access-Control-Allow-Origin":
+          "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:3000",
+      },
+    };
     axios
+<<<<<<< HEAD
+      .post(
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users/login",
+        config,
+        body
+      )
+=======
       .post("http://localhost:5000/api/users/login", body)
+>>>>>>> parent of 4da0178 (Feat: Change api uri localhost to aws uri)
       .then((response) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);
