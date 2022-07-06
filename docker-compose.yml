@@ -1,11 +1,12 @@
 version: "3"
-
+x-aws-vpc: "vpc-4166f12a"
 services:
   frontend:
     container_name: app_frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: 541795963971.dkr.ecr.ap-northeast-2.amazonaws.com/levelup-everyday-client:latest
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
     restart: always
     networks:
       - backend
@@ -16,9 +17,10 @@ services:
 
   backend:
     container_name: app_backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: 541795963971.dkr.ecr.ap-northeast-2.amazonaws.com/levelup-everyday-server:latest
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
     restart: always
     networks:
       - backend
