@@ -73,7 +73,10 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/api/score", config)
+      .get(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score",
+        config
+      )
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
@@ -93,7 +96,10 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/api/score/graph", config)
+      .get(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score/graph",
+        config
+      )
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
@@ -184,7 +190,10 @@ const Score = (props) => {
       },
     };
     axios
-      .get("http://localhost:5000/api/users", config)
+      .get(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users",
+        config
+      )
       .then((response) => {
         if (response.data.success) {
           setContinuity(response.data.data.continuity);

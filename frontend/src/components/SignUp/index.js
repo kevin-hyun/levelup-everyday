@@ -35,7 +35,10 @@ const SignUp = (props) => {
     };
 
     axios
-      .post("http://localhost:5000/api/users/register", body)
+      .post(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users/register",
+        body
+      )
       .then((response) => {
         if (response.data.success) {
           alert("가입 완료!");

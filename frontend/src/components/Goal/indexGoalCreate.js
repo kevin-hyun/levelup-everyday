@@ -38,7 +38,9 @@ const CreateIndex = () => {
       },
     };
     axios
-      .get("http://localhost:5000/api/category/default")
+      .get(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/category/default"
+      )
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -77,7 +79,11 @@ const CreateIndex = () => {
     };
     if (confirmation) {
       await axios
-        .put(`http://localhost:5000/api/goals/${id}`, body, config)
+        .put(
+          `http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals/${id}`,
+          body,
+          config
+        )
         .then((response) => {
           if (response.data.success) {
             alert("목표가 삭제되었습니다.");
@@ -107,7 +113,11 @@ const CreateIndex = () => {
     };
 
     axios
-      .post("http://localhost:5000/api/goals", body, config)
+      .post(
+        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
+        body,
+        config
+      )
       .then((response) => {
         if (response.data.success) {
           alert("목표 생성 완료!");
