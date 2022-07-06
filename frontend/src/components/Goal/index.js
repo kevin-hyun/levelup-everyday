@@ -73,7 +73,7 @@ const Goal = (props) => {
 
     axios
       .post(
-        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score",
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score",
         body,
         config
       )

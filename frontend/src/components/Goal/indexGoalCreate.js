@@ -39,7 +39,7 @@ const CreateIndex = () => {
     };
     axios
       .get(
-        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/category/default"
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/category/default"
       )
       .then((response) => {
         if (response.data.success) {
@@ -114,7 +114,7 @@ const CreateIndex = () => {
 
     axios
       .post(
-        "http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
+        "http://://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
         body,
         config
       )
