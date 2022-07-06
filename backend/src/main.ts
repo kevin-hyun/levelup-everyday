@@ -35,8 +35,7 @@ async function bootstrap() {
   const document: OpenAPIObject = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   app.enableCors({
-    // origin: ['http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com'],
-    origin: true,
+    origin: ['http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com'],
     credentials: true,
   });
   const PORT = process.env.PORT;

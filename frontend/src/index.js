@@ -8,9 +8,7 @@ import { GoalContextProvider } from "./store/goal-context";
 import axios from "axios";
 
 axios.defaults.baseURL =
-  "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api";
-
-console.log(axios.defaults.baseURL);
+  "http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com:5000/api";
 
 ReactDOM.render(
   <React.StrictMode>
