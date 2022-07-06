@@ -7,8 +7,10 @@ import { AuthContextProvider } from "./store/auth-context";
 import { GoalContextProvider } from "./store/goal-context";
 import axios from "axios";
 
-axios.defaults.baseURL =
-  "http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com:5000/api";
+const awsDNS = "http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com";
+
+axios.defaults.baseURL = `${awsDNS}:5000/api`;
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = `${awsDNS}:3000`;
 
 ReactDOM.render(
   <React.StrictMode>
