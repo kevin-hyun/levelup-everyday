@@ -32,15 +32,8 @@ const CreateIndex = () => {
   const [categoryList, setCategoryList] = useState([]);
 
   const getCategory = () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authCtx.token}`,
-      },
-    };
     axios
-      .get(
-        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/category/default"
-      )
+      .get("/category/default")
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -79,11 +72,7 @@ const CreateIndex = () => {
     };
     if (confirmation) {
       await axios
-        .put(
-          `http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals/${id}`,
-          body,
-          config
-        )
+        .put(`/goals/${id}`, body, config)
         .then((response) => {
           if (response.data.success) {
             alert("목표가 삭제되었습니다.");
@@ -113,11 +102,7 @@ const CreateIndex = () => {
     };
 
     axios
-      .post(
-        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
-        body,
-        config
-      )
+      .post("/goals", body, config)
       .then((response) => {
         if (response.data.success) {
           alert("목표 생성 완료!");

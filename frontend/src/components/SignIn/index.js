@@ -28,16 +28,9 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authCtx.token}`,
-      },
-    };
+
     axios
-      .post(
-        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users/login",
-        body
-      )
+      .post("/users/login", body)
 
       .then((response) => {
         if (response.data.success) {

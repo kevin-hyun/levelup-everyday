@@ -1,10 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { AuthContextProvider } from './store/auth-context';
-import { GoalContextProvider } from './store/goal-context';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { AuthContextProvider } from "./store/auth-context";
+import { GoalContextProvider } from "./store/goal-context";
+import axios from "axios";
+
+axios.defaults.baseURL =
+  "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api";
+
+console.log(axios.defaults.baseURL);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +20,7 @@ ReactDOM.render(
       </GoalContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

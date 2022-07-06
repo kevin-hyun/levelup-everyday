@@ -72,11 +72,7 @@ const Goal = (props) => {
     };
 
     axios
-      .post(
-        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score",
-        body,
-        config
-      )
+      .post("/score", body, config)
       .then((response) => {
         if (response.data.success) {
           alert("목표 점수 생성! ");
