@@ -97,7 +97,7 @@ const Score = (props) => {
 
     await axios
       .get(
-        "http://://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score/graph",
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/score/graph",
         config
       )
       .then((response) => {
@@ -191,7 +191,7 @@ const Score = (props) => {
     };
     axios
       .get(
-        "http://://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users",
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users",
         config
       )
       .then((response) => {

@@ -35,7 +35,7 @@ const SignIn = (props) => {
     };
     axios
       .post(
-        "http://://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users/login",
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/users/login",
         body
       )
 

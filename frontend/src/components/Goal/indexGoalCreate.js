@@ -80,7 +80,7 @@ const CreateIndex = () => {
     if (confirmation) {
       await axios
         .put(
-          `http://http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals/${id}`,
+          `http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals/${id}`,
           body,
           config
         )
@@ -114,7 +114,7 @@ const CreateIndex = () => {
 
     axios
       .post(
-        "http://://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
+        "http://ec2-52-78-79-223.ap-northeast-2.compute.amazonaws.com:5000/api/goals",
         body,
         config
       )
