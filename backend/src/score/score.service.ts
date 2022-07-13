@@ -171,9 +171,9 @@ export class ScoreService {
       return dataSets;
     };
 
-    const data = makeGraphData(scores);
+    const data = await makeGraphData(scores);
 
-    return data;
+    return { scores: scores, scoresReshape: data };
   }
 
   async getScoreByQuery(user: User, startDate: string, endDate: string) {

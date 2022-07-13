@@ -38,7 +38,6 @@ const Score = (props) => {
   });
 
   useEffect(() => {
-    console.log("score-useEffect");
     getAllScore();
     getGraphData();
   }, []);
@@ -54,15 +53,22 @@ const Score = (props) => {
   }, [score]);
 
   useEffect(() => {
-    if (graphData.length !== 0) {
-      lineChartConfig(graphData);
+    if (!!graphData.scores) {
+      calcScoreGraph(graphData);
     }
   }, [graphData]);
 
   useEffect(() => {
-    if (dates.length !== 0) {
+    if (graphData.length !== 0) {
+      lineChartConfig(graphData.scoresReshape);
+    }
+  }, [graphData]);
+
+  useEffect(() => {
+    if (graphData.length !== 0) {
       accumChartConfig(dates, scoreAccum);
     }
+    console.log(dates.sort());
   }, [dates]);
 
   const getAllScore = async () => {
@@ -97,6 +103,58 @@ const Score = (props) => {
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        console.log(`${statusCode} ${err.message}`);
+      });
+  };
+
+  const calcScore = (score) => {
+    let sum = 0;
+    for (const element of score) {
+      sum += element.score;
+    }
+
+    setScoreTotal(sum);
+  };
+
+  const calcScoreGraph = (graphData) => {
+    let scoreAccumArray = [];
+    let dateArray = [];
+    let sum = 0;
+    for (const element of graphData.scores) {
+      sum += element.score;
+      scoreAccumArray.push(sum);
+      dateArray.push(element.createdAt.slice(0, 10));
+    }
+
+    const newScore = [];
+    const newDate = [];
+
+    dateArray.forEach((value, index) => {
+      if (index % goalCtx.goals.length === 2) {
+        newScore.push(scoreAccumArray[index]);
+        newDate.push(value);
+      }
+    });
+
+    setScoreAccum(newScore);
+    setDates(newDate);
+  };
+
+  const getContinuity = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authCtx.token}`,
+      },
+    };
+    axios
+      .get("http://localhost:5000/api/users", config)
+      .then((response) => {
+        if (response.data.success) {
+          setContinuity(response.data.data.continuity);
         }
       })
       .catch((err) => {
@@ -152,50 +210,6 @@ const Score = (props) => {
     setLineData(result);
   };
 
-  const calcScore = (score) => {
-    let scoreAccumArray = [];
-    let dateArray = [];
-    let sum = 0;
-    for (const element of score) {
-      sum += element.score;
-      scoreAccumArray.push(sum);
-      dateArray.push(element.createdAt.slice(0, 10));
-    }
-
-    const newScore = [];
-    const newDate = [];
-
-    dateArray.forEach((value, index) => {
-      if (index % goalCtx.goals.length === 2) {
-        newScore.push(scoreAccumArray[index]);
-        newDate.push(value);
-      }
-    });
-
-    setScoreAccum(newScore);
-    setDates(newDate);
-    setScoreTotal(sum);
-  };
-
-  const getContinuity = () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authCtx.token}`,
-      },
-    };
-    axios
-      .get("/users", config)
-      .then((response) => {
-        if (response.data.success) {
-          setContinuity(response.data.data.continuity);
-        }
-      })
-      .catch((err) => {
-        const statusCode = err.message.slice(-3, err.message.length);
-        console.log(`${statusCode} ${err.message}`);
-      });
-  };
-
   return (
     <ScoreContainer>
       <ScoreContent>
@@ -210,7 +224,6 @@ const Score = (props) => {
           </ScoreWrapper>
         </ScoreCircle>
         <GraphContainer>
-          {/* {console.log('score 렌더링')} */}
           <GraphInfo>당일 이전의 그래프까지 확인 가능합니다.</GraphInfo>
           {graphData.length === 0 ? (
             <p>로딩중....</p>

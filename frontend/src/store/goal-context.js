@@ -13,7 +13,6 @@ export const GoalContextProvider = (props) => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    console.log("goalcontext-useEffect");
     getAllGoals();
 
     return () => {};
@@ -51,7 +50,6 @@ export const GoalContextProvider = (props) => {
 
   return (
     <GoalContext.Provider value={contextvalue}>
-      {console.log("goalContext 렌더링")}
       {props.children}
     </GoalContext.Provider>
   );
