@@ -39,7 +39,7 @@ const SignIn = (props) => {
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
-        if (statusCode === "401") {
+        if (statusCode === "400") {
           alert("이메일 또는 비밀번호를 확인해주세요");
           window.location = "/signin";
         }

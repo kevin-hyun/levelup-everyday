@@ -42,7 +42,7 @@ const Hero = () => {
         <HeroBtnWrapper>
           {!isLoggedIn ? (
             <Button
-              to="/signup"
+              to="/signin"
               onMouseEnter={onHover}
               onMouseLeave={onHover}
               primary="true"

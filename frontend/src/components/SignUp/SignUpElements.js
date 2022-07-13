@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   min-height: 600px;
@@ -126,13 +126,14 @@ export const FormButton = styled.button`
   color: #fff;
   font-size: 20px;
   cursor: pointer;
+  margin-bottom: 30px;
 `;
 
 export const Text = styled.small`
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  color: ${({ correct }) => (correct ? '#01c471' : '#ea4e59')};
+  color: ${({ correct }) => (correct ? "#01c471" : "#ea4e59")};
   font-weight: 400;
 
   @media screen and (max-width: 400px) {
