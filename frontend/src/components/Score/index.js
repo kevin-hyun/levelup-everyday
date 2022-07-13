@@ -79,7 +79,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/api/score", config)
+      .get("/score", config)
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
@@ -99,7 +99,7 @@ const Score = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/api/score/graph", config)
+      .get("/score/graph", config)
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);

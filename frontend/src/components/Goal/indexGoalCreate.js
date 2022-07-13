@@ -33,7 +33,7 @@ const CreateIndex = () => {
 
   const getCategory = () => {
     axios
-      .get("http://localhost:5000/api/category/default")
+      .get("/category/default")
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -72,7 +72,7 @@ const CreateIndex = () => {
     };
     if (confirmation) {
       await axios
-        .put(`http://localhost:5000/api/goals/${id}`, body, config)
+        .put(`/goals/${id}`, body, config)
         .then((response) => {
           if (response.data.success) {
             alert("목표가 삭제되었습니다.");
@@ -96,14 +96,13 @@ const CreateIndex = () => {
         Authorization: `Bearer ${authCtx.token}`,
       },
     };
-
     let body = {
       category: category,
       contents: goal,
     };
 
     axios
-      .post("http://localhost:5000/api/goals", body, config)
+      .post("/goals", body, config)
       .then((response) => {
         if (response.data.success) {
           alert("목표 생성 완료!");

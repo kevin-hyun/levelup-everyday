@@ -1,0 +1,86 @@
+{
+  "AWSEBDockerrunVersion": 1,
+  "containerDefinitions": [
+    {
+      "environment": [
+        {
+          "name": "MONGO_URI",
+          "value": "mongodb+srv://admin:Qorrha9441@levelup-everyday.yhbj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        },
+        {
+          "name": "SECRETKEY",
+          "value": "fsdgsdghwewe"
+        },
+        {
+          "name": "SWAGGER_USER",
+          "value": "levelup_admin"
+        },
+        {
+          "name": "SWAGGER_PASSWORD",
+          "value": "skygoup!@"
+        },
+        {
+          "name": "AUTHOR_EMAIL",
+          "value": "test_admin@gmail.com"
+        }
+      ],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/svr/app",
+          "sourceVolume": "_Backend"
+        },
+        {
+          "containerPath": "/svr/app/node_modules",
+          "sourceVolume": "SvrAppNode_Modules"
+        }
+      ],
+      "name": "backend",
+      "memory": 512,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "hostPort": 5000
+        }
+      ]
+    },
+    {
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/usr/src/app/src",
+          "sourceVolume": "_FrontendSrc"
+        }
+      ],
+      "name": "frontend",
+      "memory": 512,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 3000
+        }
+      ]
+    }
+  ],
+  "family": "",
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "./frontend/src"
+      },
+      "name": "_FrontendSrc"
+    },
+    {
+      "host": {
+        "sourcePath": "./backend"
+      },
+      "name": "_Backend"
+    },
+    {
+      "host": {
+        "sourcePath": "/svr/app/node_modules"
+      },
+      "name": "SvrAppNode_Modules"
+    }
+  ]
+}

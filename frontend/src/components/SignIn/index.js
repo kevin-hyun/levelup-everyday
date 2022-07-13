@@ -28,8 +28,10 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
     axios
-      .post("http://localhost:5000/api/users/login", body)
+      .post("/users/login", body)
+
       .then((response) => {
         if (response.data.success) {
           authCtx.login(response.data.data.token);

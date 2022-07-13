@@ -72,7 +72,7 @@ const Goal = (props) => {
     };
 
     axios
-      .post("http://localhost:5000/api/score", body, config)
+      .post("/score", body, config)
       .then((response) => {
         if (response.data.success) {
           alert("목표 점수 생성! ");
