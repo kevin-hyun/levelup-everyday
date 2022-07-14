@@ -68,7 +68,6 @@ const Score = (props) => {
     if (graphData.length !== 0) {
       accumChartConfig(dates, scoreAccum);
     }
-    console.log(dates.sort());
   }, [dates]);
 
   const getAllScore = async () => {
