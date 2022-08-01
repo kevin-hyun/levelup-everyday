@@ -1,41 +1,39 @@
-import './App.css';
-import { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
-import Home from './pages/Home';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import GoalPage from './pages/GoalPage';
-import GoalCreatePage from './pages/GoalCreatePage';
-import ScoreMainPage from './pages/ScoreMainPage';
-import AuthContext from './store/auth-context';
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import "./App.css";
+import Home from "./pages/Home";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import GoalPage from "./pages/GoalPage";
+import GoalCreatePage from "./pages/GoalCreatePage";
+import ScoreMainPage from "./pages/ScoreMainPage";
 
 function App() {
-  const authCtx = useContext(AuthContext);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <Router>
       <Switch>
         <Route path="/" component={Home} exact />
-        {!authCtx.isLoggendIn && (
+        {!isAuthenticated && (
           <Route path="/signin" component={SignInPage} exact />
         )}
-        {!authCtx.isLoggendIn && (
+        {!isAuthenticated && (
           <Route path="/signup" component={SignUpPage} exact />
         )}
 
-        {authCtx.isLoggendIn && (
-          <Route path="/goal" component={GoalPage} exact />
-        )}
+        {isAuthenticated && <Route path="/goal" component={GoalPage} exact />}
 
-        {authCtx.isLoggendIn && (
+        {isAuthenticated && (
           <Route path="/goal/create" component={GoalCreatePage} exact />
         )}
-        {authCtx.isLoggendIn && (
+        {isAuthenticated && (
           <Route path="/score/main" component={ScoreMainPage} exact />
         )}
 

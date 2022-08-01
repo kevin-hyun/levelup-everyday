@@ -1,24 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import axios from "axios";
+
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthContextProvider } from "./store/auth-context";
-import { GoalContextProvider } from "./store/goal-context";
-import axios from "axios";
+import store from "./store/index";
 
-const awsDNS = "http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com";
+const localhost = "http://localhost";
 
-axios.defaults.baseURL = `${awsDNS}:5000/api`;
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = `${awsDNS}:3000`;
+axios.defaults.baseURL = `${localhost}:5000/api`;
+axios.defaults.headers.common[
+  "Access-Control-Allow-Origin"
+] = `${localhost}:3000`;
+
+// const awsDNS = "http://ec2-3-39-255-32.ap-northeast-2.compute.amazonaws.com";
+
+// axios.defaults.baseURL = `${awsDNS}:5000/api`;
+// axios.defaults.headers.common["Access-Control-Allow-Origin"] = `${awsDNS}:3000`;
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <GoalContextProvider>
-        <App />
-      </GoalContextProvider>
-    </AuthContextProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

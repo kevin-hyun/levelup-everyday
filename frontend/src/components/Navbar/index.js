@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FaBars } from "react-icons/fa";
 import { animateScroll as scroll } from "react-scroll";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Nav,
@@ -16,18 +17,16 @@ import {
   NavRouterLink,
 } from "./NavbarElements";
 
-import AuthContext from "../../store/auth-context";
-import GoalContext from "../../store/goal-context";
+import { authActions } from "../../store/auth";
+import { goalActions } from "../../store/goal";
 
 const Navbar = ({ toggle }) => {
-  const authCtx = useContext(AuthContext);
-  const goalCtx = useContext(GoalContext);
-  const isLoggendIn = authCtx.isLoggendIn;
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const logoutHandler = () => {
-    authCtx.logout();
-    goalCtx.reset();
+    dispatch(authActions.logout());
+    dispatch(goalActions.reset());
   };
-
   const togglehome = () => {
     scroll.scrollToTop();
   };
@@ -46,7 +45,7 @@ const Navbar = ({ toggle }) => {
             <FaBars />
           </MobileIcon>
           <NavMenu>
-            {!isLoggendIn && (
+            {!isAuthenticated && (
               <NavItem>
                 <NavLinks to="about" duration={500} exact="true" offset={-80}>
                   오늘도레벨업?
@@ -59,14 +58,14 @@ const Navbar = ({ toggle }) => {
             <NavItem>
               <NavRouterLink to="/score/main">성장곡선</NavRouterLink>
             </NavItem>
-            {!isLoggendIn && (
+            {!isAuthenticated && (
               <NavItem>
                 <NavRouterLink to="/signup">회원가입</NavRouterLink>
               </NavItem>
             )}
           </NavMenu>
           <NavBtn>
-            {isLoggendIn ? (
+            {isAuthenticated ? (
               <NavBtnLink to="/signin" onClick={logoutHandler}>
                 로그아웃
               </NavBtnLink>
