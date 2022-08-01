@@ -1,4 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 import {
   HeroContainer,
   HeroBg,
@@ -12,11 +14,9 @@ import {
 } from "./HeroElements";
 import { Button } from "../ButtonElement";
 
-import AuthContext from "../../store/auth-context";
-
 const Hero = () => {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggendIn;
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const [hover, setHover] = useState(false);
 
   const onHover = () => {
@@ -40,7 +40,7 @@ const Hero = () => {
         <HeroP>목표를 꾸준히 하지못하는 자신에게 실망하셨나요?</HeroP>
         <HeroP>절대 멈춰있는 게 아니에요.</HeroP>
         <HeroBtnWrapper>
-          {!isLoggedIn ? (
+          {!isAuthenticated ? (
             <Button
               to="/signin"
               onMouseEnter={onHover}

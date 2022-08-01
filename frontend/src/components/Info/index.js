@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import AuthContext from "../../store/auth-context";
+import { useSelector } from "react-redux";
+
 import { Button } from "../ButtonElement";
 import {
   InfoContainer,
@@ -31,8 +32,8 @@ const Info = ({
   primary,
   dark,
 }) => {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggendIn;
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <>
       <InfoContainer lightBg={lightBg} id={id}>
@@ -44,7 +45,7 @@ const Info = ({
                 <Heading lightText={lightText}>{headline}</Heading>
                 <Subtitle darkText={darkText}>{description}</Subtitle>
                 <BtnWrap>
-                  {!isLoggedIn ? (
+                  {!isAuthenticated ? (
                     <Button
                       to="/signin"
                       primary={primary ? 1 : 0}

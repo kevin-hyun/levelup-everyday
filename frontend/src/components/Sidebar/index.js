@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
-import AuthContext from '../../store/auth-context';
+import React, { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
   SidebarContainer,
   Icon,
@@ -11,13 +12,17 @@ import {
   SidebarRoute,
   SidebarRouter,
   SidebarRouteNoBtn,
-} from './SidebarElements';
+} from "./SidebarElements";
+
+import { authActions } from "../../store/auth";
+import { goalActions } from "../../store/goal";
 
 const Sidebar = ({ isOpen, toggle }) => {
-  const authCtx = useContext(AuthContext);
-  const isLoggendIn = authCtx.isLoggendIn;
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout());
+    dispatch(goalActions.reset());
   };
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -26,7 +31,7 @@ const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          {!isLoggendIn && (
+          {!isAuthenticated && (
             <SidebarLink to="about" onClick={toggle}>
               오늘도레벨업?
             </SidebarLink>
@@ -36,13 +41,13 @@ const Sidebar = ({ isOpen, toggle }) => {
           <SidebarLink to="/score/main" onClick={toggle}>
             성장곡선
           </SidebarLink>
-          {!isLoggendIn && (
+          {!isAuthenticated && (
             <SidebarRouter to="/signup" onClick={toggle}>
               회원가입
             </SidebarRouter>
           )}
         </SidebarMenu>
-        {isLoggendIn ? (
+        {isAuthenticated ? (
           <SideBtnWrap>
             <SidebarRoute to="/signin" onClick={logoutHandler}>
               로그아웃
