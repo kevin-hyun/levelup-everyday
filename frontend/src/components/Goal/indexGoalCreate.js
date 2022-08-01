@@ -99,7 +99,6 @@ const CreateIndex = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-
     let body = {
       category: category,
       contents: goal,

@@ -30,6 +30,7 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
     axios
       .post("/users/login", body)
       .then((response) => {

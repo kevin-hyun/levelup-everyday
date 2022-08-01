@@ -27,7 +27,7 @@ export const GoalContextProvider = (props) => {
     };
 
     await axios
-      .get("http://localhost:5000/api/goals", config)
+      .get("/goals", config)
       .then((response) => {
         if (response.data.success) {
           setGoals(response.data.data);
