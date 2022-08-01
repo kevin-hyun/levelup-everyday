@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import axios from "axios";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./store/auth-context";
 import { GoalContextProvider } from "./store/goal-context";
-import axios from "axios";
+import store from "./store/index";
 
 const localhost = "http://localhost";
 
@@ -21,11 +23,9 @@ axios.defaults.headers.common[
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <GoalContextProvider>
-        <App />
-      </GoalContextProvider>
-    </AuthContextProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

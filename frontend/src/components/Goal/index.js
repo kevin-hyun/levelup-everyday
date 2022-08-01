@@ -1,5 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import {
   GoalContainer,
@@ -15,22 +17,49 @@ import {
   Checkbox,
 } from "./GoalElement";
 
-import AuthContext from "../../store/auth-context";
-import GoalContext from "../../store/goal-context";
+import { goalActions } from "../../store/goal";
 
 const Goal = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector((state) => state.auth.token);
+  const goals = useSelector((state) => state.goal.goals);
   const [isEmpty, setIsEmpty] = useState(true);
   const [checkedItem, setCheckedItem] = useState([]);
   const [completedGoal, setCompletedGoal] = useState([]);
-  const authCtx = useContext(AuthContext);
-  const goalCtx = useContext(GoalContext);
 
   useEffect(() => {
-    if (goalCtx.goals.length !== 0) {
+    getAllGoals();
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    if (goals.length !== 0) {
       setIsEmpty(false);
     }
     return () => {};
-  }, [goalCtx.goals]);
+  }, [goals]);
+
+  const getAllGoals = async () => {
+    // event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios
+      .get("/goals", config)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch(goalActions.update(response.data.data));
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        console.log(`${statusCode} ${err.message}`);
+      });
+  };
 
   const changeHandler = (checked, id) => {
     if (checked) {
@@ -42,7 +71,7 @@ const Goal = (props) => {
     }
   };
 
-  const goalList = goalCtx.goals.map((goal) => {
+  const goalList = goals.map((goal) => {
     return (
       <GoalWrapper key={goal._id}>
         <GoalList>{goal.contents}</GoalList>
@@ -63,7 +92,7 @@ const Goal = (props) => {
     event.preventDefault();
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
@@ -72,11 +101,11 @@ const Goal = (props) => {
     };
 
     axios
-      .post("http://localhost:5000/api/score", body, config)
+      .post("/score", body, config)
       .then((response) => {
         if (response.data.success) {
           alert("목표 점수 생성! ");
-          window.location = "/score/main";
+          history.push("/score/main");
         }
       })
       .catch((err) => {

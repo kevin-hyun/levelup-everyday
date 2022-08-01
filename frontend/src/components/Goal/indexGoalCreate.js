@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { AiFillEdit } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -19,21 +20,28 @@ import {
   GoalListWrapper,
   Iconwrapper,
 } from "./GoalCreateElement";
-import { GoalList } from "./GoalElement";
 
-import AuthContext from "../../store/auth-context";
-import GoalContext from "../../store/goal-context";
+import { GoalList } from "./GoalElement";
+import { goalActions } from "../../store/goal";
 
 const CreateIndex = () => {
-  const authCtx = useContext(AuthContext);
-  const goalCtx = useContext(GoalContext);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector((state) => state.auth.token);
+  const goals = useSelector((state) => state.goal.goals);
   const [goal, setGoal] = useState("");
   const [category, setCategory] = useState("621ef2fb7432c32bc3450b29");
   const [categoryList, setCategoryList] = useState([]);
 
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  useEffect(() => {}, [goals]);
+
   const getCategory = () => {
     axios
-      .get("http://localhost:5000/api/category/default")
+      .get("/category/default")
       .then((response) => {
         if (response.data.success) {
           setCategoryList(response.data.data);
@@ -44,11 +52,6 @@ const CreateIndex = () => {
         console.log(`${statusCode} ${err.message}`);
       });
   };
-
-  useEffect(() => {
-    getCategory();
-  }, []);
-  useEffect(() => {}, [goalCtx.goals]);
 
   const categoryElements = categoryList.map((category) => {
     return (
@@ -62,7 +65,7 @@ const CreateIndex = () => {
     const confirmation = window.confirm(`${goal}를(을) 삭제하시겠습니까?`);
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     let body = {
@@ -72,11 +75,11 @@ const CreateIndex = () => {
     };
     if (confirmation) {
       await axios
-        .put(`http://localhost:5000/api/goals/${id}`, body, config)
+        .put(`/goals/${id}`, body, config)
         .then((response) => {
           if (response.data.success) {
             alert("목표가 삭제되었습니다.");
-            window.location = "/goal/create";
+            history.push("/goal/create");
           }
         })
         .catch((err) => {
@@ -93,7 +96,7 @@ const CreateIndex = () => {
     event.preventDefault();
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
@@ -103,11 +106,12 @@ const CreateIndex = () => {
     };
 
     axios
-      .post("http://localhost:5000/api/goals", body, config)
+      .post("/goals", body, config)
       .then((response) => {
         if (response.data.success) {
+          dispatch(goalActions.addItem(response.data.data));
           alert("목표 생성 완료!");
-          window.location = "/goal/create";
+          history.push("/goal/create");
         }
       })
       .catch((err) => {
@@ -131,7 +135,7 @@ const CreateIndex = () => {
     }
   };
 
-  const goalList = goalCtx.goals.map((goal) => {
+  const goalList = goals.map((goal) => {
     const categoryName = getName(categoryList, goal.category);
     const black = ["어학", "습관 가지기", "취미생활"];
     const color = black.includes(categoryName) ? "#000000e8" : "#fff";

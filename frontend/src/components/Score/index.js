@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import {
   ScoreContainer,
@@ -14,15 +15,13 @@ import {
 } from "./ScoreElement";
 
 import Graph from "../Graph/index";
-import AuthContext from "../../store/auth-context";
-import GoalContext from "../../store/goal-context";
 
 const Score = (props) => {
-  const authCtx = useContext(AuthContext);
-  const goalCtx = useContext(GoalContext);
+  const token = useSelector((state) => state.auth.token);
+  const goals = useSelector((state) => state.goal.goals);
+
   const [score, setScore] = useState([]);
   const [scoreTotal, setScoreTotal] = useState(0);
-
   const [scoreAccum, setScoreAccum] = useState([]);
   const [dates, setDates] = useState([]);
   const [accumData, setAccumData] = useState({
@@ -73,12 +72,12 @@ const Score = (props) => {
   const getAllScore = async () => {
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
     await axios
-      .get("http://localhost:5000/api/score", config)
+      .get("/score", config)
       .then((response) => {
         if (response.data.success) {
           setScore(response.data.data);
@@ -93,12 +92,12 @@ const Score = (props) => {
   const getGraphData = async () => {
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
     await axios
-      .get("http://localhost:5000/api/score/graph", config)
+      .get("/score/graph", config)
       .then((response) => {
         if (response.data.success) {
           setGraphData(response.data.data);
@@ -133,7 +132,7 @@ const Score = (props) => {
     const newDate = [];
 
     dateArray.forEach((value, index) => {
-      if (index % goalCtx.goals.length === 2) {
+      if (index % goals.length === 2) {
         newScore.push(scoreAccumArray[index]);
         newDate.push(value);
       }
@@ -146,11 +145,11 @@ const Score = (props) => {
   const getContinuity = () => {
     const config = {
       headers: {
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
-      .get("http://localhost:5000/api/users", config)
+      .get("/users", config)
       .then((response) => {
         if (response.data.success) {
           setContinuity(response.data.data.continuity);

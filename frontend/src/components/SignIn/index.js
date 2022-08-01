@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { withRouter } from "react-router-dom";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -14,10 +15,11 @@ import {
   LogoIcon,
 } from "./SignInElements.js";
 
-import AuthContext from "../../store/auth-context.js";
+import { authActions } from "../../store/auth.js";
 
 const SignIn = (props) => {
-  const authCtx = useContext(AuthContext);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -29,26 +31,26 @@ const SignIn = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:5000/api/users/login", body)
+      .post("/users/login", body)
       .then((response) => {
         if (response.data.success) {
-          authCtx.login(response.data.data.token);
-          //작동은 하는데 버벅임-
-          window.location.replace("goal");
+          dispatch(authActions.login(response.data.data.token));
+          alert("로그인 성공");
+          history.push("/");
         }
       })
       .catch((err) => {
         const statusCode = err.message.slice(-3, err.message.length);
         if (statusCode === "400") {
           alert("이메일 또는 비밀번호를 확인해주세요");
-          window.location = "/signin";
+          history.push("/signin");
         }
       });
   };
 
   const signUpRedirect = (event) => {
     event.preventDefault();
-    props.history.push("/signup");
+    history.push("/signup");
   };
 
   return (

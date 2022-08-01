@@ -35,7 +35,7 @@ const SignUp = (props) => {
     };
 
     axios
-      .post("http://localhost:5000/api/users/register", body)
+      .post("/users/register", body)
       .then((response) => {
         if (response.data.success) {
           alert("가입 완료!");
