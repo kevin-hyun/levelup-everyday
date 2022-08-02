@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Link as LinkRouter } from 'react-router-dom';
+import styled from "styled-components";
+import { Link as LinkRouter } from "react-router-dom";
 
-export const GoalContainer = styled('div')`
+export const GoalContainer = styled("div")`
   background: #8080ff;
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ export const GoalContainer = styled('div')`
   }
 `;
 
-export const GoalContent = styled('div')`
+export const GoalContent = styled("div")`
   /* margin-top: 90px; */
   height: 80vh;
   width: 60%;
@@ -66,7 +66,7 @@ export const GoalCreateBtn = styled(LinkRouter)`
     color: #010606;
   }
 `;
-export const GoalShow = styled('div')`
+export const GoalShow = styled("div")`
   width: 80%;
   background: #fff;
   border-radius: 10px;
@@ -76,7 +76,7 @@ export const GoalShow = styled('div')`
   flex-direction: column;
   align-items: center;
 `;
-export const NoGoalImg = styled('img')`
+export const NoGoalImg = styled("img")`
   width: 40%;
   margin: 32px;
 
@@ -84,7 +84,7 @@ export const NoGoalImg = styled('img')`
     width: 60%;
   }
 `;
-export const NoGoalText = styled('h3')`
+export const NoGoalText = styled("h3")`
   margin-bottom: 32px;
   text-align: center;
 
@@ -94,7 +94,7 @@ export const NoGoalText = styled('h3')`
   }
 `;
 
-export const GoalCategoryImg = styled('img')`
+export const GoalCategoryImg = styled("img")`
   width: 500px;
   height: 500px;
   margin: 32px;
@@ -105,7 +105,7 @@ export const GoalCategoryImg = styled('img')`
   }
 `;
 
-export const GoalCreateH1 = styled('h1')`
+export const GoalCreateH1 = styled("h1")`
   margin-top: 30px;
   margin-bottom: -40px;
 
@@ -115,7 +115,7 @@ export const GoalCreateH1 = styled('h1')`
     font-size: 20px;
   }
 `;
-export const GoalCreateText = styled('span')`
+export const GoalCreateText = styled("span")`
   margin-top: -80px;
   margin-bottom: 30px;
   font-weight: 700;
@@ -153,7 +153,7 @@ export const Checkbox = styled.input`
   border-radius: 20px;
 `;
 
-export const GoalSubmitBtn = styled('button')`
+export const GoalSubmitBtn = styled("button")`
   border-radius: 50px;
   background: #ffff80;
   white-space: nowrap;

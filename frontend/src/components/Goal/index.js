@@ -27,9 +27,11 @@ const Goal = (props) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [checkedItem, setCheckedItem] = useState([]);
   const [completedGoal, setCompletedGoal] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     getAllGoals();
+    getScoreToday();
     return () => {};
   }, []);
 
@@ -53,6 +55,32 @@ const Goal = (props) => {
       .then((response) => {
         if (response.data.success) {
           dispatch(goalActions.update(response.data.data));
+        }
+      })
+      .catch((err) => {
+        const statusCode = err.message.slice(-3, err.message.length);
+        console.log(`${statusCode} ${err.message}`);
+      });
+  };
+
+  const getScoreToday = async () => {
+    // event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios
+      .get("/score/today", config)
+      .then((response) => {
+        if (response.data.success) {
+          const scores = response.data.data;
+          for (const score of scores) {
+            if (score["score"] > 0) {
+              setIsSubmitted(true);
+            }
+          }
         }
       })
       .catch((err) => {
@@ -114,6 +142,10 @@ const Goal = (props) => {
       });
   };
 
+  const preventSubmit = (event) => {
+    event.preventDefault();
+    alert("이미 목표를 제출했어요!");
+  };
   return (
     <GoalContainer>
       <GoalContent>
@@ -129,7 +161,11 @@ const Goal = (props) => {
         ) : (
           <GoalForm>
             {goalList}
-            <GoalSubmitBtn onClick={submitGoals}>하루 끝!</GoalSubmitBtn>
+            {isSubmitted ? (
+              <GoalSubmitBtn onClick={preventSubmit}>하루 끝!</GoalSubmitBtn>
+            ) : (
+              <GoalSubmitBtn onClick={submitGoals}>하루 끝!</GoalSubmitBtn>
+            )}
           </GoalForm>
         )}
       </GoalContent>
