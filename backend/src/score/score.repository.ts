@@ -1,13 +1,17 @@
-import { ScoreReadDateEndParamsDto } from './dto/score.read.DateEnd.dto copy';
-import { Goals } from '../goals/goals.schema';
-import { Injectable, UnauthorizedException, Type } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
+import * as moment from 'moment';
+import { Injectable, UnauthorizedException, Type } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+
+import { Goals } from '../goals/goals.schema';
 import { Score } from './score.schema';
+
+import { ScoreUpdateDto } from './dto/score.updateData.dto';
+import { ScoreReadDateEndParamsDto } from './dto/score.read.DateEnd.dto';
 import { ScoreInsertDto } from './dto/score.insert.dto';
 import { ScoreReadParamsDto } from './dto/score.read.params';
-import mongoose from 'mongoose';
 import { ScoreReadBtwParamsDto } from './dto/score.read.btw.dto';
+import { ScoreReadDateStartParamsDto } from './dto/score.read.DateStart.dto';
 
 @Injectable()
 export class ScoreRepository {
@@ -38,6 +42,16 @@ export class ScoreRepository {
       author: userId,
       updatedAt: {
         $lte: data.endDate,
+      },
+    });
+  }
+
+  async getScoreToday(userId: Types.ObjectId | string) {
+    const date = moment().startOf('day').subtract(9, 'hour').format();
+    return await this.scoreModel.find({
+      author: userId,
+      updatedAt: {
+        $gte: date,
       },
     });
   }
@@ -85,5 +99,20 @@ export class ScoreRepository {
   }
   async InsertManyData(insertData: Array<any>) {
     return await this.scoreModel.insertMany(insertData);
+  }
+
+  async updateData(userId: Types.ObjectId, updateData: ScoreUpdateDto) {
+    //가져와서
+    const date = moment().startOf('day').subtract(9, 'hour').format();
+    const score = this.scoreModel.findOneAndUpdate(
+      {
+        author: userId,
+        goal: updateData.goal,
+        updatedAt: { $gte: date },
+      },
+      { score: updateData.score, updatedAt: moment().format() },
+    );
+
+    return score;
   }
 }

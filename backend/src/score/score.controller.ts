@@ -33,7 +33,7 @@ export class ScoreController {
   @UseGuards(JwtAuthGuard)
   @Post()
   createScore(@CurrentUser() user: User, @Body() data: ScoreCreateDto) {
-    return this.scoreService.createScore(user, data);
+    return this.scoreService.updateScore(user, data);
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timeZone: 'Asia/Seoul' })
@@ -48,6 +48,13 @@ export class ScoreController {
   @Get()
   getAllScores(@CurrentUser() user: User) {
     return this.scoreService.getAllScores(user);
+  }
+
+  @ApiOperation({ summary: '오늘 score 가져오기' })
+  @UseGuards(JwtAuthGuard)
+  @Get('today')
+  getTodayScores(@CurrentUser() user: User) {
+    return this.scoreService.getTodayScores(user);
   }
 
   @ApiOperation({ summary: '그래프 그리기 위한 score자료 조회' })

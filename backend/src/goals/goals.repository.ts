@@ -42,6 +42,13 @@ export class GoalsRepository {
     return result;
   }
 
+  async getAllUsersGoals() {
+    const result = await this.goalsModel.find({
+      softDelete: false,
+    });
+    return result;
+  }
+
   async deleteGoal(user: User, id: string | Types.ObjectId) {
     const goal = await this.goalsModel.findById({ _id: id });
     if (user.role === 0) {

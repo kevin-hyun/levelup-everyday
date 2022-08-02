@@ -8,6 +8,8 @@ import { ScoreCreateDto } from './dto/score.create.dto';
 import { User } from '../users/users.schema';
 import { ScoreRepository } from './score.repository';
 import { groupBy } from '../common/utils/groupby';
+import { ScoreUpdateDto } from './dto/score.updateData.dto';
+import { type } from 'os';
 
 @Injectable()
 export class ScoreService {
@@ -17,32 +19,38 @@ export class ScoreService {
     private readonly usersRepository: UsersRepository,
   ) {}
 
-  async createScore(user: User, data: ScoreCreateDto) {
+  async getTodayScores(user: User) {
+    const userId = user._id;
+    return await this.scoreRepository.getScoreToday(userId);
+  }
+
+  async updateScore(user: User, data: ScoreCreateDto) {
     const comboWeight = 3;
     const userId = user._id;
     const continuity = user.continuity;
-    const goals = data;
-    console.log(typeof data);
+    const goals = data.goalsArray;
+    const calScore = 10 + comboWeight * continuity;
 
-    const insertData = goals.goalsArray.map((goal) => {
-      const obj = {
-        score: 10 + comboWeight * continuity,
-        author: userId,
+    // 중복제출 방지는 프론트에서
+    const arr = [];
+    for (const goal of goals) {
+      const updateData = {
         goal: new mongoose.Types.ObjectId(goal),
-        updatedAt: moment().format(),
-        createdAt: moment().format(),
+        score: calScore,
       };
-      return obj;
-    });
-
-    try {
-      const result = await this.scoreRepository.InsertManyData(insertData);
-      return result;
-    } catch (err) {
-      console.log(err);
+      try {
+        const result = await this.scoreRepository.updateData(
+          userId,
+          updateData,
+        );
+        arr.push(result);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
-    return insertData;
+    return arr;
+    // return 1;
   }
 
   async createScoreScheduled() {
@@ -78,29 +86,26 @@ export class ScoreService {
     }
 
     //* 빈 점수 생성
-    const goalSubmitted = getScoreBefore.map((score) => {
-      return score['goal'].toString();
-    });
-    const goals = await this.goalsRepository.getExcludedGoals(goalSubmitted);
-    console.log(goalSubmitted);
-    console.log(goals);
+    const goals = await this.goalsRepository.getAllUsersGoals();
 
+    let cnt = 0;
     for (const goal of goals) {
       const insertData = {
         score: 0,
         author: new mongoose.Types.ObjectId(goal['author']),
         goal: new mongoose.Types.ObjectId(goal['_id']),
-        updatedAt: moment().subtract(1, 'day').format(),
-        createdAt: moment().subtract(1, 'day').format(),
+        updatedAt: moment().format(),
+        createdAt: moment().format(),
       };
       try {
         await this.scoreRepository.InsertData(insertData);
+        cnt += 1;
       } catch (err) {
         console.log(err);
       }
     }
 
-    return 1;
+    return `scheduled Completed ${cnt}score added`;
   }
 
   async getAllScores(user: User) {
